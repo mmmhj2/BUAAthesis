@@ -323,15 +323,17 @@ void main()
 分别为图\ref{fig-sub-l}和图\ref{fig-sub-r}，并有一个共同的图题。
 \begin{figure}[h!]
     \centering
-    \subfigure[并排小图a]{
+    \begin{subfigure}[b]{0.3\linewidth}
+        \includegraphics[width=\linewidth]{figure/image.pdf}
+        \caption{并排小图a}
         \label{fig-sub-l}
-        \includegraphics[width=0.3\textwidth]{figure/image.pdf}
-    }
+    \end{subfigure}
     \hspace{4em} % 水平间隔
-    \subfigure[并排小图b]{
+    \begin{subfigure}[b]{0.3\linewidth}
+        \includegraphics[width=\linewidth]{figure/image.pdf}
+        \caption{并排小图b}
         \label{fig-sub-r}
-        \includegraphics[width=0.3\textwidth]{figure/image.pdf}
-    }
+    \end{subfigure}
     \caption{子图并排的示例}
     \label{fig-sub}
 \end{figure}
@@ -341,25 +343,29 @@ void main()
 图\ref{fig-matrix-c}和图\ref{fig-matrix-d}。
 \begin{figure}[h!]
     \centering
-    \subfigcapskip=6pt
-    \begin{tabular}{cc}
-        \subfigure[矩阵子图A]{
-            \label{fig-matrix-a}
-            \includegraphics[width=0.3\textwidth]{figure/image.pdf}
-        } \hspace{4em} &
-        \subfigure[矩阵子图B]{
-            \label{fig-matrix-b}
-            \includegraphics[width=0.3\textwidth]{figure/image.pdf}
-        } \\
-        \subfigure[矩阵子图C]{
-            \label{fig-matrix-c}
-            \includegraphics[width=0.3\textwidth]{figure/image.pdf}
-        } \hspace{4em} &
-        \subfigure[矩阵子图D]{
-            \label{fig-matrix-d}
-            \includegraphics[width=0.3\textwidth]{figure/image.pdf}
-        } \\
-    \end{tabular}
+    \begin{subfigure}[b]{0.3\linewidth}
+        \includegraphics[width=\textwidth]{figure/image.pdf}
+        \caption{矩阵子图A}
+        \label{fig-matrix-a}
+    \end{subfigure}
+    \hspace{4em}
+    \begin{subfigure}[b]{0.3\linewidth}
+        \includegraphics[width=\textwidth]{figure/image.pdf}
+        \caption{矩阵子图B}
+        \label{fig-matrix-b}
+    \end{subfigure}
+
+    \begin{subfigure}[b]{0.3\linewidth}
+        \includegraphics[width=\textwidth]{figure/image.pdf}
+        \caption{矩阵子图C}
+        \label{fig-matrix-c}
+    \end{subfigure}
+    \hspace{4em}
+    \begin{subfigure}[b]{0.3\linewidth}
+        \includegraphics[width=\textwidth]{figure/image.pdf}
+        \caption{矩阵子图D}
+        \label{fig-matrix-d}
+    \end{subfigure}
     \caption{矩形的subfig排列}
     \label{fig-matrix}
 \end{figure}
