@@ -4,11 +4,14 @@
 %%%%%%%%%% class clarification %%%%%%%%%%
 % 模板声明
 
-\NeedsTeXFormat{LaTeX2e}[2007/10/19]
-\ProvidesClass{buaathesis}
-              [2020/03/05 v0.9
-The LaTeX template for thesis of BUAA]
-\typeout{Document Class `buaathesis' v0.9 by BHOSC (2020/03)}
+\NeedsTeXFormat{LaTeX2e}[2023/12/08]
+\ProvidesExplClass{buaathesis}{2024/02/17}{v0.10}{The LaTeX3 template for thesis of BUAA}
+
+\msg_new:nnn{buaathesis}{bootstrap/info}{
+    You ~ are ~ using ~ buaathesis ~ package ~ with ~ '#1' ~ (version~'#2')
+}
+
+\msg_info:nnVV{buaathesis}{bootstrap/info}{\c_sys_engine_format_str}{\c_sys_engine_version_str}
 
 %%%%%%%%%% class options %%%%%%%%%%
 % 模板选项
@@ -57,7 +60,7 @@ The LaTeX template for thesis of BUAA]
 
 % 主要字体为Times New Roman和宋体
 % 模板某些标题需要华文行楷和32号字
-\setmainfont{Times New Roman}
+\setmainfont{Times~New~Roman}
 % 不需要设置CJKmainfont，ctex 宏包已经很好的处理了
 % 不仅设置了粗体为黑体，斜体为楷体，还兼容了winfonts和adobefonts
 % 直接设置反而会在只有adobefonts的情况下报错
@@ -118,9 +121,9 @@ The LaTeX template for thesis of BUAA]
 
 \renewcommand{\baselinestretch}{1.5}
 \setlength{\parindent}{2em}
-\setlength{\floatsep}{3pt plus 3pt minus 2pt}      % 图形之间或图形与正文之间的距离
-\setlength{\abovecaptionskip}{10pt plus 1pt minus 1pt} % 图形中的图与标题之间的距离
-\setlength{\belowcaptionskip}{3pt plus 1pt minus 2pt} % 表格中的表与标题之间的距离
+\setlength{\floatsep}{3pt~plus~3pt~minus~2pt}      % 图形之间或图形与正文之间的距离
+\setlength{\abovecaptionskip}{10pt~plus~1pt~minus~1pt} % 图形中的图与标题之间的距离
+\setlength{\belowcaptionskip}{3pt~plus~1pt~minus~2pt} % 表格中的表与标题之间的距离
 
 %%%%%%%%%% header & footer %%%%%%%%%%
 % 页眉页脚
@@ -316,7 +319,7 @@ The LaTeX template for thesis of BUAA]
     \hypersetup{
         bookmarksnumbered,
         bookmarksopen,
-        pdftitle={BUAA thesis},
+        pdftitle={BUAA~thesis},
         pdfauthor={BHOSC},
         pdfsubject={北航毕业设计开题报告/文献综述},
         pdfcreator={LaTeXed~By~BHOSC}
@@ -325,7 +328,7 @@ The LaTeX template for thesis of BUAA]
     \hypersetup{
         bookmarksnumbered,
         bookmarksopen,
-        pdftitle={BUAA thesis},
+        pdftitle={BUAA~thesis},
         pdfauthor={BHOSC},
         pdfsubject={北航毕业设计论文},
         pdfcreator={LaTeXed~By~BHOSC}
@@ -581,7 +584,7 @@ The LaTeX template for thesis of BUAA]
 
 %%%%%%%%%% index %%%%%%%%%%
 % 首页
-
+\ExplSyntaxOff
 % 本科生首页的右上角和底部的填写内容居中
 % cvrtc : CoVer - Right  - Top    - Center
 % cvcbc : CoVer - Center - Bottom - Center
@@ -867,6 +870,8 @@ The LaTeX template for thesis of BUAA]
         \buaa@universityeng , Beijing, China}
     \end{center}
 }
+
+\ExplSyntaxOn
 
 %%%%%%%%%% abstract %%%%%%%%%%
 % 摘要
