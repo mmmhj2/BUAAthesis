@@ -348,10 +348,7 @@ The LaTeX template for thesis of BUAA]
 
 %%%%%%%%%% reference %%%%%%%%%%
 % 参考文献
-%\RequirePackage[sort&compress]{natbib}
-%\bibpunct{[}{]}{,}{n}{}{}
-%\setlength{\bibsep}{0pt}
-%\newcommand{\upcite}[1]{\textsuperscript{\cite{#1}}}
+\usepackage[style=gb7714-2015, backend=biber]{biblatex}
 
 %%%%%%%%%% table %%%%%%%%%%
 % 表格
