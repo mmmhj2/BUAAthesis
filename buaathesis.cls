@@ -93,7 +93,7 @@ The LaTeX template for thesis of BUAA]
 % 颜色设置
 
 % 只用于电子版
-\RequirePackage{color}
+\RequirePackage{xcolor}
 \definecolor{dkgreen}{rgb}{0,0.6,0}
 \definecolor{gray}{rgb}{0.5,0.5,0.5}
 \definecolor{mauve}{rgb}{0.58,0,0.82}
@@ -348,10 +348,10 @@ The LaTeX template for thesis of BUAA]
 
 %%%%%%%%%% reference %%%%%%%%%%
 % 参考文献
-\RequirePackage[sort&compress]{natbib}
-\bibpunct{[}{]}{,}{n}{}{}
-\setlength{\bibsep}{0pt}
-\newcommand{\upcite}[1]{\textsuperscript{\cite{#1}}}
+%\RequirePackage[sort&compress]{natbib}
+%\bibpunct{[}{]}{,}{n}{}{}
+%\setlength{\bibsep}{0pt}
+%\newcommand{\upcite}[1]{\textsuperscript{\cite{#1}}}
 
 %%%%%%%%%% table %%%%%%%%%%
 % 表格
@@ -401,7 +401,7 @@ The LaTeX template for thesis of BUAA]
 \RequirePackage{graphicx}
 \graphicspath{{figure/}}
 \RequirePackage{pifont} % “秘级”后的五角星
-\RequirePackage{subfigure}
+% \RequirePackage{subfigure}
 
 %%%%%%%%%% list %%%%%%%%%%
 % 列表
@@ -538,7 +538,7 @@ The LaTeX template for thesis of BUAA]
 \fi
 
 % Fix subfigure reference bug
-\let\p@subfigure=\thefigure
+% \let\p@subfigure=\thefigure
 
 % 图片表格标题命令，主要用于混排
 \newcommand\figcaption{\def\@captype{figure}\caption}
