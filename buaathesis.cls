@@ -889,9 +889,10 @@
         \clearpage
         \legacy_if:nT { @twoside } {
             \int_if_odd:nF { \c@page } {
-                \hbox{}\thispagestyle{empty}\newpage
-                \if@twocolumn
+                \hbox{} \thispagestyle{empty} \newpage
+                \legacy_if:nT { @twocolumn } {
                     \hbox{}\newpage
+                }
             }
         }
     }
