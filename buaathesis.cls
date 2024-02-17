@@ -808,7 +808,6 @@
             \renewcommand{\thetable}{\arabic{chapter}.\arabic{table}}
             \renewcommand{\theequation}{\arabic{chapter}.\arabic{equation}}
         } {
-            \RequirePackage{remreset}
             \@removefromreset{table}{chapter}
             \@removefromreset{figure}{chapter}
             %使图表的标号与章节无关
