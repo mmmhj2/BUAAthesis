@@ -82,6 +82,37 @@
 % 引用ctexbook及基本设置
 \LoadClass[zihao=-4,a4paper]{ctexbook}[2007/10/19]
 
+%%%%%%%%%% global package %%%%%%%%%%
+% 全局通用宏包
+
+\RequirePackage{ifthen}
+\RequirePackage{amsmath,amssymb,amsfonts,mathrsfs,bm}
+\RequirePackage[amsmath,thmmarks,hyperref]{ntheorem}
+\RequirePackage{txfonts}
+\RequirePackage{hyphenat}
+\RequirePackage{xcolor}
+\RequirePackage{geometry}
+\RequirePackage{titletoc}
+\RequirePackage{booktabs}       % 设置三线表格的上下边为粗实线
+\RequirePackage{longtable}      % 长表格
+\RequirePackage{multirow}       % 表格中的行合并
+\RequirePackage{fancyhdr}
+\RequirePackage{tabularx}
+\RequirePackage{array}
+\RequirePackage{graphicx}
+\RequirePackage{pifont}         % “秘级”后的五角星
+\RequirePackage{subcaption}
+\RequirePackage{enumitem}
+\RequirePackage{listings}
+\RequirePackage{dirtree}
+\RequirePackage{caption}
+\RequirePackage{ulem}           % 下划线
+\RequirePackage{setspace}       % 设置行距
+
+\RequirePackage[style=gb7714-2015, backend=biber]{biblatex}
+
+\graphicspath{{figure/}}
+
 %%%%%%%%%% common user info %%%%%%%%%%
 
 \cs_new_protected:Npn \@@_cs_declare_token_list:nn #1#2 {
@@ -319,22 +350,12 @@
 
 \ExplSyntaxOff
 
-%%%%%%%%%% global package %%%%%%%%%%
-% 全局通用宏包
-
-\RequirePackage{ifthen}
-
 %%%%%%%%%% font %%%%%%%%%%
 % 数学相关和字体设置
-
-\RequirePackage{amsmath,amssymb,amsfonts,mathrsfs,bm}
-\RequirePackage[amsmath,thmmarks,hyperref]{ntheorem}
-\RequirePackage{txfonts}
 
 %%%%%%%%%% hyphen %%%%%%%%%%
 % For the `\hyp{}` command. Allow the user to insert `hyp{}` manually to
 % adjust the line break when necessary.
-\RequirePackage{hyphenat}
 
 % 主要字体为Times New Roman和宋体
 % 模板某些标题需要华文行楷和32号字
@@ -360,7 +381,6 @@
 % 颜色设置
 
 % 只用于电子版
-\RequirePackage{xcolor}
 \definecolor{dkgreen}{rgb}{0,0.6,0}
 \definecolor{gray}{rgb}{0.5,0.5,0.5}
 \definecolor{mauve}{rgb}{0.58,0,0.82}
@@ -368,7 +388,6 @@
 %%%%%%%%%% page margin %%%%%%%%%%
 % 页面边距
 
-\RequirePackage{geometry}
 \newgeometry{
     top=30mm, bottom=25mm, left=30mm, right=20mm,
     headsep=5mm, includefoot
@@ -420,7 +439,6 @@
 %
 % The fix is tricky, but I think it is the best option we currently have...
 %
-\RequirePackage{fancyhdr}
 \newif\iff@nch@compatViii
 \let\f@nch@gbl\relax
 \let\f@nch@gbl\global
@@ -561,7 +579,6 @@
 %%%%%%%%%% contents %%%%%%%%%%
 % 目录
 
-\RequirePackage{titletoc}
 \ExplSyntaxOn
     \bool_if:nTF \g_@@_bachelor_bool {
         \titlecontents{chapter}[0pt]{\heiti\zihao{-4}}{\thecontentslabel\ }{}
@@ -624,21 +641,8 @@
     }
 \fi
 
-%%%%%%%%%% reference %%%%%%%%%%
-% 参考文献
-\usepackage[style=gb7714-2015, backend=biber]{biblatex}
-
 %%%%%%%%%% table %%%%%%%%%%
 % 表格
-
-% 设置三线表格的上下边为粗实线
-\RequirePackage{booktabs}
-
-% 长表格
-\RequirePackage{longtable}
-
-% 表格中的行合并
-\RequirePackage{multirow}
 
 % 重定义table/tabular/tabularx环境，使表格内为5号字
 % TODO(huxuan): 支持 longtable
@@ -658,7 +662,6 @@
 {\renewcommand{\arraystretch}{1}
 \endoldtabular}
 
-\RequirePackage{tabularx}
 \let\oldtabularx\tabularx
 \let\endoldtabularx\endtabularx
 \renewenvironment{tabularx}[2]
@@ -667,22 +670,9 @@
 {\renewcommand{\arraystretch}{1}
 \endoldtabularx}
 
-
-\RequirePackage{array}
-
-%%%%%%%%%% picture %%%%%%%%%%
-% 图片
-
-\RequirePackage{graphicx}
-\graphicspath{{figure/}}
-\RequirePackage{pifont} % “秘级”后的五角星
-\RequirePackage{subcaption}
-% \RequirePackage{subfigure}
-
 %%%%%%%%%% list %%%%%%%%%%
 % 列表
 
-\RequirePackage{enumitem}
 \setlist{noitemsep}
 \setlist[1,2]{labelindent=\parindent}
 \setlist[enumerate,1]{label=\arabic*、}
@@ -698,7 +688,7 @@
 % 代码
 
 % Listing 的设置请参考 http://en.wikibooks.org/wiki/LaTeX/Packages/Listings
-\RequirePackage{listings}
+
 \lstset{
     backgroundcolor=\color{white},
     basicstyle=\zihao{5}\ttfamily,
@@ -769,8 +759,6 @@
 %%%%%%%%%% file directory %%%%%%%%%%
 % 文件目录
 
-\RequirePackage{dirtree}
-
 \ExplSyntaxOn
     \bool_if:nT \g_@@_color_bool {
         \renewcommand*\DTstylecomment{\ttfamily\color{dkgreen}}
@@ -781,7 +769,6 @@
 %%%%%%%%%% caption %%%%%%%%%%
 % 图表标题
 
-\RequirePackage{caption}
 \DeclareCaptionFormat{bachelorfigure}{\songti\zihao{5}{#1\textrm{#2}#3}}
 \DeclareCaptionFormat{bachelortable}{\heiti\bf\zihao{5}{#1\textrm{#2}#3}}
 \DeclareCaptionFormat{bachelorlstlisting}{\songti\bf\zihao{5}{#1\textrm{#2}#3}}
@@ -865,12 +852,6 @@
     \renewcommand{\appendix}{
         \oldappendix\rmrelation
     }
-
-    % 下划线
-    \RequirePackage{ulem}
-
-    % 设置行距
-    \RequirePackage{setspace}
 
     % 正文前的页码设置位大写罗马数字
     \renewcommand{\frontmatter}{
