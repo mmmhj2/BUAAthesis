@@ -1,10 +1,11 @@
 % !Mode:: "TeX:UTF-8"
 %%%%% 'buaathesis.cls' BEGIN
+%<@@=buaathesis>
 
 %%%%%%%%%% class clarification %%%%%%%%%%
 % 模板声明
 
-\NeedsTeXFormat{LaTeX2e}[2023/12/08]
+\NeedsTeXFormat{LaTeX2e}[2023/11/01]
 \ProvidesExplClass{buaathesis}{2024/02/17}{v0.10}{The LaTeX3 template for thesis of BUAA}
 
 \msg_new:nnn{buaathesis}{bootstrap/info}{
@@ -19,6 +20,48 @@
 % 本模板自身包含五个选项
 % 前四个为对应学位类型，决定不同样式
 % 第五个为颜色选项，用于电子版的情况
+
+\bool_gset_false:N \g_@@_bachelor_bool
+\bool_gset_false:N \g_@@_master_bool
+\bool_gset_false:N \g_@@_doctor_bool
+\bool_gset_false:N \g_@@_professional_bool
+\bool_gset_false:N \g_@@_classified_bool
+\bool_gset_false:N \g_@@_color_bool
+\bool_gset_false:N \g_@@_twoteacher_bool
+\bool_gset_false:N \g_@@_proposal_bool
+
+\keys_define:nn{buaathesis}{
+    bachelor        .code:n = { \bool_gset_true:N \g_@@_bachelor_bool },
+    master          .code:n = { \bool_gset_true:N \g_@@_master_bool },
+    doctor          .code:n = { \bool_gset_true:N \g_@@_doctor_bool },
+    professional    .code:n = { \bool_gset_true:N \g_@@_professional_bool },
+    classfied       .code:n = { \bool_gset_true:N \g_@@_classified_bool },
+    color           .code:n = { \bool_gset_true:N \g_@@_color_bool },
+    twoteacher      .code:n = { \bool_gset_true:N \g_@@_twoteacher_bool },
+    ktreport        .code:n = { \bool_gset_true:N \g_@@_proposal_bool },
+    % Pass unknown options to ctexbook
+    unknown         .code:n = { \PassOptionsToClass{\CurrentOption}{ctexbook} }
+}
+\ProcessKeyOptions[buaathesis]
+
+\bool_log:N \g_@@_bachelor_bool
+\bool_log:N \g_@@_master_bool
+\bool_log:N \g_@@_doctor_bool
+\bool_log:N \g_@@_professional_bool
+\bool_log:N \g_@@_classified_bool
+\bool_log:N \g_@@_color_bool
+\bool_log:N \g_@@_twoteacher_bool
+\bool_log:N \g_@@_proposal_bool
+
+\bool_if:nF { \g_@@_bachelor_bool || \g_@@_master_bool || \g_@@_doctor_bool } {
+    \msg_new:nnn {buaathesis} {error/notselected} {
+        None ~ of ~ the ~ degrees ~ is ~ selected. ~ Result ~ may ~ be ~ unexpected.
+    }
+    \msg_warning:nn {buaathesis} {error/notselected}
+}
+
+\ExplSyntaxOff
+
 \newif\ifbuaa@bachelor\buaa@bachelorfalse
 \newif\ifbuaa@master\buaa@masterfalse
 \newif\ifbuaa@doctor\buaa@doctorfalse
@@ -36,7 +79,7 @@
 \DeclareOption{twoteacher}{\buaa@twoteachertrue}
 \DeclareOption{ktreport}{\buaa@ktreporttrue}
 % 其余选项传递给ctexbook
-\DeclareOption*{\PassOptionsToClass{\CurrentOption}{ctexbook}}
+%\DeclareOption*{\PassOptionsToClass{\CurrentOption}{ctexbook}}
 \ProcessOptions\relax
 % 引用ctexbook及基本设置
 \LoadClass[zihao=-4,a4paper]{ctexbook}[2007/10/19]
@@ -60,7 +103,7 @@
 
 % 主要字体为Times New Roman和宋体
 % 模板某些标题需要华文行楷和32号字
-\setmainfont{Times~New~Roman}
+\setmainfont{Times New Roman}
 % 不需要设置CJKmainfont，ctex 宏包已经很好的处理了
 % 不仅设置了粗体为黑体，斜体为楷体，还兼容了winfonts和adobefonts
 % 直接设置反而会在只有adobefonts的情况下报错
@@ -110,20 +153,22 @@
 }
 \savegeometry{mastergeometry}
 
-\ifbuaa@bachelor
-    \loadgeometry{bachelorgeometry}
-\else
-    \loadgeometry{mastergeometry}
-\fi
+\ExplSyntaxOn
+    \bool_if:NTF \g_@@_bachelor_bool {
+        \loadgeometry{bachelorgeometry}
+    }{
+        \loadgeometry{mastergeometry}
+    }
+\ExplSyntaxOff
 
 %%%%%%%%%% space %%%%%%%%%%
 % 其他间距
 
 \renewcommand{\baselinestretch}{1.5}
 \setlength{\parindent}{2em}
-\setlength{\floatsep}{3pt~plus~3pt~minus~2pt}      % 图形之间或图形与正文之间的距离
-\setlength{\abovecaptionskip}{10pt~plus~1pt~minus~1pt} % 图形中的图与标题之间的距离
-\setlength{\belowcaptionskip}{3pt~plus~1pt~minus~2pt} % 表格中的表与标题之间的距离
+\setlength{\floatsep}{3pt plus 3pt minus 2pt}      % 图形之间或图形与正文之间的距离
+\setlength{\abovecaptionskip}{10pt plus 1pt minus 1pt} % 图形中的图与标题之间的距离
+\setlength{\belowcaptionskip}{3pt plus 1pt minus 2pt} % 表格中的表与标题之间的距离
 
 %%%%%%%%%% header & footer %%%%%%%%%%
 % 页眉页脚
@@ -152,11 +197,13 @@
     \fancyhf{}
     \fancyfoot[C]{\thepage}
 }
+
+\ExplSyntaxOn
 \fancypagestyle{mainmatter}{
     \fancyhead{}
     \fancyfoot{}
-    \ifbuaa@bachelor
-        \ifbuaa@ktreport
+    \bool_if:nT { \g_@@_bachelor_bool } {
+        \bool_if:nTF {\g_@@_proposal_bool} {
             \fancyhead[C]{\zihao{-5}\hwkaiti
                 \buaa@degreehead 学位论文\buaa@ktclass\vspace{1.5mm}
             }
@@ -169,15 +216,17 @@
             }
             % 本科开题报告有页脚线
             \renewcommand{\footrulewidth}{0.4bp}
-        \else
+        } {
             \fancyhead[C]{
                 \includegraphics[width=37bp]{figure/buaamark.pdf}\hfill
                 \raisebox{2ex}{\heiti\zihao{4}\buaa@university 毕业设计(论文)}\hfill
                 \raisebox{2ex}{\songti\zihao{5}第\quad\thepage\quad 页}
             }
-        \fi
-    \else
-        \ifbuaa@ktreport
+        }
+    }
+
+    \bool_if:nT { \g_@@_master_bool || \g_@@_doctor_bool } {
+        \bool_if:nTF { \g_@@_proposal_bool } {
             % 研究生开题报告/文献综述，与本科生格式基本一致
             \fancyhead[C]{\zihao{-5}\hwkaiti
                 \buaa@degreehead 学位论文\buaa@ktclass\vspace{1.5mm}
@@ -191,26 +240,26 @@
             }
             % 研究生开题报告有页脚线
             \renewcommand{\footrulewidth}{0.4bp}
-        \else
-            \if@twoside
+        } {
+            \legacy_if:nTF { @twoside } {
                 \fancyhead[CO]{\zihao{-5}\songti
                     \buaa@university\buaa@degreehead 学位论文\vspace{1.5mm}
                 }
                 \fancyhead[CE]{\zihao{-5}\songti\leftmark\vspace{1.5mm}}
-            \else
+            } {
                 \fancyhead[C]{\zihao{-5}\songti
                     \ifthenelse{\isodd{\value{page}}}
                         {\buaa@university\buaa@degreehead 学位论文}
                         {\leftmark}
                     \vspace{1.5mm}
                 }
-            \fi
+            }
             \fancyfoot[C]{\zihao{5}\thepage}
-        \fi
-    \fi
-
+        }
+    }
     \renewcommand{\headrulewidth}{0.5bp} % 页眉线宽度
 }
+\ExplSyntaxOff
 
 \fancypagestyle{plain}{
     \pagestyle{fancy}
@@ -250,47 +299,51 @@
     },
 }
 
-\ifbuaa@bachelor
-    \ctexset{
-        chapter={
-            name={,},
-            number={\arabic{chapter}},
-        },
-        section={
-            format={\zihao{-4}\heiti},
-        },
+\ExplSyntaxOn
+    \bool_if:NTF \g_@@_bachelor_bool {
+        \ctexset{
+            chapter={
+                name={,},
+                number={\arabic{chapter}},
+            },
+            section={
+                format={\zihao{-4}\heiti},
+            },
+        }
+    }{
+        \ctexset{
+            chapter={
+                name={第,章},
+                number={\chinese{chapter}},
+            },
+            section={
+                format={\zihao{4}\heiti},
+            },
+        }
     }
-\else
-    \ctexset{
-        chapter={
-            name={第,章},
-            number={\chinese{chapter}},
-        },
-        section={
-            format={\zihao{4}\heiti},
-        },
-    }
-\fi
+\ExplSyntaxOff
 
 %%%%%%%%%% contents %%%%%%%%%%
 % 目录
 
 \RequirePackage{titletoc}
-\ifbuaa@bachelor
-    \titlecontents{chapter}[0pt]{\heiti\zihao{-4}}{\thecontentslabel\ }{}
-        {\hspace{.5em}\titlerule*[4pt]{$\cdot$}\contentspage}
-    \titlecontents{section}[2em]{\vspace{0.1\baselineskip}\songti\zihao{-4}}{\thecontentslabel\ }{}
-        {\hspace{.5em}\titlerule*[4pt]{$\cdot$}\contentspage}
-    \titlecontents{subsection}[4em]{\vspace{0.1\baselineskip}\songti\zihao{-4}}{\thecontentslabel\ }{}
-        {\hspace{.5em}\titlerule*[4pt]{$\cdot$}\contentspage}
-\else
-    \titlecontents{chapter}[0pt]{\vspace{-0.25\baselineskip}\heiti\zihao{4}}{\thecontentslabel\ }{}
-        {\hspace{.5em}\titlerule*[4pt]{$\cdot$}{\zihao{-4}\contentspage}}[\vspace{0.07\baselineskip}]
-    \titlecontents{section}[2em]{\songti\zihao{-4}}{\thecontentslabel\ }{}
-        {\hspace{.5em}\titlerule*[4pt]{$\cdot$}{\zihao{-4}\contentspage}}[\vspace{0.1\baselineskip}]
-    \titlecontents{subsection}[4em]{\vspace{-0.2\baselineskip}\songti\zihao{5}}{\thecontentslabel\ }{}
-        {\hspace{.5em}\titlerule*[4pt]{$\cdot$}{\zihao{-4}\contentspage}}[\vspace{0.1\baselineskip}]
-\fi
+\ExplSyntaxOn
+    \bool_if:nTF \g_@@_bachelor_bool {
+        \titlecontents{chapter}[0pt]{\heiti\zihao{-4}}{\thecontentslabel\ }{}
+            {\hspace{.5em}\titlerule*[4pt]{$\cdot$}\contentspage}
+        \titlecontents{section}[2em]{\vspace{0.1\baselineskip}\songti\zihao{-4}}{\thecontentslabel\ }{}
+            {\hspace{.5em}\titlerule*[4pt]{$\cdot$}\contentspage}
+        \titlecontents{subsection}[4em]{\vspace{0.1\baselineskip}\songti\zihao{-4}}{\thecontentslabel\ }{}
+            {\hspace{.5em}\titlerule*[4pt]{$\cdot$}\contentspage}
+    } {
+        \titlecontents{chapter}[0pt]{\vspace{-0.25\baselineskip}\heiti\zihao{4}}{\thecontentslabel\ }{}
+            {\hspace{.5em}\titlerule*[4pt]{$\cdot$}{\zihao{-4}\contentspage}}[\vspace{0.07\baselineskip}]
+        \titlecontents{section}[2em]{\songti\zihao{-4}}{\thecontentslabel\ }{}
+            {\hspace{.5em}\titlerule*[4pt]{$\cdot$}{\zihao{-4}\contentspage}}[\vspace{0.1\baselineskip}]
+        \titlecontents{subsection}[4em]{\vspace{-0.2\baselineskip}\songti\zihao{5}}{\thecontentslabel\ }{}
+            {\hspace{.5em}\titlerule*[4pt]{$\cdot$}{\zihao{-4}\contentspage}}[\vspace{0.1\baselineskip}]
+    }
+\ExplSyntaxOff
 
 % 取消图片、表格目录中的章节空格
 \newcommand*{\noaddvspace}{\renewcommand*{\addvspace}[1]{}}
@@ -309,6 +362,7 @@
 %%%%%%%%%% cross reference %%%%%%%%%%
 % 交叉引用
 
+% TODO: Update hyperref options
 \RequirePackage[xetex,unicode]{hyperref}
 \ifbuaa@color
     \hypersetup{colorlinks}
@@ -434,21 +488,24 @@
     xleftmargin=3em,
     xrightmargin=3em,
 }
-\ifbuaa@color
-    \lstset{
-        numberstyle=\color{gray},
-        keywordstyle=\color{blue},
-        commentstyle=\color{dkgreen},
-        stringstyle=\color{mauve},
+
+\ExplSyntaxOn
+    \bool_if:nTF \g_@@_color_bool {
+        \lstset{
+            numberstyle=\color{gray},
+            keywordstyle=\color{blue},
+            commentstyle=\color{dkgreen},
+            stringstyle=\color{mauve},
+        }
+    }{
+        \lstset{
+            numberstyle=\color{black},
+            keywordstyle=\color{black},
+            commentstyle=\color{black},
+            stringstyle=\color{black},
+        }
     }
-\else
-    \lstset{
-        numberstyle=\color{black},
-        keywordstyle=\color{black},
-        commentstyle=\color{black},
-        stringstyle=\color{black},
-    }
-\fi
+\ExplSyntaxOff
 
 % 重命名Listings标题头
 \renewcommand{\lstlistingname}{代码}
@@ -478,10 +535,13 @@
 % 文件目录
 
 \RequirePackage{dirtree}
-\ifbuaa@color
-    \renewcommand*\DTstylecomment{\ttfamily\color{dkgreen}}
-    \renewcommand*\DTstyle{\ttfamily\color{red}}
-\fi
+
+\ExplSyntaxOn
+    \bool_if:nT \g_@@_color_bool {
+        \renewcommand*\DTstylecomment{\ttfamily\color{dkgreen}}
+        \renewcommand*\DTstyle{\ttfamily\color{red}}
+    }
+\ExplSyntaxOff
 
 %%%%%%%%%% caption %%%%%%%%%%
 % 图表标题
@@ -493,39 +553,39 @@
 \DeclareCaptionFormat{masterfigure}{\bf\songti\zihao{5}{#1\textrm{#2}#3}}
 \DeclareCaptionFormat{mastertable}{\bf\songti\zihao{5}{#1\textrm{#2}#3}}
 \DeclareCaptionFormat{masterlstlisting}{\bf\songti\zihao{5}{#1\textrm{#2}#3}}
-\ifbuaa@bachelor
-    % 本科无论是否是开题报告，图表序号都和章节有关
-    \captionsetup[figure]{format=bachelorfigure,labelsep=quad}
-    \captionsetup[table]{format=bachelortable,labelsep=quad}
-    \captionsetup[lstlisting]{format=bachelorlstlisting,labelsep=quad}
-    \renewcommand{\thefigure}{\arabic{chapter}.\arabic{figure}}
-    \renewcommand{\thetable}{\arabic{chapter}.\arabic{table}}
-    \renewcommand{\theequation}{\arabic{chapter}.\arabic{equation}}
-\else
-    % ktreport 中图标序号跟章节相关
-    \ifbuaa@ktreport
-        \captionsetup[figure]{format=masterfigure,labelsep=quad}
-        \captionsetup[table]{format=mastertable,labelsep=quad}
-        \captionsetup[lstlisting]{format=masterlstlisting,labelsep=quad}
+
+\ExplSyntaxOn
+    \bool_if:nTF \g_@@_bachelor_bool {
+        % 本科无论是否是开题报告，图表序号都和章节有关
+        \captionsetup[figure]{format=bachelorfigure,labelsep=quad}
+        \captionsetup[table]{format=bachelortable,labelsep=quad}
+        \captionsetup[lstlisting]{format=bachelorlstlisting,labelsep=quad}
         \renewcommand{\thefigure}{\arabic{chapter}.\arabic{figure}}
         \renewcommand{\thetable}{\arabic{chapter}.\arabic{table}}
         \renewcommand{\theequation}{\arabic{chapter}.\arabic{equation}}
-    \else
-        \RequirePackage{remreset}
-        \@removefromreset{table}{chapter}
-        \@removefromreset{figure}{chapter}
-        %使图表的标号与章节无关
-        \captionsetup[figure]{format=masterfigure,labelsep=quad}
-        \captionsetup[table]{format=mastertable,labelsep=quad}
-        \captionsetup[lstlisting]{format=masterlstlisting,labelsep=quad}
-        \renewcommand{\thefigure}{\arabic{figure}}
-        \renewcommand{\thetable}{\arabic{table}}
-        \renewcommand{\theequation}{\arabic{chapter}.\arabic{equation}}
-    \fi
-\fi
-
-% Fix subfigure reference bug
-% \let\p@subfigure=\thefigure
+    } {
+         % ktreport 中图标序号跟章节相关
+        \bool_if:nTF \g_@@_proposal_bool {
+            \captionsetup[figure]{format=masterfigure,labelsep=quad}
+            \captionsetup[table]{format=mastertable,labelsep=quad}
+            \captionsetup[lstlisting]{format=masterlstlisting,labelsep=quad}
+            \renewcommand{\thefigure}{\arabic{chapter}.\arabic{figure}}
+            \renewcommand{\thetable}{\arabic{chapter}.\arabic{table}}
+            \renewcommand{\theequation}{\arabic{chapter}.\arabic{equation}}
+        } {
+            \RequirePackage{remreset}
+            \@removefromreset{table}{chapter}
+            \@removefromreset{figure}{chapter}
+            %使图表的标号与章节无关
+            \captionsetup[figure]{format=masterfigure,labelsep=quad}
+            \captionsetup[table]{format=mastertable,labelsep=quad}
+            \captionsetup[lstlisting]{format=masterlstlisting,labelsep=quad}
+            \renewcommand{\thefigure}{\arabic{figure}}
+            \renewcommand{\thetable}{\arabic{table}}
+            \renewcommand{\theequation}{\arabic{chapter}.\arabic{equation}}
+        }
+    }
+\ExplSyntaxOff
 
 % 图片表格标题命令，主要用于混排
 \newcommand\figcaption{\def\@captype{figure}\caption}
@@ -535,56 +595,75 @@
 % 杂项
 
 % 设置<附录>的图表编号与当前附录章号关联
-\newcommand{\rmrelation}{
-    % 图、表、公式编号随 chapter 清零
-    \@addtoreset{figure}{chapter}
-    \@addtoreset{table}{chapter}
-    \@addtoreset{equation}{chapter}
-    %图、表、公式编号章节关联
-    \renewcommand{\thefigure}{\ifnum \c@chapter>\z@ \thechapter.\fi \@arabic\c@figure}
-    \renewcommand{\thetable}{\ifnum \c@chapter>\z@ \thechapter.\fi \@arabic\c@table}
-    \renewcommand{\theequation}{\ifnum \c@chapter>\z@ \thechapter.\fi \@arabic\c@equation}
-}
-\let\oldappendix\appendix
-\renewcommand{\appendix}{
-    \oldappendix\rmrelation
-}
+\ExplSyntaxOn
+    \newcommand{\rmrelation}{
+        % 图、表、公式编号随 chapter 清零
+        \@addtoreset{figure}{chapter}
+        \@addtoreset{table}{chapter}
+        \@addtoreset{equation}{chapter}
+        %图、表、公式编号章节关联
+        \renewcommand{\thefigure}{
+            \bool_if:NT {
+                \int_compare_p:nNn { \c@chapter } > { 0 }
+            } {
+                \thechapter.
+            }
+            \@arabic\c@figure
+        }
+        \renewcommand{\thetable}{
+            \bool_if:NT {
+                \int_compare_p:nNn { \c@chapter } > { 0 }
+            } {
+                \thechapter.
+            }
+            \@arabic\c@table
+        }
+        \renewcommand{\theequation}{
+            \bool_if:NT {
+                \int_compare_p:nNn { \c@chapter } > { 0 }
+            } {
+                \thechapter.
+            }
+            \@arabic\c@equation
+        }
+    }
+    \let\oldappendix\appendix
+    \renewcommand{\appendix}{
+        \oldappendix\rmrelation
+    }
 
-% 下划线
-\RequirePackage{ulem}
+    % 下划线
+    \RequirePackage{ulem}
 
-% 设置行距
-\RequirePackage{setspace}
+    % 设置行距
+    \RequirePackage{setspace}
 
-% 正文前的页码设置位大写罗马数字
-\renewcommand{\frontmatter}{
-    \cleardoublepage
-    \@mainmatterfalse
-    \ifbuaa@bachelor
-        \pagenumbering{Roman}
-    \else
-        \pagenumbering{roman}
-    \fi
-}
+    % 正文前的页码设置位大写罗马数字
+    \renewcommand{\frontmatter}{
+        \cleardoublepage
+        \@mainmatterfalse
+        \bool_if:nTF \g_@@_bachelor_bool {
+            \pagenumbering{Roman}
+        } {
+            \pagenumbering{roman}
+        }
+    }
 
-% 保证偶数页结束章节
-\newcommand{\clearemptydoublepage}{%
-    \clearpage
-    \if@twoside
-        \ifodd
-            \c@page
-        \else
-            \hbox{}\thispagestyle{empty}\newpage
-            \if@twocolumn
-                \hbox{}\newpage
-            \fi
-        \fi
-    \fi
-}
-
+    % 保证偶数页结束章节
+    \newcommand{\clearemptydoublepage}{%
+        \clearpage
+        \legacy_if:nT { @twoside } {
+            \int_if_odd:nF { \c@page } {
+                \hbox{}\thispagestyle{empty}\newpage
+                \if@twocolumn
+                    \hbox{}\newpage
+            }
+        }
+    }
+\ExplSyntaxOff
 %%%%%%%%%% index %%%%%%%%%%
 % 首页
-\ExplSyntaxOff
+
 % 本科生首页的右上角和底部的填写内容居中
 % cvrtc : CoVer - Right  - Top    - Center
 % cvcbc : CoVer - Center - Bottom - Center
@@ -871,7 +950,6 @@
     \end{center}
 }
 
-\ExplSyntaxOn
 
 %%%%%%%%%% abstract %%%%%%%%%%
 % 摘要
@@ -1359,23 +1437,45 @@
     \def\buaa@degreetitle{#3}
     \def\buaa@degreehead{#4}
 }
-\ifbuaa@bachelor
-    \degree{学士学位}{Bachelor}{学士学位}{学士}
-\else
-    \ifbuaa@master
-        \ifbuaa@professional
-            \degree{专业硕士学位}{Master}{硕士学位}{硕士}
-        \else
-            \degree{硕士学位}{Master}{硕士学位}{硕士}
-        \fi
-    \else
-        \ifbuaa@professional
-            \degree{专业博士学位}{Doctor of Philosophy}{博士学位}{博士}
-        \else
-            \degree{博士学位}{Doctor of Philosophy}{博士学位}{博士}
-        \fi
-    \fi
-\fi
+
+\ExplSyntaxOn
+    \tl_new:N \l_@@_degree_long_tl
+    \tl_new:N \l_@@_degree_long_eng_tl
+    \tl_new:N \l_@@_degree_title_tl
+    \tl_new:N \l_@@_degree_head_tl
+
+    \bool_if:NT \g_@@_bachelor_bool {
+        \tl_set:Nn \l_@@_degree_long_tl {学士学位}
+        \tl_set:Nn \l_@@_degree_long_eng_tl {Bachelor}
+        \tl_set:Nn \l_@@_degree_title_tl {学士学位}
+        \tl_set:Nn \l_@@_degree_head_tl {学士}
+    }
+    \bool_if:NT \g_@@_master_bool {
+        \bool_if:NTF \g_@@_professional_bool {
+            \tl_set:Nn \l_@@_degree_long_tl {专业硕士学位}
+        } {
+            \tl_set:Nn \l_@@_degree_long_tl {硕士学位}
+        }
+        \tl_set:Nn \l_@@_degree_long_eng_tl {Master}
+        \tl_set:Nn \l_@@_degree_title_tl {硕士学位}
+        \tl_set:Nn \l_@@_degree_head_tl {硕士}
+    }
+    \bool_if:NT \g_@@_doctor_bool {
+        \bool_if:NTF \g_@@_professional_bool {
+            \tl_set:Nn \l_@@_degree_long_tl {专业博士学位}
+        } {
+            \tl_set:Nn \l_@@_degree_long_tl {博士学位}
+        }
+        \tl_set:Nn \l_@@_degree_long_eng_tl {Doctor of Philosophy}
+        \tl_set:Nn \l_@@_degree_title_tl {博士学位}
+        \tl_set:Nn \l_@@_degree_head_tl {博士}
+    }
+
+    \exp_args:NNV \def \buaa@degree \l_@@_degree_long_tl 
+    \exp_args:NNV \def \buaa@degreeeng \l_@@_degree_long_eng_tl 
+    \exp_args:NNV \def \buaa@degreetitle \l_@@_degree_title_tl 
+    \exp_args:NNV \def \buaa@degreehead \l_@@_degree_head_tl 
+\ExplSyntaxOff
 
 %%%%%%%%%% bachelor user info %%%%%%%%%%
 % 开题文件类别
