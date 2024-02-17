@@ -1534,13 +1534,12 @@
 %%%%%%%%%% settings for custom pages %%%%%%%%%%
 % 首页重定义
 
-\renewcommand{\maketitle}{%
+\ExplSyntaxOn
+\RenewDocumentCommand{\maketitle}{}{
     \titlech
-    \ifbuaa@bachelor
-        \ifbuaa@ktreport
-            \pagestyle{fancy}
-            \frontmatter
-        \else
+    \bool_case:n {
+        { \g_@@_bachelor_bool && \g_@@_proposal_bool } { \pagestyle{fancy} \frontmatter }
+        { \g_@@_bachelor_bool } {
             \pagestyle{empty}
             \loadgeometry{bachelortaskgeometry}
             \buaa@bachelor@assign     %本科生论文任务书
@@ -1548,21 +1547,19 @@
             \announce                 %本科生声明
             \pagestyle{fancy}
             \frontmatter
-        \fi
-    \else
-        \ifbuaa@ktreport
-            \clearemptydoublepage
-            \frontmatter
-        \else
+        }
+        { (\g_@@_master_bool || \g_@@_doctor_bool) && \g_@@_proposal_bool } { \clearemptydoublepage \frontmatter }
+        { \g_@@_master_bool || \g_@@_doctor_bool } {
             \titleeng                 %研究生英文封面
             \timingye                 %研究生题名页
             \creationanduse           %研究生独创性声明和使用授权书
             \clearemptydoublepage
             \frontmatter
-        \fi
-    \fi
+        }
+    }
     \songti
     \zihao{-4}
 }
+\ExplSyntaxOff
 
 %%%%% 'buaathesis.cls' %%%%% END
