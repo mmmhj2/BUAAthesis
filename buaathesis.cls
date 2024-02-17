@@ -1309,71 +1309,60 @@
 
 %%%%%%%%%% assign %%%%%%%%%%
 % 本科生任务书
-
+\ExplSyntaxOn
 % 文字左对齐的下划线
-\newcommand{\ulinel}[2][]{\uline{\makebox[#1\textwidth][l]{#2}}}
+\NewDocumentCommand{\ulinel}{O{}m}{
+    \uline{\makebox[#1\textwidth][l]{#2}}
+}
 % 文字居中的下划线
-\newcommand{\ulinec}[2][]{\uline{\makebox[#1\textwidth][c]{#2}}}
+\NewDocumentCommand{\ulinec}{O{}m}{
+    \uline{\makebox[#1\textwidth][c]{#2}}
+}
 % 任务书条目序号
 \newcounter{assign}
 % 原始资料及设计要求
-\def\buaa@bachelor@assign@req@one{}
-\def\buaa@bachelor@assign@req@two{}
-\def\buaa@bachelor@assign@req@three{}
-\def\buaa@bachelor@assign@req@four{}
-\def\buaa@bachelor@assign@req@five{}
-\newcommand{\assignReq}[5]{
-    \def\buaa@bachelor@assign@req@one{#1}
-    \def\buaa@bachelor@assign@req@two{#2}
-    \def\buaa@bachelor@assign@req@three{#3}
-    \def\buaa@bachelor@assign@req@four{#4}
-    \def\buaa@bachelor@assign@req@five{#5}
+\seq_new:N \l_@@_bachelor_asgnmt_requirement_seq 
+\seq_new:N \l_@@_bachelor_asgnmt_work_seq
+\seq_new:N \l_@@_bachelor_asgnmt_reference_seq
+\NewDocumentCommand{\assignReq}{mmmmm}{
+    \seq_clear:N \l_@@_bachelor_asgnmt_requirement_seq
+    \seq_put_right:Nn \l_@@_bachelor_asgnmt_requirement_seq {#1}
+    \seq_put_right:Nn \l_@@_bachelor_asgnmt_requirement_seq {#2}
+    \seq_put_right:Nn \l_@@_bachelor_asgnmt_requirement_seq {#3}
+    \seq_put_right:Nn \l_@@_bachelor_asgnmt_requirement_seq {#4}
+    \seq_put_right:Nn \l_@@_bachelor_asgnmt_requirement_seq {#5}
 }
 % 工作内容
-\def\buaa@bachelor@assign@work@one{}
-\def\buaa@bachelor@assign@work@two{}
-\def\buaa@bachelor@assign@work@three{}
-\def\buaa@bachelor@assign@work@four{}
-\def\buaa@bachelor@assign@work@five{}
-\def\buaa@bachelor@assign@work@six{}
-\newcommand{\assignWork}[6]{
-    \def\buaa@bachelor@assign@work@one{#1}
-    \def\buaa@bachelor@assign@work@two{#2}
-    \def\buaa@bachelor@assign@work@three{#3}
-    \def\buaa@bachelor@assign@work@four{#4}
-    \def\buaa@bachelor@assign@work@five{#5}
-    \def\buaa@bachelor@assign@work@six{#6}
+\NewDocumentCommand{\assignWork}{mmmmmm}{
+    \seq_clear:N \l_@@_bachelor_asgnmt_work_seq
+    \seq_put_right:Nn \l_@@_bachelor_asgnmt_work_seq {#1}
+    \seq_put_right:Nn \l_@@_bachelor_asgnmt_work_seq {#2}
+    \seq_put_right:Nn \l_@@_bachelor_asgnmt_work_seq {#3}
+    \seq_put_right:Nn \l_@@_bachelor_asgnmt_work_seq {#4}
+    \seq_put_right:Nn \l_@@_bachelor_asgnmt_work_seq {#5}
+    \seq_put_right:Nn \l_@@_bachelor_asgnmt_work_seq {#6}
 }
 % 参考文献
-\def\buaa@bachelor@assign@ref@one{}
-\def\buaa@bachelor@assign@ref@two{}
-\def\buaa@bachelor@assign@ref@three{}
-\def\buaa@bachelor@assign@ref@four{}
-\def\buaa@bachelor@assign@ref@five{}
-\def\buaa@bachelor@assign@ref@six{}
-\def\buaa@bachelor@assign@ref@seven{}
-\def\buaa@bachelor@assign@ref@eight{}
-\newcommand{\assignRef}[8]{
-    \def\buaa@bachelor@assign@ref@one{#1}
-    \def\buaa@bachelor@assign@ref@two{#2}
-    \def\buaa@bachelor@assign@ref@three{#3}
-    \def\buaa@bachelor@assign@ref@four{#4}
-    \def\buaa@bachelor@assign@ref@five{#5}
-    \def\buaa@bachelor@assign@ref@six{#6}
-    \def\buaa@bachelor@assign@ref@seven{#7}
-    \def\buaa@bachelor@assign@ref@eight{#8}
+\NewDocumentCommand{\assignRef}{mmmmmmmm}{
+    \seq_clear:N \l_@@_bachelor_asgnmt_reference_seq
+    \seq_put_right:Nn \l_@@_bachelor_asgnmt_reference_seq {#1}
+    \seq_put_right:Nn \l_@@_bachelor_asgnmt_reference_seq {#2}
+    \seq_put_right:Nn \l_@@_bachelor_asgnmt_reference_seq {#3}
+    \seq_put_right:Nn \l_@@_bachelor_asgnmt_reference_seq {#4}
+    \seq_put_right:Nn \l_@@_bachelor_asgnmt_reference_seq {#5}
+    \seq_put_right:Nn \l_@@_bachelor_asgnmt_reference_seq {#6}
+    \seq_put_right:Nn \l_@@_bachelor_asgnmt_reference_seq {#7}
+    \seq_put_right:Nn \l_@@_bachelor_asgnmt_reference_seq {#8}
 }
 % 任务书
-\def\buaa@bachelor@assign{
-    \newpage
-    \thispagestyle{empty}
-    \parindent=0pt
-    \songti
+
+\cs_new:Npn \@@_cs_bachelor_assign: {
+    \newpage \thispagestyle{empty} \parindent=0pt \songti
     {
         \zihao{2}
         {
             \renewcommand{\CJKglue}{\hskip 1pt}
-            \centerline{\hwxingkai{北京航空航天大学}}
+            \centerline{ \hwxingkai{ \tl_use:N \l_@@_university_name_tl } }
         }
         {
             \renewcommand{\CJKglue}{\hskip 1.2pt}
@@ -1381,51 +1370,58 @@
         }
     }
     {
-        \linespread{2}
-        \zihao{4}
-        \stepcounter{assign}
+        \linespread{2} \zihao{4} \stepcounter{assign}
         \Roman{assign}、毕业设计（论文）题目： \\[2.5ex]
-        \ulinel{\buaa@thesistitle}
-        \ulinel{\buaa@thesissubtitle}
-        \ulinel{}
+        \ulinel{ \tl_use:N \l_@@_thesis_title_tl } \\
+        \ulinel{ \tl_use:N \l_@@_thesis_subtitle_tl } \\
+        \ulinel{} \\
+
         \stepcounter{assign}
         \Roman{assign}、毕业设计（论文）使用的原始资料（数据）及设计技术要求： \\[2.5ex]
-        \ulinel{\buaa@bachelor@assign@req@one}
-        \ulinel{\buaa@bachelor@assign@req@two}
-        \ulinel{\buaa@bachelor@assign@req@three}
-        \ulinel{\buaa@bachelor@assign@req@four}
-        \ulinel{\buaa@bachelor@assign@req@five}
+        \int_set:Nn \l_tmpa_int {1}
+        \int_while_do:nNnn { \l_tmpa_int } < { 6 } {
+            \ulinel{ \seq_item:NV \l_@@_bachelor_asgnmt_requirement_seq \l_tmpa_int } \\
+            \int_incr:N \l_tmpa_int
+        }
+        
         \stepcounter{assign}
         \Roman{assign}、毕业设计（论文）工作内容： \\[2.5ex]
-        \ulinel{\buaa@bachelor@assign@work@one}
-        \ulinel{\buaa@bachelor@assign@work@two}
-        \ulinel{\buaa@bachelor@assign@work@three}
-        \ulinel{\buaa@bachelor@assign@work@four}
-        \ulinel{\buaa@bachelor@assign@work@five}
-        \ulinel{\buaa@bachelor@assign@work@six}
-        \newpage
-        \thispagestyle{empty}
-        \begin{spacing}{1.9}
-        \zihao{4}
+        \int_set:Nn \l_tmpa_int {1}
+        \int_while_do:nNnn { \l_tmpa_int } < { 7 } {
+            \ulinel{ \seq_item:NV \l_@@_bachelor_asgnmt_work_seq \l_tmpa_int }
+            % 最后一行换行会溢出至下一页
+            \int_compare:nNnT {\l_tmpa_int} < { 6 } { \\ }
+            \int_incr:N \l_tmpa_int
+        }
+
+        \newpage \thispagestyle{empty} \begin{spacing}{1.9} \zihao{4}
         \stepcounter{assign}
         \Roman{assign}、主要参考资料： \\[1.5ex]
-        \ulinel{\buaa@bachelor@assign@ref@one}
-        \ulinel{\buaa@bachelor@assign@ref@two}
-        \ulinel{\buaa@bachelor@assign@ref@three}
-        \ulinel{\buaa@bachelor@assign@ref@four}
-        \ulinel{\buaa@bachelor@assign@ref@five}
-        \ulinel{\buaa@bachelor@assign@ref@six}
-        \ulinel{\buaa@bachelor@assign@ref@seven}
-        \ulinel{\buaa@bachelor@assign@ref@eight}
-        \ulinec[.28]{\buaa@school}学院\ulinec[.28]{\buaa@major}~专业类~\ulinec[.15]{\buaa@class}班 \\
+        \int_set:Nn \l_tmpa_int {1}
+        \int_while_do:nNnn { \l_tmpa_int } < { 9 } {
+            \ulinel{ \seq_item:NV \l_@@_bachelor_asgnmt_reference_seq \l_tmpa_int } \\
+            \int_incr:N \l_tmpa_int
+        }
+
+        \ulinec[.28]{\buaa@school}学院
+        \ulinec[.28]{\buaa@major}~专业类~\ulinec[.15]{\buaa@class}班 \\
         学生\ulinec[.3]{\buaa@thesisauthor} \\
-        毕业设计(论文)时间：~~\ulinec[.1]{\buaa@thesisbeginyear}年\ulinec[.06]{\buaa@thesisbeginmonth}月\ulinec[.06]{\buaa@thesisbeginday}日至\ulinec[.1]{\buaa@thesisendyear}年\ulinec[.06]{\buaa@thesisendmonth}月\ulinec[.06]{\buaa@thesisendday}日 \\
-        答辩时间：\ulinec[.16]{\buaa@defenseyear}年\ulinec[.08]{\buaa@defensemonth}月\ulinec[.08]{\buaa@defenseday}日 \\
+        毕业设计(论文)时间：~~
+        \ulinec[.1]{\buaa@thesisbeginyear}年
+        \ulinec[.06]{\buaa@thesisbeginmonth}月
+        \ulinec[.06]{\buaa@thesisbeginday}日
+        至\ulinec[.1]{\buaa@thesisendyear}年
+        \ulinec[.06]{\buaa@thesisendmonth}月
+        \ulinec[.06]{\buaa@thesisendday}日 \\
+        答辩时间：
+        \ulinec[.16]{\buaa@defenseyear}年
+        \ulinec[.08]{\buaa@defensemonth}月
+        \ulinec[.08]{\buaa@defenseday}日 \\
         成\qquad 绩：\ulinec[.3]{} \\
         指导教师：\ulinec[.3]{} \\
         兼职教师或答疑教师（并指出所负责部分）：\\
-        \ulinel{}
-        \ulinel{}
+        \ulinel{} \\
+        \ulinel{} \\
         \ulinec[.28]{}系（教研室） 主任（签字）：\ulinec[.28]{} \\
         \vfill
         注：任务书应该附在已完成的毕业设计（论文）的首页。
@@ -1435,6 +1431,7 @@
     \linespread{1.5}
 }
 
+\ExplSyntaxOff
 %%%%%%%%%% nominate %%%%%%%%%%
 % 研究生提名页
 
@@ -1542,7 +1539,7 @@
         { \g_@@_bachelor_bool } {
             \pagestyle{empty}
             \loadgeometry{bachelortaskgeometry}
-            \buaa@bachelor@assign     %本科生论文任务书
+            \@@_cs_bachelor_assign:
             \loadgeometry{bachelorgeometry}
             \announce                 %本科生声明
             \pagestyle{fancy}
