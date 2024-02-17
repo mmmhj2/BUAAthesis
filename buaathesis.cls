@@ -643,33 +643,40 @@
 
 %%%%%%%%%% table %%%%%%%%%%
 % 表格
-
+\ExplSyntaxOn
 % 重定义table/tabular/tabularx环境，使表格内为5号字
 % TODO(huxuan): 支持 longtable
-\let\oldtable\table
-\let\endoldtable\endtable
-\renewenvironment{table}[1][h!]
-{\renewcommand{\arraystretch}{1.5}
-\oldtable[#1]\zihao{5}}
-{\renewcommand{\arraystretch}{1}
-\endoldtable}
+\let \oldtable \table
+\let \endoldtable \endtable
+\RenewDocumentEnvironment {table} {O{h!}} {
+    \renewcommand{\arraystretch}{1.5}
+    \zihao{5} \oldtable[#1]
+}{
+    \endoldtable
+    \renewcommand{\arraystretch}{1}
+}
 
-\let\oldtabular\tabular
-\let\endoldtabular\endtabular
-\renewenvironment{tabular}[1][h!]
-{\renewcommand{\arraystretch}{1.5}
-\oldtabular[#1]\zihao{5}}
-{\renewcommand{\arraystretch}{1}
-\endoldtabular}
+\let \oldtabular \tabular
+\let \endoldtabular \endtabular
+\RenewDocumentEnvironment {tabular} {om} {
+    \renewcommand{\arraystretch}{1.5}
+    \zihao{5} \oldtabular[#1]{#2}
+}{
+    \endoldtabular
+    \renewcommand{\arraystretch}{1}
+}
 
-\let\oldtabularx\tabularx
-\let\endoldtabularx\endtabularx
-\renewenvironment{tabularx}[2]
-{\renewcommand{\arraystretch}{1.5}
-\zihao{5}\oldtabularx{#1}{#2}}
-{\renewcommand{\arraystretch}{1}
-\endoldtabularx}
+\let\oldtabularx\tabularx\relax
+\let\endoldtabularx\endtabularx\relax
+\RenewDocumentEnvironment {tabularx} {mm} {
+    \renewcommand{\arraystretch}{1.5}
+    \zihao{5} \oldtabularx{#1}{#2}
+}{
+    \endoldtabularx
+    \renewcommand{\arraystretch}{1}
+}
 
+\ExplSyntaxOff
 %%%%%%%%%% list %%%%%%%%%%
 % 列表
 
