@@ -60,8 +60,6 @@
     \msg_warning:nn {buaathesis} {error/notselected}
 }
 
-\ExplSyntaxOff
-
 \newif\ifbuaa@bachelor\buaa@bachelorfalse
 \newif\ifbuaa@master\buaa@masterfalse
 \newif\ifbuaa@doctor\buaa@doctorfalse
@@ -85,150 +83,181 @@
 \LoadClass[zihao=-4,a4paper]{ctexbook}[2007/10/19]
 
 %%%%%%%%%% common user info %%%%%%%%%%
+
+\cs_new_protected:Npn \@@_cs_declare_token_list:nn #1#2 {
+    \tl_new:N #1
+    \def #2 {\tl_use:N #1}
+}
+
 % 用户信息
 
 % 学校名称
-\def\buaa@university{北京航空航天大学}
-\def\buaa@universityeng{Beihang University}
-\newcommand{\university}[2]{%
-    \def\buaa@university{#1}
-    \def\buaa@universityeng{#2}
+\@@_cs_declare_token_list:nn {\l_@@_university_name_tl}{\buaa@university}
+\@@_cs_declare_token_list:nn {\l_@@_university_name_eng_tl}{\buaa@universityeng}
+\tl_set:Nn \l_@@_university_name_tl {北京航空航天大学}
+\tl_set:Nn \l_@@_university_name_eng_tl {Beihang University}
+\NewDocumentCommand{\university}{mm}{
+    \tl_set:Nn \l_@@_university_name_tl {#1}
+    \tl_set:Nn \l_@@_university_name_eng_tl {#2}
 }
+
 % 学院
-\def\buaa@school{}
-\def\buaa@schooleng{}
-\newcommand{\school}[2]{%
-    \def\buaa@school{#1}
-    \def\buaa@schooleng{#2}
+\@@_cs_declare_token_list:nn {\l_@@_school_name_tl}{\buaa@school}
+\@@_cs_declare_token_list:nn {\l_@@_school_name_eng_tl}{\buaa@schooleng}
+\NewDocumentCommand{\school}{mm}{
+    \tl_set:Ne \l_@@_school_name_tl {#1}
+    \tl_set:Ne \l_@@_school_name_eng_tl {#2}
 }
+
 % 专业
-\def\buaa@major{}
-\def\buaa@majoreng{}
-\newcommand{\major}[2]{%
-    \def\buaa@major{#1}
-    \def\buaa@majoreng{#2}
+\@@_cs_declare_token_list:nn {\l_@@_major_tl}{\buaa@major}
+\@@_cs_declare_token_list:nn {\l_@@_major_eng_tl}{\buaa@majoreng}
+\NewDocumentCommand{\major}{mm}{
+    \tl_set:Ne \l_@@_major_tl {#1}
+    \tl_set:Ne \l_@@_major_eng_tl {#2}
 }
+
 % 论文标题和副标题
-\def\buaa@thesistitle{}
-\def\buaa@thesissubtitle{}
-\def\buaa@thesistitleeng{}
-\def\buaa@thesissubtitleeng{}
-\newcommand{\thesistitle}[4]{%
-    \def\buaa@thesistitle{#1}
-    \def\buaa@thesissubtitle{#2}
-    \def\buaa@thesistitleeng{#3}
-    \def\buaa@thesissubtitleeng{#4}
+\@@_cs_declare_token_list:nn {\l_@@_thesis_title_tl}{\buaa@thesistitle}
+\@@_cs_declare_token_list:nn {\l_@@_thesis_subtitle_tl}{\buaa@thesissubtitle}
+\@@_cs_declare_token_list:nn {\l_@@_thesis_title_eng_tl}{\buaa@thesistitleeng}
+\@@_cs_declare_token_list:nn {\l_@@_thesis_subtitle_eng_tl}{\buaa@thesissubtitleeng}
+\RenewDocumentCommand{\title}{mmmm}{
+    \tl_set:Nn \l_@@_thesis_title_tl {#1}
+    \tl_set:Nn \l_@@_thesis_subtitle_tl {#2}
+    \tl_set:Nn \l_@@_thesis_title_eng_tl {#3}
+    \tl_set:Nn \l_@@_thesis_subtitle_eng_tl {#4}
 }
+\NewCommandCopy{\thesistitle}{\title}
+
 % 作者
-\def\buaa@thesisauthor{}
-\def\buaa@thesisauthoreng{}
-\newcommand{\thesisauthor}[2]{%
-    \def\buaa@thesisauthor{#1}
-    \def\buaa@thesisauthoreng{#2}
+\@@_cs_declare_token_list:nn {\l_@@_author_tl}{\buaa@thesisauthor}
+\@@_cs_declare_token_list:nn {\l_@@_author_eng_tl}{\buaa@thesisauthoreng}
+\RenewDocumentCommand{\author}{mm}{
+    \tl_set:Nn \l_@@_author_tl {#1}
+    \tl_set:Nn \l_@@_author_eng_tl {#2}
 }
+\NewCommandCopy{\thesisauthor}{\author}
+
 % 指导老师
-\def\buaa@teacher{}
-\def\buaa@teachereng{}
-\newcommand{\teacher}[2]{%
-    \def\buaa@teacher{#1}
-    \def\buaa@teachereng{#2}
+\@@_cs_declare_token_list:nn {\l_@@_teacher_tl}{\buaa@teacher}
+\@@_cs_declare_token_list:nn {\l_@@_teacher_eng_tl}{\buaa@teachereng}
+\NewDocumentCommand{\teacher}{mm}{
+    \tl_set:Nn \l_@@_teacher_tl {#1}
+    \tl_set:Nn \l_@@_teacher_eng_tl {#2}
 }
+
 % 副指导老师
-\def\buaa@subteacher{}
-\def\buaa@subteachereng{}
-\newcommand{\subteacher}[2]{%
-    \def\buaa@subteacher{#1}
-    \def\buaa@subteachereng{#2}
+\@@_cs_declare_token_list:nn {\l_@@_teacher_two_tl}{\buaa@subteacher}
+\@@_cs_declare_token_list:nn {\l_@@_teacher_two_eng_tl}{\buaa@subteachereng}
+\NewDocumentCommand{\subteacher}{mm}{
+    \tl_set:Nn \l_@@_teacher_two_tl {#1}
+    \tl_set:Nn \l_@@_teacher_two_eng_tl {#2}
+
+    \regex_match:nnTF {.+}{ \tl_use:N \l_@@_teacher_two_tl }{
+        \bool_gset:Nn \g_@@_twoteacher_bool { true }
+
+        \msg_new:nnn {buaathesis}{autotwoteacher}{
+            subteacher~command~was~issued,~and~twoteacher~option~will~be~automatically~selected.
+        }
+        \msg_info:nn {buaathesis}{autotwoteacher}
+    }{
+        \msg_new:nnn {buaathesis}{notwoteacher}{
+            subteacher~command~was~issued,~but~no~teacher~two~could~be~found.
+        }
+        \msg_warning:nn {buaathesis}{notwoteacher}
+    }
 }
+
 % 分类号
-\def\buaa@category{}
-\newcommand{\category}[1]{%
-    \def\buaa@category{#1}
+\@@_cs_declare_token_list:nn {\l_@@_clc_number_tl}{\buaa@category}
+\NewDocumentCommand{\category}{m}{
+    \tl_set:Nn \l_@@_clc_number_tl {#1}
 }
+
 % 论文开始时间
-\def\buaa@thesisbeginyear{}
-\def\buaa@thesisbeginmonth{}
-\def\buaa@thesisbeginday{}
-\newcommand{\thesisbegin}[3]{%
-    \def\buaa@thesisbeginyear{#1}
-    \def\buaa@thesisbeginmonth{#2}
-    \def\buaa@thesisbeginday{#3}
+\@@_cs_declare_token_list:nn {\l_@@_thesis_begin_year_tl}{\buaa@thesisbeginyear}
+\@@_cs_declare_token_list:nn {\l_@@_thesis_begin_month_tl}{\buaa@thesisbeginmonth}
+\@@_cs_declare_token_list:nn {\l_@@_thesis_begin_day_tl}{\buaa@thesisbeginday}
+\NewDocumentCommand{\thesisbegin}{mmm}{
+    \tl_set:Nn \l_@@_thesis_begin_year_tl {#1}
+    \tl_set:Nn \l_@@_thesis_begin_month_tl {#2}
+    \tl_set:Nn \l_@@_thesis_begin_day_tl {#3}
 }
+
 % 论文结束时间
-\def\buaa@thesisendyear{}
-\def\buaa@thesisendmonth{}
-\def\buaa@thesisendday{}
-\newcommand{\thesisend}[3]{%
-    \def\buaa@thesisendyear{#1}
-    \def\buaa@thesisendmonth{#2}
-    \def\buaa@thesisendday{#3}
+\@@_cs_declare_token_list:nn {\l_@@_thesis_end_year_tl}{\buaa@thesisendyear}
+\@@_cs_declare_token_list:nn {\l_@@_thesis_end_month_tl}{\buaa@thesisendmonth}
+\@@_cs_declare_token_list:nn {\l_@@_thesis_end_day_tl}{\buaa@thesisendday}
+\NewDocumentCommand{\thesisend}{mmm}{
+    \tl_set:Nn \l_@@_thesis_end_year_tl {#1}
+    \tl_set:Nn \l_@@_thesis_end_month_tl {#2}
+    \tl_set:Nn \l_@@_thesis_end_day_tl {#3}
 }
+
 % 答辩时间
-\def\buaa@defenseyear{}
-\def\buaa@defensemonth{}
-\def\buaa@defenseday{}
-\newcommand{\defense}[3]{%
-    \def\buaa@defenseyear{#1}
-    \def\buaa@defensemonth{#2}
-    \def\buaa@defenseday{#3}
+\@@_cs_declare_token_list:nn {\l_@@_defense_year_tl}{\buaa@defenseyear}
+\@@_cs_declare_token_list:nn {\l_@@_defense_month_tl}{\buaa@defensemonth}
+\@@_cs_declare_token_list:nn {\l_@@_defense_day_tl}{\buaa@defenseday}
+\NewDocumentCommand{\defense}{mmm}{
+    \tl_set:Nn \l_@@_defense_year_tl {#1}
+    \tl_set:Nn \l_@@_defense_month_tl {#2}
+    \tl_set:Nn \l_@@_defense_day_tl {#3}
 }
+
 % 中文摘要关键字
-\def\buaa@ckeyword{}
-\newcommand{\ckeyword}[1]{%
-    \def\buaa@ckeyword{#1}}
+\@@_cs_declare_token_list:nn {\l_@@_keyword_tl}{\buaa@ckeyword}
+\NewDocumentCommand{\ckeyword}{m}{
+    \tl_set:Nn \l_@@_keyword_tl {#1}
+}
 % 英文摘要关键字
-\def\buaa@ekeyword{}
-\newcommand{\ekeyword}[1]{%
-    \def\buaa@ekeyword{#1}}
+\@@_cs_declare_token_list:nn {\l_@@_keyword_eng_tl}{\buaa@ekeyword}
+\NewDocumentCommand{\ekeyword}{m}{
+    \tl_set:Nn \l_@@_keyword_eng_tl {#1}
+}
+
 % 学位
 \def\buaa@degree{} % 中文首页
 \def\buaa@degreeeng{} % 英文首页
 \def\buaa@degreetitle{} % 题名页
 \def\buaa@degreehead{} % 页眉页脚
-\newcommand{\degree}[4]{%
-    \def\buaa@degree{#1}
-    \def\buaa@degreeeng{#2}
-    \def\buaa@degreetitle{#3}
-    \def\buaa@degreehead{#4}
+
+\tl_new:N \l_@@_degree_long_tl
+\tl_new:N \l_@@_degree_long_eng_tl
+\tl_new:N \l_@@_degree_title_tl
+\tl_new:N \l_@@_degree_head_tl
+
+\bool_if:NT \g_@@_bachelor_bool {
+    \tl_set:Nn \l_@@_degree_long_tl {学士学位}
+    \tl_set:Nn \l_@@_degree_long_eng_tl {Bachelor}
+    \tl_set:Nn \l_@@_degree_title_tl {学士学位}
+    \tl_set:Nn \l_@@_degree_head_tl {学士}
+}
+\bool_if:NT \g_@@_master_bool {
+    \bool_if:NTF \g_@@_professional_bool {
+        \tl_set:Nn \l_@@_degree_long_tl {专业硕士学位}
+    } {
+        \tl_set:Nn \l_@@_degree_long_tl {硕士学位}
+    }
+    \tl_set:Nn \l_@@_degree_long_eng_tl {Master}
+    \tl_set:Nn \l_@@_degree_title_tl {硕士学位}
+    \tl_set:Nn \l_@@_degree_head_tl {硕士}
+}
+\bool_if:NT \g_@@_doctor_bool {
+    \bool_if:NTF \g_@@_professional_bool {
+        \tl_set:Nn \l_@@_degree_long_tl {专业博士学位}
+    } {
+        \tl_set:Nn \l_@@_degree_long_tl {博士学位}
+    }
+    \tl_set:Nn \l_@@_degree_long_eng_tl {Doctor of Philosophy}
+    \tl_set:Nn \l_@@_degree_title_tl {博士学位}
+    \tl_set:Nn \l_@@_degree_head_tl {博士}
 }
 
-\ExplSyntaxOn
-    \tl_new:N \l_@@_degree_long_tl
-    \tl_new:N \l_@@_degree_long_eng_tl
-    \tl_new:N \l_@@_degree_title_tl
-    \tl_new:N \l_@@_degree_head_tl
-
-    \bool_if:NT \g_@@_bachelor_bool {
-        \tl_set:Nn \l_@@_degree_long_tl {学士学位}
-        \tl_set:Nn \l_@@_degree_long_eng_tl {Bachelor}
-        \tl_set:Nn \l_@@_degree_title_tl {学士学位}
-        \tl_set:Nn \l_@@_degree_head_tl {学士}
-    }
-    \bool_if:NT \g_@@_master_bool {
-        \bool_if:NTF \g_@@_professional_bool {
-            \tl_set:Nn \l_@@_degree_long_tl {专业硕士学位}
-        } {
-            \tl_set:Nn \l_@@_degree_long_tl {硕士学位}
-        }
-        \tl_set:Nn \l_@@_degree_long_eng_tl {Master}
-        \tl_set:Nn \l_@@_degree_title_tl {硕士学位}
-        \tl_set:Nn \l_@@_degree_head_tl {硕士}
-    }
-    \bool_if:NT \g_@@_doctor_bool {
-        \bool_if:NTF \g_@@_professional_bool {
-            \tl_set:Nn \l_@@_degree_long_tl {专业博士学位}
-        } {
-            \tl_set:Nn \l_@@_degree_long_tl {博士学位}
-        }
-        \tl_set:Nn \l_@@_degree_long_eng_tl {Doctor of Philosophy}
-        \tl_set:Nn \l_@@_degree_title_tl {博士学位}
-        \tl_set:Nn \l_@@_degree_head_tl {博士}
-    }
-
-    \exp_args:NNV \def \buaa@degree \l_@@_degree_long_tl 
-    \exp_args:NNV \def \buaa@degreeeng \l_@@_degree_long_eng_tl 
-    \exp_args:NNV \def \buaa@degreetitle \l_@@_degree_title_tl 
-    \exp_args:NNV \def \buaa@degreehead \l_@@_degree_head_tl 
+\exp_args:NNV \def \buaa@degree \l_@@_degree_long_tl 
+\exp_args:NNV \def \buaa@degreeeng \l_@@_degree_long_eng_tl 
+\exp_args:NNV \def \buaa@degreetitle \l_@@_degree_title_tl 
+\exp_args:NNV \def \buaa@degreehead \l_@@_degree_head_tl 
 \ExplSyntaxOff
 
 %%%%%%%%%% bachelor user info %%%%%%%%%%
