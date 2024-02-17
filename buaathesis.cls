@@ -656,15 +656,15 @@
     \renewcommand{\arraystretch}{1}
 }
 
-\let \oldtabular \tabular
-\let \endoldtabular \endtabular
-\RenewDocumentEnvironment {tabular} {om} {
-    \renewcommand{\arraystretch}{1.5}
-    \zihao{5} \oldtabular[#1]{#2}
-}{
-    \endoldtabular
-    \renewcommand{\arraystretch}{1}
-}
+% \let \oldtabular \tabular
+% \let \endoldtabular \endtabular
+% \RenewDocumentEnvironment {tabular} {om} {
+%     \renewcommand{\arraystretch}{1.5}
+%     \zihao{5} \oldtabular[#1]{#2}
+% }{
+%     \endoldtabular
+%     \renewcommand{\arraystretch}{1}
+% }
 
 \let\oldtabularx\tabularx\relax
 \let\endoldtabularx\endtabularx\relax
