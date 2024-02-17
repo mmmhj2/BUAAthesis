@@ -100,7 +100,6 @@
     \tl_set:Nn \l_@@_university_name_tl {#1}
     \tl_set:Nn \l_@@_university_name_eng_tl {#2}
 }
-
 % 学院
 \@@_cs_declare_token_list:nn {\l_@@_school_name_tl}{\buaa@school}
 \@@_cs_declare_token_list:nn {\l_@@_school_name_eng_tl}{\buaa@schooleng}
@@ -108,7 +107,6 @@
     \tl_set:Ne \l_@@_school_name_tl {#1}
     \tl_set:Ne \l_@@_school_name_eng_tl {#2}
 }
-
 % 专业
 \@@_cs_declare_token_list:nn {\l_@@_major_tl}{\buaa@major}
 \@@_cs_declare_token_list:nn {\l_@@_major_eng_tl}{\buaa@majoreng}
@@ -116,7 +114,6 @@
     \tl_set:Ne \l_@@_major_tl {#1}
     \tl_set:Ne \l_@@_major_eng_tl {#2}
 }
-
 % 论文标题和副标题
 \@@_cs_declare_token_list:nn {\l_@@_thesis_title_tl}{\buaa@thesistitle}
 \@@_cs_declare_token_list:nn {\l_@@_thesis_subtitle_tl}{\buaa@thesissubtitle}
@@ -129,7 +126,6 @@
     \tl_set:Nn \l_@@_thesis_subtitle_eng_tl {#4}
 }
 \NewCommandCopy{\thesistitle}{\title}
-
 % 作者
 \@@_cs_declare_token_list:nn {\l_@@_author_tl}{\buaa@thesisauthor}
 \@@_cs_declare_token_list:nn {\l_@@_author_eng_tl}{\buaa@thesisauthoreng}
@@ -138,7 +134,6 @@
     \tl_set:Nn \l_@@_author_eng_tl {#2}
 }
 \NewCommandCopy{\thesisauthor}{\author}
-
 % 指导老师
 \@@_cs_declare_token_list:nn {\l_@@_teacher_tl}{\buaa@teacher}
 \@@_cs_declare_token_list:nn {\l_@@_teacher_eng_tl}{\buaa@teachereng}
@@ -146,7 +141,6 @@
     \tl_set:Nn \l_@@_teacher_tl {#1}
     \tl_set:Nn \l_@@_teacher_eng_tl {#2}
 }
-
 % 副指导老师
 \@@_cs_declare_token_list:nn {\l_@@_teacher_two_tl}{\buaa@subteacher}
 \@@_cs_declare_token_list:nn {\l_@@_teacher_two_eng_tl}{\buaa@subteachereng}
@@ -168,13 +162,9 @@
         \msg_warning:nn {buaathesis}{notwoteacher}
     }
 }
-
 % 分类号
 \@@_cs_declare_token_list:nn {\l_@@_clc_number_tl}{\buaa@category}
-\NewDocumentCommand{\category}{m}{
-    \tl_set:Nn \l_@@_clc_number_tl {#1}
-}
-
+\NewDocumentCommand{\category}{m}{ \tl_set:Nn \l_@@_clc_number_tl {#1} }
 % 论文开始时间
 \@@_cs_declare_token_list:nn {\l_@@_thesis_begin_year_tl}{\buaa@thesisbeginyear}
 \@@_cs_declare_token_list:nn {\l_@@_thesis_begin_month_tl}{\buaa@thesisbeginmonth}
@@ -184,7 +174,6 @@
     \tl_set:Nn \l_@@_thesis_begin_month_tl {#2}
     \tl_set:Nn \l_@@_thesis_begin_day_tl {#3}
 }
-
 % 论文结束时间
 \@@_cs_declare_token_list:nn {\l_@@_thesis_end_year_tl}{\buaa@thesisendyear}
 \@@_cs_declare_token_list:nn {\l_@@_thesis_end_month_tl}{\buaa@thesisendmonth}
@@ -194,7 +183,6 @@
     \tl_set:Nn \l_@@_thesis_end_month_tl {#2}
     \tl_set:Nn \l_@@_thesis_end_day_tl {#3}
 }
-
 % 答辩时间
 \@@_cs_declare_token_list:nn {\l_@@_defense_year_tl}{\buaa@defenseyear}
 \@@_cs_declare_token_list:nn {\l_@@_defense_month_tl}{\buaa@defensemonth}
@@ -204,18 +192,12 @@
     \tl_set:Nn \l_@@_defense_month_tl {#2}
     \tl_set:Nn \l_@@_defense_day_tl {#3}
 }
-
 % 中文摘要关键字
 \@@_cs_declare_token_list:nn {\l_@@_keyword_tl}{\buaa@ckeyword}
-\NewDocumentCommand{\ckeyword}{m}{
-    \tl_set:Nn \l_@@_keyword_tl {#1}
-}
+\NewDocumentCommand{\ckeyword}{m}{ \tl_set:Nn \l_@@_keyword_tl {#1} }
 % 英文摘要关键字
 \@@_cs_declare_token_list:nn {\l_@@_keyword_eng_tl}{\buaa@ekeyword}
-\NewDocumentCommand{\ekeyword}{m}{
-    \tl_set:Nn \l_@@_keyword_eng_tl {#1}
-}
-
+\NewDocumentCommand{\ekeyword}{m}{ \tl_set:Nn \l_@@_keyword_eng_tl {#1} }
 % 学位
 \def\buaa@degree{} % 中文首页
 \def\buaa@degreeeng{} % 英文首页
@@ -258,98 +240,84 @@
 \exp_args:NNV \def \buaa@degreeeng \l_@@_degree_long_eng_tl 
 \exp_args:NNV \def \buaa@degreetitle \l_@@_degree_title_tl 
 \exp_args:NNV \def \buaa@degreehead \l_@@_degree_head_tl 
-\ExplSyntaxOff
-
-%%%%%%%%%% bachelor user info %%%%%%%%%%
 % 开题文件类别
-\def\buaa@ktclass{}
-\newcommand{\ktclass}[1]{%
-    \def\buaa@ktclass{#1}
-}
+\@@_cs_declare_token_list:nn {\l_@@_proposal_class_tl}{\buaa@ktclass}
+\NewDocumentCommand{\ktclass}{m}{ \tl_set:Nn \l_@@_proposal_class_tl {#1} }
 
 %%%%%%%%%% bachelor user info %%%%%%%%%%
 % 本科生信息
 
 % 班级
-\def\buaa@class{}
-\newcommand{\class}[1]{%
-    \def\buaa@class{#1}
-}
+\@@_cs_declare_token_list:nn {\l_@@_class_tl}{\buaa@class}
+\NewDocumentCommand{\class}{m}{ \tl_set:Nn \l_@@_class_tl {#1} }
 % 单位代码
-\def\buaa@unicode{1006}
-\newcommand{\unicode}[1]{%
-    \def\buaa@unicode{#1}
-}
+\@@_cs_declare_token_list:nn {\l_@@_unit_code_tl}{\buaa@unicode}
+\tl_set:Nn \l_@@_unit_code_tl {1006}
+\NewDocumentCommand{\unicode}{m}{ \tl_set:Nn \l_@@_unit_code_tl {#1} }
 % 学号
-\def\buaa@studentID{}
-\newcommand{\studentID}[1]{%
-    \def\buaa@studentID{#1}
-}
+\@@_cs_declare_token_list:nn {\l_@@_student_id_tl}{\buaa@studentID}
+\NewDocumentCommand{\studentID}{m}{ \tl_set:Nn \l_@@_student_id_tl{#1} }
 % 论文时间
-\def\buaa@thesisdateyear{}
-\def\buaa@thesisdatemonth{}
-\newcommand{\thesisdate}[2]{%
-    \def\buaa@thesisdateyear{#1}
-    \def\buaa@thesisdatemonth{#2}
+\@@_cs_declare_token_list:nn {\l_@@_bachelor_thesis_year_tl}{\buaa@thesisdateyear}
+\@@_cs_declare_token_list:nn {\l_@@_bachelor_thesis_month_tl}{\buaa@thesisdatemonth}
+\NewDocumentCommand{\thesisdate}{mm}{
+    \tl_set:Nn \l_@@_bachelor_thesis_year_tl {#1}
+    \tl_set:Nn \l_@@_bachelor_thesis_month_tl {#2}
 }
 
 %%%%%%%%%% master user info %%%%%%%%%%
 % 研究生信息
 
 % 保密等级
-\def\buaa@clevel{}
-\def\buaa@climit{}
-\newcommand{\mibao}[2]{%
-    \def\buaa@clevel{#1}
-    \def\buaa@climit{#2}
+\@@_cs_declare_token_list:nn {\l_@@_confidential_level_tl}{\buaa@clevel}
+\@@_cs_declare_token_list:nn {\l_@@_confidential_limit_tl}{\buaa@climit}
+\NewDocumentCommand{\mibao}{mm}{
+    \tl_set:Nn \l_@@_confidential_level_tl {#1}
+    \tl_set:Nn \l_@@_confidential_limit_tl {#2}
 }
 % 研究方向
-\def\buaa@direction{}
-\newcommand{\direction}[1]{
-    \def\buaa@direction{#1}
-}
+\@@_cs_declare_token_list:nn {\l_@@_direction_tl}{\buaa@direction}
+\NewDocumentCommand{\direction}{m}{ \tl_set:Nn \l_@@_direction_tl {#1} }
 % 导师职称
-\def\buaa@teacherdegree{}
-\def\buaa@teacherdegreeeng{}
-\newcommand{\teacherdegree}[2]{%
-    \def\buaa@teacherdegree{#1}
-    \def\buaa@teacherdegreeeng{#2}
+\@@_cs_declare_token_list:nn {\l_@@_teacher_title_tl}{\buaa@teacherdegree}
+\@@_cs_declare_token_list:nn {\l_@@_teacher_title_eng_tl}{\buaa@teacherdegreeeng}
+\NewDocumentCommand{\teacherdegree}{mm}{
+    \tl_set:Nn \l_@@_teacher_title_tl {#1}
+    \tl_set:Nn \l_@@_teacher_title_eng_tl {#2}
 }
 % 副导师职称
-\def\buaa@subteacherdegree{}
-\def\buaa@subteacherdegreeeng{}
-\newcommand{\subteacherdegree}[2]{%
-    \def\buaa@subteacherdegree{#1}
-    \def\buaa@subteacherdegreeeng{#2}
+\@@_cs_declare_token_list:nn {\l_@@_teacher_two_title_tl}{\buaa@subteacherdegree}
+\@@_cs_declare_token_list:nn {\l_@@_teacher_two_title_eng_tl}{\buaa@subteacherdegreeeng}
+\NewDocumentCommand{\subteacherdegree}{mm}{
+    \tl_set:Nn \l_@@_teacher_two_title_tl {#1}
+    \tl_set:Nn \l_@@_teacher_two_title_eng_tl {#2}
 }
 % 申请学位级别(题名页)
-\def\buaa@appdegree{}
-\newcommand{\applydegree}[1]{%
-    \def\buaa@appdegree{#1}
-}
+\@@_cs_declare_token_list:nn {\l_@@_applied_degree_tl}{\buaa@appdegree}
+\NewDocumentCommand{\applydegree}{m}{ \tl_set:Nn \l_@@_applied_degree_tl {#1} }
 % 论文编号
-\def\buaa@thesisID{}
-\newcommand{\thesisID}[1]{%
-    \def\buaa@thesisID{#1}
-}
+\@@_cs_declare_token_list:nn {\l_@@_thesis_id_tl}{\buaa@thesisID}
+\NewDocumentCommand{\thesisID}{m}{ \tl_set:Nn \l_@@_thesis_id_tl {#1} }
 % 论文提交时间
-\def\buaa@commityear{}
-\def\buaa@commitmonth{}
-\def\buaa@commitday{}
-\newcommand{\commit}[3]{%
-    \def\buaa@commityear{#1}
-    \def\buaa@commitmonth{#2}
-    \def\buaa@commitday{#3}
+\@@_cs_declare_token_list:nn {\l_@@_submission_year_tl}{\buaa@commityear}
+\@@_cs_declare_token_list:nn {\l_@@_submission_month_tl}{\buaa@commitmonth}
+\@@_cs_declare_token_list:nn {\l_@@_submission_day_tl}{\buaa@commitday}
+\NewDocumentCommand{\commit}{mmm}{
+    \tl_set:Nn \l_@@_submission_year_tl {#1}
+    \tl_set:Nn \l_@@_submission_month_tl {#2}
+    \tl_set:Nn \l_@@_submission_day_tl {#3}
 }
 % 授予学位时间
-\def\buaa@awardyear{}
-\def\buaa@awardmonth{}
-\def\buaa@awardday{}
-\newcommand{\award}[3]{%
-    \def\buaa@awardyear{#1}
-    \def\buaa@awardmonth{#2}
-    \def\buaa@awardday{#3}
+\@@_cs_declare_token_list:nn {\l_@@_award_year_tl}{\buaa@awardyear}
+\@@_cs_declare_token_list:nn {\l_@@_award_month_tl}{\buaa@awardmonth}
+\@@_cs_declare_token_list:nn {\l_@@_award_day_tl}{\buaa@awardday}
+\NewDocumentCommand{\award}{mmm}{
+    \tl_set:Nn \l_@@_award_year_tl {#1}
+    \tl_set:Nn \l_@@_award_month_tl {#2}
+    \tl_set:Nn \l_@@_award_day_tl {#3}
 }
+
+\ExplSyntaxOff
 
 %%%%%%%%%% global package %%%%%%%%%%
 % 全局通用宏包
