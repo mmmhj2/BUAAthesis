@@ -84,6 +84,244 @@
 % 引用ctexbook及基本设置
 \LoadClass[zihao=-4,a4paper]{ctexbook}[2007/10/19]
 
+%%%%%%%%%% common user info %%%%%%%%%%
+% 用户信息
+
+% 学校名称
+\def\buaa@university{北京航空航天大学}
+\def\buaa@universityeng{Beihang University}
+\newcommand{\university}[2]{%
+    \def\buaa@university{#1}
+    \def\buaa@universityeng{#2}
+}
+% 学院
+\def\buaa@school{}
+\def\buaa@schooleng{}
+\newcommand{\school}[2]{%
+    \def\buaa@school{#1}
+    \def\buaa@schooleng{#2}
+}
+% 专业
+\def\buaa@major{}
+\def\buaa@majoreng{}
+\newcommand{\major}[2]{%
+    \def\buaa@major{#1}
+    \def\buaa@majoreng{#2}
+}
+% 论文标题和副标题
+\def\buaa@thesistitle{}
+\def\buaa@thesissubtitle{}
+\def\buaa@thesistitleeng{}
+\def\buaa@thesissubtitleeng{}
+\newcommand{\thesistitle}[4]{%
+    \def\buaa@thesistitle{#1}
+    \def\buaa@thesissubtitle{#2}
+    \def\buaa@thesistitleeng{#3}
+    \def\buaa@thesissubtitleeng{#4}
+}
+% 作者
+\def\buaa@thesisauthor{}
+\def\buaa@thesisauthoreng{}
+\newcommand{\thesisauthor}[2]{%
+    \def\buaa@thesisauthor{#1}
+    \def\buaa@thesisauthoreng{#2}
+}
+% 指导老师
+\def\buaa@teacher{}
+\def\buaa@teachereng{}
+\newcommand{\teacher}[2]{%
+    \def\buaa@teacher{#1}
+    \def\buaa@teachereng{#2}
+}
+% 副指导老师
+\def\buaa@subteacher{}
+\def\buaa@subteachereng{}
+\newcommand{\subteacher}[2]{%
+    \def\buaa@subteacher{#1}
+    \def\buaa@subteachereng{#2}
+}
+% 分类号
+\def\buaa@category{}
+\newcommand{\category}[1]{%
+    \def\buaa@category{#1}
+}
+% 论文开始时间
+\def\buaa@thesisbeginyear{}
+\def\buaa@thesisbeginmonth{}
+\def\buaa@thesisbeginday{}
+\newcommand{\thesisbegin}[3]{%
+    \def\buaa@thesisbeginyear{#1}
+    \def\buaa@thesisbeginmonth{#2}
+    \def\buaa@thesisbeginday{#3}
+}
+% 论文结束时间
+\def\buaa@thesisendyear{}
+\def\buaa@thesisendmonth{}
+\def\buaa@thesisendday{}
+\newcommand{\thesisend}[3]{%
+    \def\buaa@thesisendyear{#1}
+    \def\buaa@thesisendmonth{#2}
+    \def\buaa@thesisendday{#3}
+}
+% 答辩时间
+\def\buaa@defenseyear{}
+\def\buaa@defensemonth{}
+\def\buaa@defenseday{}
+\newcommand{\defense}[3]{%
+    \def\buaa@defenseyear{#1}
+    \def\buaa@defensemonth{#2}
+    \def\buaa@defenseday{#3}
+}
+% 中文摘要关键字
+\def\buaa@ckeyword{}
+\newcommand{\ckeyword}[1]{%
+    \def\buaa@ckeyword{#1}}
+% 英文摘要关键字
+\def\buaa@ekeyword{}
+\newcommand{\ekeyword}[1]{%
+    \def\buaa@ekeyword{#1}}
+% 学位
+\def\buaa@degree{} % 中文首页
+\def\buaa@degreeeng{} % 英文首页
+\def\buaa@degreetitle{} % 题名页
+\def\buaa@degreehead{} % 页眉页脚
+\newcommand{\degree}[4]{%
+    \def\buaa@degree{#1}
+    \def\buaa@degreeeng{#2}
+    \def\buaa@degreetitle{#3}
+    \def\buaa@degreehead{#4}
+}
+
+\ExplSyntaxOn
+    \tl_new:N \l_@@_degree_long_tl
+    \tl_new:N \l_@@_degree_long_eng_tl
+    \tl_new:N \l_@@_degree_title_tl
+    \tl_new:N \l_@@_degree_head_tl
+
+    \bool_if:NT \g_@@_bachelor_bool {
+        \tl_set:Nn \l_@@_degree_long_tl {学士学位}
+        \tl_set:Nn \l_@@_degree_long_eng_tl {Bachelor}
+        \tl_set:Nn \l_@@_degree_title_tl {学士学位}
+        \tl_set:Nn \l_@@_degree_head_tl {学士}
+    }
+    \bool_if:NT \g_@@_master_bool {
+        \bool_if:NTF \g_@@_professional_bool {
+            \tl_set:Nn \l_@@_degree_long_tl {专业硕士学位}
+        } {
+            \tl_set:Nn \l_@@_degree_long_tl {硕士学位}
+        }
+        \tl_set:Nn \l_@@_degree_long_eng_tl {Master}
+        \tl_set:Nn \l_@@_degree_title_tl {硕士学位}
+        \tl_set:Nn \l_@@_degree_head_tl {硕士}
+    }
+    \bool_if:NT \g_@@_doctor_bool {
+        \bool_if:NTF \g_@@_professional_bool {
+            \tl_set:Nn \l_@@_degree_long_tl {专业博士学位}
+        } {
+            \tl_set:Nn \l_@@_degree_long_tl {博士学位}
+        }
+        \tl_set:Nn \l_@@_degree_long_eng_tl {Doctor of Philosophy}
+        \tl_set:Nn \l_@@_degree_title_tl {博士学位}
+        \tl_set:Nn \l_@@_degree_head_tl {博士}
+    }
+
+    \exp_args:NNV \def \buaa@degree \l_@@_degree_long_tl 
+    \exp_args:NNV \def \buaa@degreeeng \l_@@_degree_long_eng_tl 
+    \exp_args:NNV \def \buaa@degreetitle \l_@@_degree_title_tl 
+    \exp_args:NNV \def \buaa@degreehead \l_@@_degree_head_tl 
+\ExplSyntaxOff
+
+%%%%%%%%%% bachelor user info %%%%%%%%%%
+% 开题文件类别
+\def\buaa@ktclass{}
+\newcommand{\ktclass}[1]{%
+    \def\buaa@ktclass{#1}
+}
+
+%%%%%%%%%% bachelor user info %%%%%%%%%%
+% 本科生信息
+
+% 班级
+\def\buaa@class{}
+\newcommand{\class}[1]{%
+    \def\buaa@class{#1}
+}
+% 单位代码
+\def\buaa@unicode{1006}
+\newcommand{\unicode}[1]{%
+    \def\buaa@unicode{#1}
+}
+% 学号
+\def\buaa@studentID{}
+\newcommand{\studentID}[1]{%
+    \def\buaa@studentID{#1}
+}
+% 论文时间
+\def\buaa@thesisdateyear{}
+\def\buaa@thesisdatemonth{}
+\newcommand{\thesisdate}[2]{%
+    \def\buaa@thesisdateyear{#1}
+    \def\buaa@thesisdatemonth{#2}
+}
+
+%%%%%%%%%% master user info %%%%%%%%%%
+% 研究生信息
+
+% 保密等级
+\def\buaa@clevel{}
+\def\buaa@climit{}
+\newcommand{\mibao}[2]{%
+    \def\buaa@clevel{#1}
+    \def\buaa@climit{#2}
+}
+% 研究方向
+\def\buaa@direction{}
+\newcommand{\direction}[1]{
+    \def\buaa@direction{#1}
+}
+% 导师职称
+\def\buaa@teacherdegree{}
+\def\buaa@teacherdegreeeng{}
+\newcommand{\teacherdegree}[2]{%
+    \def\buaa@teacherdegree{#1}
+    \def\buaa@teacherdegreeeng{#2}
+}
+% 副导师职称
+\def\buaa@subteacherdegree{}
+\def\buaa@subteacherdegreeeng{}
+\newcommand{\subteacherdegree}[2]{%
+    \def\buaa@subteacherdegree{#1}
+    \def\buaa@subteacherdegreeeng{#2}
+}
+% 申请学位级别(题名页)
+\def\buaa@appdegree{}
+\newcommand{\applydegree}[1]{%
+    \def\buaa@appdegree{#1}
+}
+% 论文编号
+\def\buaa@thesisID{}
+\newcommand{\thesisID}[1]{%
+    \def\buaa@thesisID{#1}
+}
+% 论文提交时间
+\def\buaa@commityear{}
+\def\buaa@commitmonth{}
+\def\buaa@commitday{}
+\newcommand{\commit}[3]{%
+    \def\buaa@commityear{#1}
+    \def\buaa@commitmonth{#2}
+    \def\buaa@commitday{#3}
+}
+% 授予学位时间
+\def\buaa@awardyear{}
+\def\buaa@awardmonth{}
+\def\buaa@awardday{}
+\newcommand{\award}[3]{%
+    \def\buaa@awardyear{#1}
+    \def\buaa@awardmonth{#2}
+    \def\buaa@awardday{#3}
+}
+
 %%%%%%%%%% global package %%%%%%%%%%
 % 全局通用宏包
 
@@ -1328,244 +1566,6 @@
     \fi
     \songti
     \zihao{-4}
-}
-
-%%%%%%%%%% common user info %%%%%%%%%%
-% 用户信息
-
-% 学校名称
-\def\buaa@university{北京航空航天大学}
-\def\buaa@universityeng{Beihang University}
-\newcommand{\university}[2]{%
-    \def\buaa@university{#1}
-    \def\buaa@universityeng{#2}
-}
-% 学院
-\def\buaa@school{}
-\def\buaa@schooleng{}
-\newcommand{\school}[2]{%
-    \def\buaa@school{#1}
-    \def\buaa@schooleng{#2}
-}
-% 专业
-\def\buaa@major{}
-\def\buaa@majoreng{}
-\newcommand{\major}[2]{%
-    \def\buaa@major{#1}
-    \def\buaa@majoreng{#2}
-}
-% 论文标题和副标题
-\def\buaa@thesistitle{}
-\def\buaa@thesissubtitle{}
-\def\buaa@thesistitleeng{}
-\def\buaa@thesissubtitleeng{}
-\newcommand{\thesistitle}[4]{%
-    \def\buaa@thesistitle{#1}
-    \def\buaa@thesissubtitle{#2}
-    \def\buaa@thesistitleeng{#3}
-    \def\buaa@thesissubtitleeng{#4}
-}
-% 作者
-\def\buaa@thesisauthor{}
-\def\buaa@thesisauthoreng{}
-\newcommand{\thesisauthor}[2]{%
-    \def\buaa@thesisauthor{#1}
-    \def\buaa@thesisauthoreng{#2}
-}
-% 指导老师
-\def\buaa@teacher{}
-\def\buaa@teachereng{}
-\newcommand{\teacher}[2]{%
-    \def\buaa@teacher{#1}
-    \def\buaa@teachereng{#2}
-}
-% 副指导老师
-\def\buaa@subteacher{}
-\def\buaa@subteachereng{}
-\newcommand{\subteacher}[2]{%
-    \def\buaa@subteacher{#1}
-    \def\buaa@subteachereng{#2}
-}
-% 分类号
-\def\buaa@category{}
-\newcommand{\category}[1]{%
-    \def\buaa@category{#1}
-}
-% 论文开始时间
-\def\buaa@thesisbeginyear{}
-\def\buaa@thesisbeginmonth{}
-\def\buaa@thesisbeginday{}
-\newcommand{\thesisbegin}[3]{%
-    \def\buaa@thesisbeginyear{#1}
-    \def\buaa@thesisbeginmonth{#2}
-    \def\buaa@thesisbeginday{#3}
-}
-% 论文结束时间
-\def\buaa@thesisendyear{}
-\def\buaa@thesisendmonth{}
-\def\buaa@thesisendday{}
-\newcommand{\thesisend}[3]{%
-    \def\buaa@thesisendyear{#1}
-    \def\buaa@thesisendmonth{#2}
-    \def\buaa@thesisendday{#3}
-}
-% 答辩时间
-\def\buaa@defenseyear{}
-\def\buaa@defensemonth{}
-\def\buaa@defenseday{}
-\newcommand{\defense}[3]{%
-    \def\buaa@defenseyear{#1}
-    \def\buaa@defensemonth{#2}
-    \def\buaa@defenseday{#3}
-}
-% 中文摘要关键字
-\def\buaa@ckeyword{}
-\newcommand{\ckeyword}[1]{%
-    \def\buaa@ckeyword{#1}}
-% 英文摘要关键字
-\def\buaa@ekeyword{}
-\newcommand{\ekeyword}[1]{%
-    \def\buaa@ekeyword{#1}}
-% 学位
-\def\buaa@degree{} % 中文首页
-\def\buaa@degreeeng{} % 英文首页
-\def\buaa@degreetitle{} % 题名页
-\def\buaa@degreehead{} % 页眉页脚
-\newcommand{\degree}[4]{%
-    \def\buaa@degree{#1}
-    \def\buaa@degreeeng{#2}
-    \def\buaa@degreetitle{#3}
-    \def\buaa@degreehead{#4}
-}
-
-\ExplSyntaxOn
-    \tl_new:N \l_@@_degree_long_tl
-    \tl_new:N \l_@@_degree_long_eng_tl
-    \tl_new:N \l_@@_degree_title_tl
-    \tl_new:N \l_@@_degree_head_tl
-
-    \bool_if:NT \g_@@_bachelor_bool {
-        \tl_set:Nn \l_@@_degree_long_tl {学士学位}
-        \tl_set:Nn \l_@@_degree_long_eng_tl {Bachelor}
-        \tl_set:Nn \l_@@_degree_title_tl {学士学位}
-        \tl_set:Nn \l_@@_degree_head_tl {学士}
-    }
-    \bool_if:NT \g_@@_master_bool {
-        \bool_if:NTF \g_@@_professional_bool {
-            \tl_set:Nn \l_@@_degree_long_tl {专业硕士学位}
-        } {
-            \tl_set:Nn \l_@@_degree_long_tl {硕士学位}
-        }
-        \tl_set:Nn \l_@@_degree_long_eng_tl {Master}
-        \tl_set:Nn \l_@@_degree_title_tl {硕士学位}
-        \tl_set:Nn \l_@@_degree_head_tl {硕士}
-    }
-    \bool_if:NT \g_@@_doctor_bool {
-        \bool_if:NTF \g_@@_professional_bool {
-            \tl_set:Nn \l_@@_degree_long_tl {专业博士学位}
-        } {
-            \tl_set:Nn \l_@@_degree_long_tl {博士学位}
-        }
-        \tl_set:Nn \l_@@_degree_long_eng_tl {Doctor of Philosophy}
-        \tl_set:Nn \l_@@_degree_title_tl {博士学位}
-        \tl_set:Nn \l_@@_degree_head_tl {博士}
-    }
-
-    \exp_args:NNV \def \buaa@degree \l_@@_degree_long_tl 
-    \exp_args:NNV \def \buaa@degreeeng \l_@@_degree_long_eng_tl 
-    \exp_args:NNV \def \buaa@degreetitle \l_@@_degree_title_tl 
-    \exp_args:NNV \def \buaa@degreehead \l_@@_degree_head_tl 
-\ExplSyntaxOff
-
-%%%%%%%%%% bachelor user info %%%%%%%%%%
-% 开题文件类别
-\def\buaa@ktclass{}
-\newcommand{\ktclass}[1]{%
-    \def\buaa@ktclass{#1}
-}
-
-%%%%%%%%%% bachelor user info %%%%%%%%%%
-% 本科生信息
-
-% 班级
-\def\buaa@class{}
-\newcommand{\class}[1]{%
-    \def\buaa@class{#1}
-}
-% 单位代码
-\def\buaa@unicode{1006}
-\newcommand{\unicode}[1]{%
-    \def\buaa@unicode{#1}
-}
-% 学号
-\def\buaa@studentID{}
-\newcommand{\studentID}[1]{%
-    \def\buaa@studentID{#1}
-}
-% 论文时间
-\def\buaa@thesisdateyear{}
-\def\buaa@thesisdatemonth{}
-\newcommand{\thesisdate}[2]{%
-    \def\buaa@thesisdateyear{#1}
-    \def\buaa@thesisdatemonth{#2}
-}
-
-%%%%%%%%%% master user info %%%%%%%%%%
-% 研究生信息
-
-% 保密等级
-\def\buaa@clevel{}
-\def\buaa@climit{}
-\newcommand{\mibao}[2]{%
-    \def\buaa@clevel{#1}
-    \def\buaa@climit{#2}
-}
-% 研究方向
-\def\buaa@direction{}
-\newcommand{\direction}[1]{
-    \def\buaa@direction{#1}
-}
-% 导师职称
-\def\buaa@teacherdegree{}
-\def\buaa@teacherdegreeeng{}
-\newcommand{\teacherdegree}[2]{%
-    \def\buaa@teacherdegree{#1}
-    \def\buaa@teacherdegreeeng{#2}
-}
-% 副导师职称
-\def\buaa@subteacherdegree{}
-\def\buaa@subteacherdegreeeng{}
-\newcommand{\subteacherdegree}[2]{%
-    \def\buaa@subteacherdegree{#1}
-    \def\buaa@subteacherdegreeeng{#2}
-}
-% 申请学位级别(题名页)
-\def\buaa@appdegree{}
-\newcommand{\applydegree}[1]{%
-    \def\buaa@appdegree{#1}
-}
-% 论文编号
-\def\buaa@thesisID{}
-\newcommand{\thesisID}[1]{%
-    \def\buaa@thesisID{#1}
-}
-% 论文提交时间
-\def\buaa@commityear{}
-\def\buaa@commitmonth{}
-\def\buaa@commitday{}
-\newcommand{\commit}[3]{%
-    \def\buaa@commityear{#1}
-    \def\buaa@commitmonth{#2}
-    \def\buaa@commitday{#3}
-}
-% 授予学位时间
-\def\buaa@awardyear{}
-\def\buaa@awardmonth{}
-\def\buaa@awardday{}
-\newcommand{\award}[3]{%
-    \def\buaa@awardyear{#1}
-    \def\buaa@awardmonth{#2}
-    \def\buaa@awardday{#3}
 }
 
 %%%%% 'buaathesis.cls' %%%%% END
