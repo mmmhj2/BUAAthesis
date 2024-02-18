@@ -890,8 +890,6 @@
         \\
     \end{tabular}
 }
-\NewDocumentCommand{\buaathesis@BachelorProposalTabular}{}{\@@_cs_bachelor_proposal_tabular:}
-
 \cs_new:Nn \@@_cs_bachelor_tabular: {
     \begin{tabular}{cc}
         学 \hspace{0.75em} 院 \hspace{0.75em} 名 \hspace{0.75em} 称 \hspace{0.75em} &
@@ -904,8 +902,6 @@
         \ulinecvcbc{\buaa@teacher \bool_if:NT \g_@@_twoteacher_bool {\quad \buaa@subteacher} } \\
     \end{tabular}
 }
-\NewDocumentCommand{\buaathesis@@BachelorTabular}{}{\@@_cs_bachelor_tabular:}
-
 \cs_new:Nn \@@_cs_graduate_proposal_tabular: {
     \begin{tabular}{c~p{0.55\textwidth}<{\raggedright}}
         \hwkaiti \textbf{题 \hspace{2em} 目}  : 
@@ -927,8 +923,6 @@
         & \hwkaiti\buaa@teacher \bool_if:nT \g_@@_twoteacher_bool {\quad \buaa@subteacher}\\
     \end{tabular}
 }
-\NewDocumentCommand{\buaathesis@GraduateProposalTabular}{}{\@@_cs_graduate_proposal_tabular:}
-
 \cs_new:Nn \@@_cs_graduate_tabular: {
     \begin{tabular}[b]{ll}
         作 \hspace{0.5em} 者 \hspace{0.5em} 姓 \hspace{0.5em} 名 \hspace{0.5em} & \buaa@thesisauthor \\[.3ex]
@@ -945,155 +939,152 @@
         培 \hspace{0.5em} 养 \hspace{0.5em} 学 \hspace{0.5em} 院 \hspace{0.5em} & \buaa@school 学院\\
     \end{tabular}
 }
-\NewDocumentCommand{\buaathesis@GraduateTabular}{}{\@@_cs_graduate_tabular:}
-
-\ExplSyntaxOff
+\cs_new:Nn \@@_cs_bachelor_proposal_cover_page: {
+    \begin{titlepage}
+        % 第二个()里的参数表示左移35pt，下移55pt
+        \hfill \vskip 45bp
+        \begin{center}
+            \includegraphics[width=310bp]{figure/buaaname.pdf}
+            \\ \vskip 60bp \hspace{0.5em} \\
+            \centerline{\zihao{1} \heiti \textbf{\buaa@degree 论文\buaa@ktclass}}
+            \hspace{0.5em} \\ \vskip 60bp \hspace{0.5em} \\
+            { \zihao{-3} \heiti \@@_cs_bachelor_proposal_tabular: }
+            \hspace{0.5em} \\ \vskip 75bp \hspace{0.5em} \\
+            \centerline{
+                \heiti\zihao{3}\textbf{\buaa@university \buaa@school 学院}
+            }
+            \vskip 20bp
+            \centerline{
+                \heiti\zihao{-3}
+                \buaa@thesisdateyear \hspace{0.5em} 年 \hspace{0.5em} 
+                \buaa@thesisdatemonth \hspace{0.5em} 月
+            }
+        \end{center}
+    \end{titlepage}
+}
+\cs_new:Nn \@@_cs_bachelor_cover_page: {
+    \begin{titlepage}
+        % 第二个()里的参数表示左移35pt，下移55pt
+        \begin{picture}(0,0)(35,55)
+            \includegraphics[width=90pt]{figure/buaamark.pdf}
+        \end{picture}
+        \hfill
+        \raisebox{-.2cm}[0pt][0pt]{
+            \zihao{5}\heiti
+            \begin{tabular}{c}
+                单位代码 \hspace{0.25em} \ulinecvrtc{\bf\buaa@unicode}\\[.1ex]
+                学 \qquad 号 \hspace{0.25em} \ulinecvrtc{\bf\buaa@studentID}\\[.1ex]
+                分 \hspace{0.5em} 类 \hspace{0.5em} 号 \hspace{0.25em} \ulinecvrtc{\bf\buaa@category}\\
+            \end{tabular}
+        }
+        \vskip 95bp
+        \begin{center}
+            \includegraphics[width=360bp]{figure/buaaname.pdf}
+            \vskip 45bp
+            \centerline{\zihao{-0}\heiti 毕业设计(论文)}
+            \hspace{0.5em} \\ \vspace*{\stretch{4}}
+            \begin{minipage}[h]{.8\textwidth}
+                \centering{\heiti\zihao{2}\buaa@thesistitle}
+            \end{minipage}
+            \vskip 20bp
+            \begin{minipage}[h]{.75\textwidth}
+                \centering{\heiti\zihao{3}\buaa@thesissubtitle}
+            \end{minipage}
+            \vspace*{\stretch{3}} \hspace{0.5em} \\
+            {
+                \zihao{-3}\heiti
+                \@@_cs_bachelor_tabular:
+            }
+            \vskip 60bp
+            \centerline{
+                \heiti\zihao{-3}
+                \buaa@thesisdateyear \hspace{0.5em} 年 \hspace{0.5em} 
+                \buaa@thesisdatemonth \hspace{0.5em} 月
+            }
+        \end{center}
+    \end{titlepage}
+}
+\cs_new:Nn \@@_cs_graduate_proposal_cover_page: {
+    \begin{titlepage}
+        % 第二个()里的参数表示左移35pt，下移55pt
+        \hfill
+        \vskip 45bp
+        \begin{center}
+            \includegraphics[width=310bp]{figure/buaaname.pdf}
+            \hspace{0.5em} \\ \vskip 60bp \hspace{0.5em}\\
+            \centerline{\zihao{1} \heiti \textbf{\buaa@degree 论文\buaa@ktclass}}
+            \hspace{0.5em}\\ \vskip 60bp \hspace{0.5em}\\
+            { \zihao{-3} \heiti \@@_cs_graduate_proposal_tabular: }
+            \hspace{0.5em}\\ \vskip 75bp \hspace{0.5em}\\
+            \centerline{\heiti\zihao{3}\textbf{\buaa@university\buaa@school 学院}}
+            \vskip 20bp
+            \centerline{
+                \heiti\zihao{-3}
+                \buaa@thesisdateyear \hspace{0.5em} 年 \hspace{0.5em}
+                \buaa@thesisdatemonth \hspace{0.5em} 月
+            }
+        \end{center}
+    \end{titlepage}
+}
+\cs_new:Nn \@@_cs_graduate_cover_page: {
+    \begin{titlepage}
+        \begin{center}
+            \begin{spacing}{1.5}
+                {
+                    \zihao{5}\heiti\bfseries
+                    \begin{flushleft}
+                        中图分类号：\buaa@category  \\
+                        论\,\,文\,\,编\,\,号：\buaa@thesisID\\
+                        \bool_if:nTF \g_@@_classified_bool {
+                            \buaa@clevel\ding{73} \hspace{0.5em} \buaa@climit \\
+                        } {
+                            \vskip 20bp
+                        }
+                    \end{flushleft}
+                }
+                \vskip 60bp
+                \includegraphics[width=.5\textwidth]{figure/buaaname_ch.pdf}
+                \vskip 30bp
+                \centerline{\zihao{0}\ziju{0.2}\hwxingkai\buaa@degree 论文}
+                \hspace{0.5em} \\
+                %\vskip 100bp
+                \vspace*{\stretch{5}}
+                \begin{minipage}[h]{.85\textwidth}
+                    \begin{spacing}{3}
+                        % actually, it should be 1.5, but I think 3 will be prefect.
+                        \centering{\zihao{-1}\songti\bfseries\buaa@thesistitle}
+                    \end{spacing}
+                \end{minipage} \par
+                %\vspace{5bp}
+                % the space between title and subtitle, however, it seems doesn't work.
+                \begin{minipage}[h]{.75\textwidth}
+                    \begin{spacing}{1.5}
+                        \centering{\heiti\zihao{3}\buaa@thesissubtitle}
+                    \end{spacing}
+                \end{minipage}
+                \vspace*{\stretch{4}}
+                \hspace{0.5em} \\
+                %\vskip 80bp
+                {
+                    \heiti\zihao{4}\ziju{0.2}
+                    \@@_cs_graduate_tabular:
+                }
+            \end{spacing}
+        \end{center}
+    \end{titlepage}
+}
 
 % 中文首页
-\newcommand{\titlech}{
-    \ifbuaa@bachelor
-        \ifbuaa@ktreport
-            \begin{titlepage}
-                % 第二个()里的参数表示左移35pt，下移55pt
-                \hfill
-                \vskip 45bp
-                \begin{center}
-                    \includegraphics[width=310bp]{figure/buaaname.pdf}
-                    ~~\\
-                    \vskip 60bp
-                    ~~\\
-                    \centerline{\zihao{1} \heiti \textbf{\buaa@degree 论文\buaa@ktclass}}
-                    ~~\\
-                    \vskip 60bp
-                    ~~\\
-                    {
-                        \zihao{-3}\heiti
-                        \buaa@BachelorProposalTabular
-                    }
-                    ~~\\
-                    \vskip 75bp
-                    ~~\\
-                    \centerline{\heiti\zihao{3}\textbf{\buaa@university\buaa@school 学院}}
-                    \vskip 20bp
-                    \centerline{\heiti\zihao{-3}\buaa@thesisdateyear ~~年~~\buaa@thesisdatemonth ~~月}
-                \end{center}
-            \end{titlepage}
-        \else
-            \begin{titlepage}
-                % 第二个()里的参数表示左移35pt，下移55pt
-                \begin{picture}(0,0)(35,55)
-                    \includegraphics[width=90pt]{figure/buaamark.pdf}
-                \end{picture}
-                \hfill
-                \raisebox{-.2cm}[0pt][0pt]{
-                    \zihao{5}\heiti
-                    \begin{tabular}{c}
-                        单位代码~\ulinecvrtc{\bf\buaa@unicode}\\[.1ex]
-                        学\qquad 号~\ulinecvrtc{\bf\buaa@studentID}\\[.1ex]
-                        分~~类~~号~\ulinecvrtc{\bf\buaa@category}\\
-                    \end{tabular}
-                }
-                \vskip 95bp
-                \begin{center}
-                    \includegraphics[width=360bp]{figure/buaaname.pdf}
-                    \vskip 45bp
-                    \centerline{\zihao{-0}\heiti 毕业设计(论文)}
-                    ~~\\
-                    \vspace*{\stretch{4}}
-                    \begin{minipage}[h]{.8\textwidth}
-                        \centering{\heiti\zihao{2}\buaa@thesistitle}
-                    \end{minipage}
-                    \vskip 20bp
-                    \begin{minipage}[h]{.75\textwidth}
-                        \centering{\heiti\zihao{3}\buaa@thesissubtitle}
-                    \end{minipage}
-                    \vspace*{\stretch{3}}
-                    ~~\\
-                    {
-                        \zihao{-3}\heiti
-                        \buaathesis@@BachelorTabular
-                    }
-                    \vskip 60bp
-                    \centerline{\heiti\zihao{-3}\buaa@thesisdateyear ~~年~~\buaa@thesisdatemonth ~~月}
-                \end{center}
-            \end{titlepage}
-        \fi
-    \else
-        \ifbuaa@ktreport
-            \begin{titlepage}
-                % 第二个()里的参数表示左移35pt，下移55pt
-                \hfill
-                \vskip 45bp
-                \begin{center}
-                    \includegraphics[width=310bp]{figure/buaaname.pdf}
-                    ~~\\
-                    \vskip 60bp
-                    ~~\\
-                    \centerline{\zihao{1} \heiti \textbf{\buaa@degree 论文\buaa@ktclass}}
-                    ~~\\
-                    \vskip 60bp
-                    ~~\\
-                    {
-                        \zihao{-3}\heiti
-                        \buaathesis@GraduateProposalTabular
-                    }
-                    ~~\\
-                    \vskip 75bp
-                    ~~\\
-                    \centerline{\heiti\zihao{3}\textbf{\buaa@university\buaa@school 学院}}
-                    \vskip 20bp
-                    \centerline{\heiti\zihao{-3}\buaa@thesisdateyear ~~年~~\buaa@thesisdatemonth ~~月}
-                \end{center}
-            \end{titlepage}
-        \else
-            \begin{titlepage}
-                \begin{center}
-                    \begin{spacing}{1.5}
-                        {
-                            \zihao{5}\heiti\bfseries
-                            \begin{flushleft}
-                                中图分类号：\buaa@category  \\
-                                论\,\,文\,\,编\,\,号：\buaa@thesisID\\
-                                \ifbuaa@classfied
-                                    \buaa@clevel\ding{73}~~\buaa@climit \\
-                                \else
-                                    \vskip 20bp
-                                \fi
-                            \end{flushleft}
-                        }
-                        \vskip 60bp
-                        \includegraphics[width=.5\textwidth]{figure/buaaname_ch.pdf}
-                        \vskip 30bp
-                        \centerline{\zihao{0}\ziju{0.2}\hwxingkai\buaa@degree 论文}
-                        ~~\\
-                        %\vskip 100bp
-                        \vspace*{\stretch{5}}
-                        \begin{minipage}[h]{.85\textwidth}
-                            \begin{spacing}{3}
-                                % actually, it should be 1.5, but I think 3 will be prefect.
-                                \centering{\zihao{-1}\songti\bfseries\buaa@thesistitle}
-                            \end{spacing}
-                        \end{minipage}
-                        %\vspace{5bp}
-                        % the space between title and subtitle, however, it seems doesn't work.
-                        \begin{minipage}[h]{.75\textwidth}
-                            \begin{spacing}{1.5}
-                                \centering{\heiti\zihao{3}\buaa@thesissubtitle}
-                            \end{spacing}
-                        \end{minipage}
-                        \vspace*{\stretch{4}}
-                        ~~\\
-                        %\vskip 80bp
-                        {
-                            \heiti\zihao{4}\ziju{0.2}
-                            \buaathesis@GraduateTabular
-                        }
-                    \end{spacing}
-                \end{center}
-            \end{titlepage}
-        \fi
-    \fi
+\cs_new:Nn \@@_cs_cover_page: {
+    \bool_case:n {
+        { \g_@@_bachelor_bool && \g_@@_proposal_bool } { \@@_cs_bachelor_proposal_cover_page: }
+        { \g_@@_bachelor_bool } { \@@_cs_bachelor_cover_page: }
+        { (\g_@@_master_bool || \g_@@_doctor_bool) && \g_@@_proposal_bool } { \@@_cs_graduate_proposal_cover_page: }
+        { \g_@@_master_bool || \g_@@_doctor_bool } { \@@_cs_graduate_cover_page:}
+    }
 }
+
+\ExplSyntaxOff
 
 % 英文首页
 \newcommand{\titleeng}{
@@ -1481,7 +1472,7 @@
 % 首页重定义
 
 \RenewDocumentCommand{\maketitle}{}{
-    \titlech
+    \@@_cs_cover_page:
     \bool_case:n {
         { \g_@@_bachelor_bool && \g_@@_proposal_bool } { \pagestyle{fancy} \frontmatter }
         { \g_@@_bachelor_bool } {
