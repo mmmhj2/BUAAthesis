@@ -348,8 +348,6 @@
     \tl_set:Nn \l_@@_award_day_tl {#3}
 }
 
-\ExplSyntaxOff
-
 %%%%%%%%%% font %%%%%%%%%%
 % 数学相关和字体设置
 
@@ -359,7 +357,7 @@
 
 % 主要字体为Times New Roman和宋体
 % 模板某些标题需要华文行楷和32号字
-\setmainfont{Times New Roman}
+\setmainfont{Times~New~Roman}
 % 不需要设置CJKmainfont，ctex 宏包已经很好的处理了
 % 不仅设置了粗体为黑体，斜体为楷体，还兼容了winfonts和adobefonts
 % 直接设置反而会在只有adobefonts的情况下报错
@@ -407,22 +405,20 @@
 }
 \savegeometry{mastergeometry}
 
-\ExplSyntaxOn
-    \bool_if:NTF \g_@@_bachelor_bool {
-        \loadgeometry{bachelorgeometry}
-    }{
-        \loadgeometry{mastergeometry}
-    }
-\ExplSyntaxOff
+\bool_if:NTF \g_@@_bachelor_bool {
+    \loadgeometry{bachelorgeometry}
+}{
+    \loadgeometry{mastergeometry}
+}
 
 %%%%%%%%%% space %%%%%%%%%%
 % 其他间距
 
 \renewcommand{\baselinestretch}{1.5}
 \setlength{\parindent}{2em}
-\setlength{\floatsep}{3pt plus 3pt minus 2pt}      % 图形之间或图形与正文之间的距离
-\setlength{\abovecaptionskip}{10pt plus 1pt minus 1pt} % 图形中的图与标题之间的距离
-\setlength{\belowcaptionskip}{3pt plus 1pt minus 2pt} % 表格中的表与标题之间的距离
+\setlength{\floatsep}{3pt~plus~3pt~minus~2pt}      % 图形之间或图形与正文之间的距离
+\setlength{\abovecaptionskip}{10pt~plus~1pt~minus~1pt} % 图形中的图与标题之间的距离
+\setlength{\belowcaptionskip}{3pt~plus~1pt~minus~2pt} % 表格中的表与标题之间的距离
 
 %%%%%%%%%% header & footer %%%%%%%%%%
 % 页眉页脚
@@ -451,7 +447,6 @@
     \fancyfoot[C]{\thepage}
 }
 
-\ExplSyntaxOn
 \fancypagestyle{mainmatter}{
     \fancyhead{}
     \fancyfoot{}
@@ -512,7 +507,6 @@
     }
     \renewcommand{\headrulewidth}{0.5bp} % 页眉线宽度
 }
-\ExplSyntaxOff
 
 \fancypagestyle{plain}{
     \pagestyle{fancy}
@@ -552,34 +546,31 @@
     },
 }
 
-\ExplSyntaxOn
-    \bool_if:NTF \g_@@_bachelor_bool {
-        \ctexset{
-            chapter={
-                name={,},
-                number={\arabic{chapter}},
-            },
-            section={
-                format={\zihao{-4}\heiti},
-            },
-        }
-    }{
-        \ctexset{
-            chapter={
-                name={第,章},
-                number={\chinese{chapter}},
-            },
-            section={
-                format={\zihao{4}\heiti},
-            },
-        }
+\bool_if:NTF \g_@@_bachelor_bool {
+    \ctexset{
+        chapter={
+            name={,},
+            number={\arabic{chapter}},
+        },
+        section={
+            format={\zihao{-4}\heiti},
+        },
     }
-\ExplSyntaxOff
+}{
+    \ctexset{
+        chapter={
+            name={第,章},
+            number={\chinese{chapter}},
+        },
+        section={
+            format={\zihao{4}\heiti},
+        },
+    }
+}
 
 %%%%%%%%%% contents %%%%%%%%%%
 % 目录
 
-\ExplSyntaxOn
     \bool_if:nTF \g_@@_bachelor_bool {
         \titlecontents{chapter}[0pt]{\heiti\zihao{-4}}{\thecontentslabel\ }{}
             {\hspace{.5em}\titlerule*[4pt]{$\cdot$}\contentspage}
@@ -595,7 +586,7 @@
         \titlecontents{subsection}[4em]{\vspace{-0.2\baselineskip}\songti\zihao{5}}{\thecontentslabel\ }{}
             {\hspace{.5em}\titlerule*[4pt]{$\cdot$}{\zihao{-4}\contentspage}}[\vspace{0.1\baselineskip}]
     }
-\ExplSyntaxOff
+
 
 % 取消图片、表格目录中的章节空格
 \newcommand*{\noaddvspace}{\renewcommand*{\addvspace}[1]{}}
@@ -610,7 +601,7 @@
 
 \titlecontents{table}[0pt]{\vspace{0.15\baselineskip}\songti\zihao{-4}}{\makebox[3em][l]{表~\thecontentslabel\quad}}{}
     {\hspace{.5em}\titlerule*[4pt]{$\cdot$}\contentspage}[\vspace{0.15\baselineskip}]
-
+\ExplSyntaxOff
 %%%%%%%%%% cross reference %%%%%%%%%%
 % 交叉引用
 
@@ -676,7 +667,6 @@
     \renewcommand{\arraystretch}{1}
 }
 
-\ExplSyntaxOff
 %%%%%%%%%% list %%%%%%%%%%
 % 列表
 
@@ -721,23 +711,21 @@
     xrightmargin=3em,
 }
 
-\ExplSyntaxOn
-    \bool_if:nTF \g_@@_color_bool {
-        \lstset{
-            numberstyle=\color{gray},
-            keywordstyle=\color{blue},
-            commentstyle=\color{dkgreen},
-            stringstyle=\color{mauve},
-        }
-    }{
-        \lstset{
-            numberstyle=\color{black},
-            keywordstyle=\color{black},
-            commentstyle=\color{black},
-            stringstyle=\color{black},
-        }
+\bool_if:nTF \g_@@_color_bool {
+    \lstset{
+        numberstyle=\color{gray},
+        keywordstyle=\color{blue},
+        commentstyle=\color{dkgreen},
+        stringstyle=\color{mauve},
     }
-\ExplSyntaxOff
+}{
+    \lstset{
+        numberstyle=\color{black},
+        keywordstyle=\color{black},
+        commentstyle=\color{black},
+        stringstyle=\color{black},
+    }
+}
 
 % 重命名Listings标题头
 \renewcommand{\lstlistingname}{代码}
@@ -766,12 +754,10 @@
 %%%%%%%%%% file directory %%%%%%%%%%
 % 文件目录
 
-\ExplSyntaxOn
-    \bool_if:nT \g_@@_color_bool {
-        \renewcommand*\DTstylecomment{\ttfamily\color{dkgreen}}
-        \renewcommand*\DTstyle{\ttfamily\color{red}}
-    }
-\ExplSyntaxOff
+\bool_if:nT \g_@@_color_bool {
+    \renewcommand*\DTstylecomment{\ttfamily\color{dkgreen}}
+    \renewcommand*\DTstyle{\ttfamily\color{red}}
+}
 
 %%%%%%%%%% caption %%%%%%%%%%
 % 图表标题
@@ -783,37 +769,35 @@
 \DeclareCaptionFormat{mastertable}{\bf\songti\zihao{5}{#1\textrm{#2}#3}}
 \DeclareCaptionFormat{masterlstlisting}{\bf\songti\zihao{5}{#1\textrm{#2}#3}}
 
-\ExplSyntaxOn
-    \bool_if:nTF \g_@@_bachelor_bool {
-        % 本科无论是否是开题报告，图表序号都和章节有关
-        \captionsetup[figure]{format=bachelorfigure,labelsep=quad}
-        \captionsetup[table]{format=bachelortable,labelsep=quad}
-        \captionsetup[lstlisting]{format=bachelorlstlisting,labelsep=quad}
+\bool_if:nTF \g_@@_bachelor_bool {
+    % 本科无论是否是开题报告，图表序号都和章节有关
+    \captionsetup[figure]{format=bachelorfigure,labelsep=quad}
+    \captionsetup[table]{format=bachelortable,labelsep=quad}
+    \captionsetup[lstlisting]{format=bachelorlstlisting,labelsep=quad}
+    \renewcommand{\thefigure}{\arabic{chapter}.\arabic{figure}}
+    \renewcommand{\thetable}{\arabic{chapter}.\arabic{table}}
+    \renewcommand{\theequation}{\arabic{chapter}.\arabic{equation}}
+} {
+        % ktreport 中图标序号跟章节相关
+    \bool_if:nTF \g_@@_proposal_bool {
+        \captionsetup[figure]{format=masterfigure,labelsep=quad}
+        \captionsetup[table]{format=mastertable,labelsep=quad}
+        \captionsetup[lstlisting]{format=masterlstlisting,labelsep=quad}
         \renewcommand{\thefigure}{\arabic{chapter}.\arabic{figure}}
         \renewcommand{\thetable}{\arabic{chapter}.\arabic{table}}
         \renewcommand{\theequation}{\arabic{chapter}.\arabic{equation}}
     } {
-         % ktreport 中图标序号跟章节相关
-        \bool_if:nTF \g_@@_proposal_bool {
-            \captionsetup[figure]{format=masterfigure,labelsep=quad}
-            \captionsetup[table]{format=mastertable,labelsep=quad}
-            \captionsetup[lstlisting]{format=masterlstlisting,labelsep=quad}
-            \renewcommand{\thefigure}{\arabic{chapter}.\arabic{figure}}
-            \renewcommand{\thetable}{\arabic{chapter}.\arabic{table}}
-            \renewcommand{\theequation}{\arabic{chapter}.\arabic{equation}}
-        } {
-            \@removefromreset{table}{chapter}
-            \@removefromreset{figure}{chapter}
-            %使图表的标号与章节无关
-            \captionsetup[figure]{format=masterfigure,labelsep=quad}
-            \captionsetup[table]{format=mastertable,labelsep=quad}
-            \captionsetup[lstlisting]{format=masterlstlisting,labelsep=quad}
-            \renewcommand{\thefigure}{\arabic{figure}}
-            \renewcommand{\thetable}{\arabic{table}}
-            \renewcommand{\theequation}{\arabic{chapter}.\arabic{equation}}
-        }
+        \@removefromreset{table}{chapter}
+        \@removefromreset{figure}{chapter}
+        %使图表的标号与章节无关
+        \captionsetup[figure]{format=masterfigure,labelsep=quad}
+        \captionsetup[table]{format=mastertable,labelsep=quad}
+        \captionsetup[lstlisting]{format=masterlstlisting,labelsep=quad}
+        \renewcommand{\thefigure}{\arabic{figure}}
+        \renewcommand{\thetable}{\arabic{table}}
+        \renewcommand{\theequation}{\arabic{chapter}.\arabic{equation}}
     }
-\ExplSyntaxOff
+}
 
 % 图片表格标题命令，主要用于混排
 \newcommand\figcaption{\def\@captype{figure}\caption}
@@ -823,66 +807,66 @@
 % 杂项
 
 % 设置<附录>的图表编号与当前附录章号关联
-\ExplSyntaxOn
-    \newcommand{\rmrelation}{
-        % 图、表、公式编号随 chapter 清零
-        \@addtoreset{figure}{chapter}
-        \@addtoreset{table}{chapter}
-        \@addtoreset{equation}{chapter}
-        %图、表、公式编号章节关联
-        \renewcommand{\thefigure}{
-            \bool_if:NT {
-                \int_compare_p:nNn { \c@chapter } > { 0 }
-            } {
-                \thechapter.
-            }
-            \@arabic\c@figure
-        }
-        \renewcommand{\thetable}{
-            \bool_if:NT {
-                \int_compare_p:nNn { \c@chapter } > { 0 }
-            } {
-                \thechapter.
-            }
-            \@arabic\c@table
-        }
-        \renewcommand{\theequation}{
-            \bool_if:NT {
-                \int_compare_p:nNn { \c@chapter } > { 0 }
-            } {
-                \thechapter.
-            }
-            \@arabic\c@equation
-        }
-    }
-    \let\oldappendix\appendix
-    \renewcommand{\appendix}{
-        \oldappendix\rmrelation
-    }
 
-    % 正文前的页码设置位大写罗马数字
-    \renewcommand{\frontmatter}{
-        \cleardoublepage
-        \@mainmatterfalse
-        \bool_if:nTF \g_@@_bachelor_bool {
-            \pagenumbering{Roman}
+\newcommand{\rmrelation}{
+    % 图、表、公式编号随 chapter 清零
+    \@addtoreset{figure}{chapter}
+    \@addtoreset{table}{chapter}
+    \@addtoreset{equation}{chapter}
+    %图、表、公式编号章节关联
+    \renewcommand{\thefigure}{
+        \bool_if:NT {
+            \int_compare_p:nNn { \c@chapter } > { 0 }
         } {
-            \pagenumbering{roman}
+            \thechapter.
         }
+        \@arabic\c@figure
     }
+    \renewcommand{\thetable}{
+        \bool_if:NT {
+            \int_compare_p:nNn { \c@chapter } > { 0 }
+        } {
+            \thechapter.
+        }
+        \@arabic\c@table
+    }
+    \renewcommand{\theequation}{
+        \bool_if:NT {
+            \int_compare_p:nNn { \c@chapter } > { 0 }
+        } {
+            \thechapter.
+        }
+        \@arabic\c@equation
+    }
+}
+\let\oldappendix\appendix
+\renewcommand{\appendix}{
+    \oldappendix\rmrelation
+}
 
-    % 保证偶数页结束章节
-    \newcommand{\clearemptydoublepage}{%
-        \clearpage
-        \legacy_if:nT { @twoside } {
-            \int_if_odd:nF { \c@page } {
-                \hbox{} \thispagestyle{empty} \newpage
-                \legacy_if:nT { @twocolumn } {
-                    \hbox{}\newpage
-                }
+% 正文前的页码设置位大写罗马数字
+\renewcommand{\frontmatter}{
+    \cleardoublepage
+    \@mainmatterfalse
+    \bool_if:nTF \g_@@_bachelor_bool {
+        \pagenumbering{Roman}
+    } {
+        \pagenumbering{roman}
+    }
+}
+
+% 保证偶数页结束章节
+\newcommand{\clearemptydoublepage}{%
+    \clearpage
+    \legacy_if:nT { @twoside } {
+        \int_if_odd:nF { \c@page } {
+            \hbox{} \thispagestyle{empty} \newpage
+            \legacy_if:nT { @twocolumn } {
+                \hbox{}\newpage
             }
         }
     }
+}
 \ExplSyntaxOff
 %%%%%%%%%% index %%%%%%%%%%
 % 首页
