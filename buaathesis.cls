@@ -571,21 +571,21 @@
 %%%%%%%%%% contents %%%%%%%%%%
 % 目录
 
-    \bool_if:nTF \g_@@_bachelor_bool {
-        \titlecontents{chapter}[0pt]{\heiti\zihao{-4}}{\thecontentslabel\ }{}
-            {\hspace{.5em}\titlerule*[4pt]{$\cdot$}\contentspage}
-        \titlecontents{section}[2em]{\vspace{0.1\baselineskip}\songti\zihao{-4}}{\thecontentslabel\ }{}
-            {\hspace{.5em}\titlerule*[4pt]{$\cdot$}\contentspage}
-        \titlecontents{subsection}[4em]{\vspace{0.1\baselineskip}\songti\zihao{-4}}{\thecontentslabel\ }{}
-            {\hspace{.5em}\titlerule*[4pt]{$\cdot$}\contentspage}
-    } {
-        \titlecontents{chapter}[0pt]{\vspace{-0.25\baselineskip}\heiti\zihao{4}}{\thecontentslabel\ }{}
-            {\hspace{.5em}\titlerule*[4pt]{$\cdot$}{\zihao{-4}\contentspage}}[\vspace{0.07\baselineskip}]
-        \titlecontents{section}[2em]{\songti\zihao{-4}}{\thecontentslabel\ }{}
-            {\hspace{.5em}\titlerule*[4pt]{$\cdot$}{\zihao{-4}\contentspage}}[\vspace{0.1\baselineskip}]
-        \titlecontents{subsection}[4em]{\vspace{-0.2\baselineskip}\songti\zihao{5}}{\thecontentslabel\ }{}
-            {\hspace{.5em}\titlerule*[4pt]{$\cdot$}{\zihao{-4}\contentspage}}[\vspace{0.1\baselineskip}]
-    }
+\bool_if:nTF \g_@@_bachelor_bool {
+    \titlecontents{chapter}[0pt]{\heiti\zihao{-4}}{\thecontentslabel\ }{}
+        {\hspace{.5em}\titlerule*[4pt]{$\cdot$}\contentspage}
+    \titlecontents{section}[2em]{\vspace{0.1\baselineskip}\songti\zihao{-4}}{\thecontentslabel\ }{}
+        {\hspace{.5em}\titlerule*[4pt]{$\cdot$}\contentspage}
+    \titlecontents{subsection}[4em]{\vspace{0.1\baselineskip}\songti\zihao{-4}}{\thecontentslabel\ }{}
+        {\hspace{.5em}\titlerule*[4pt]{$\cdot$}\contentspage}
+} {
+    \titlecontents{chapter}[0pt]{\vspace{-0.25\baselineskip}\heiti\zihao{4}}{\thecontentslabel\ }{}
+        {\hspace{.5em}\titlerule*[4pt]{$\cdot$}{\zihao{-4}\contentspage}}[\vspace{0.07\baselineskip}]
+    \titlecontents{section}[2em]{\songti\zihao{-4}}{\thecontentslabel\ }{}
+        {\hspace{.5em}\titlerule*[4pt]{$\cdot$}{\zihao{-4}\contentspage}}[\vspace{0.1\baselineskip}]
+    \titlecontents{subsection}[4em]{\vspace{-0.2\baselineskip}\songti\zihao{5}}{\thecontentslabel\ }{}
+        {\hspace{.5em}\titlerule*[4pt]{$\cdot$}{\zihao{-4}\contentspage}}[\vspace{0.1\baselineskip}]
+}
 
 
 % 取消图片、表格目录中的章节空格
@@ -1212,7 +1212,7 @@
 %%%%%%%%%% announce %%%%%%%%%%
 % 本科生声明页
 
-\newcommand{\announce}{%
+\cs_new:Nn \@@_cs_bachelor_declaration_page: {
     \clearemptydoublepage \thispagestyle{empty} \vspace*{54bp}
     \centerline{\bf\zihao{-2}\songti 本人声明}
     \vskip 27bp
@@ -1277,7 +1277,7 @@
 }
 % 任务书
 
-\cs_new:Npn \@@_cs_bachelor_assign: {
+\cs_new:Npn \@@_cs_bachelor_assignment_page: {
     \newpage \thispagestyle{empty} \parindent=0pt \songti
     {
         \zihao{2}
@@ -1354,8 +1354,7 @@
 
 %%%%%%%%%% nominate %%%%%%%%%%
 % 研究生提名页
-
-\NewDocumentCommand{\timingye}{}{
+\cs_new:Nn \@@_cs_graduate_title_page: {
     \clearemptydoublepage \thispagestyle{empty}
     \begin{flushleft}
         {
@@ -1427,7 +1426,7 @@
 %%%%%%%%%% creation and use %%%%%%%%%%
 % 研究生独创性声明和授权书
 
-\NewDocumentCommand{\creationanduse}{}{
+\cs_new:Nn \@@_cs_graduate_declaration_page: {
     \clearemptydoublepage \thispagestyle{empty}
     \vspace*{50bp}
     \centerline{\zihao{3}\heiti 关于学位论文的独创性声明}
@@ -1454,8 +1453,6 @@
     \ 学位论文作者签名：\uline{\mbox{\hspace{7em}}}\hspace{5em}日期：\hspace{7ex}年\hspace{5ex}月\hspace{5ex}日\par
     \ 指导教师签名：\uline{\mbox{\hspace{9em}}}\hspace{5em}日期：\hspace{7ex}年\hspace{5ex}月\hspace{5ex}日}
 }
-
-
 
 %%%%%%%%%% denotation %%%%%%%%%%
 % 符号对照表
@@ -1490,17 +1487,17 @@
         { \g_@@_bachelor_bool } {
             \pagestyle{empty}
             \loadgeometry{bachelortaskgeometry}
-            \@@_cs_bachelor_assign:
+            \@@_cs_bachelor_assignment_page:
             \loadgeometry{bachelorgeometry}
-            \announce                 %本科生声明
+            \@@_cs_bachelor_declaration_page:                 %本科生声明
             \pagestyle{fancy}
             \frontmatter
         }
         { (\g_@@_master_bool || \g_@@_doctor_bool) && \g_@@_proposal_bool } { \clearemptydoublepage \frontmatter }
         { \g_@@_master_bool || \g_@@_doctor_bool } {
             \titleeng                 %研究生英文封面
-            \timingye                 %研究生题名页
-            \creationanduse           %研究生独创性声明和使用授权书
+            \@@_cs_graduate_title_page:                 %研究生题名页
+            \@@_cs_graduate_declaration_page:           %研究生独创性声明和使用授权书
             \clearemptydoublepage
             \frontmatter
         }
