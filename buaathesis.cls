@@ -180,7 +180,7 @@
     \tl_set:Nn \l_@@_teacher_two_eng_tl {#2}
 
     \regex_match:nnTF {.+}{ \tl_use:N \l_@@_teacher_two_tl }{
-        \bool_gset:Nn \g_@@_twoteacher_bool { true }
+        \bool_gset_true:N \g_@@_twoteacher_bool
 
         \msg_new:nnn {buaathesis}{autotwoteacher}{
             subteacher~command~was~issued,~and~twoteacher~option~will~be~automatically~selected.
@@ -1176,116 +1176,86 @@
 
 %%%%%%%%%% abstract %%%%%%%%%%
 % 摘要
-
+\ExplSyntaxOn
 % 中文摘要
-\newenvironment{cabstract}{%
-    \newpage
-    \vspace*{2bp}
-    \ifbuaa@bachelor
+\NewDocumentEnvironment{cabstract}{}{
+    \newpage \vspace*{2bp}
+    \bool_if:NT \g_@@_bachelor_bool {
         \begin{center}
             \begin{minipage}[h]{.75\textwidth}
-                \centering{\zihao{3}\heiti\buaa@thesistitle}
-            \end{minipage}
+                \centering{\zihao{3} \heiti \tl_use:N \l_@@_thesis_title_tl }
+            \end{minipage} \par
             \begin{minipage}[h]{.8\textwidth}
                 \begin{flushright}
-                    {\zihao{3}\heiti\buaa@thesissubtitle}
+                    {\zihao{3} \heiti \tl_use:N \l_@@_thesis_subtitle_tl}
                 \end{flushright}
-                % subtitle should be flush right?
             \end{minipage}
         \end{center}
-        %\vskip 10bp
         \begin{flushright}
-            \ifbuaa@twoteacher
-                {\begin{tabular}{cl}
-                    学\qquad 生：&\buaa@thesisauthor\\
-                    指导教师：&\buaa@teacher\\
-                    ~~ & \buaa@subteacher\\
-                    % I don't know is this corrent and properly.
-                \end{tabular}}
-            \else
-                {\begin{tabular}{cl}
-                    学\qquad 生：&\buaa@thesisauthor\\
-                    指导教师：&\buaa@teacher\\
-                \end{tabular}}
-            \fi
+            \begin{tabular}{cl}
+                学~\qquad~生：& \tl_use:N \l_@@_author_tl \\
+                指导教师：& \tl_use:N \l_@@_teacher_tl
+                \bool_if:NT \g_@@_twoteacher_bool {
+                    \\ ~~ & \tl_use:N \l_@@_teacher_two_tl
+                } \\
+            \end{tabular}
         \end{flushright}
-    \fi
-    \centerline{\heiti\zihao{3} 摘~~~~要}
-    \ifbuaa@bachelor
-        \vskip 10bp
-        \par
-    \else
-        \vspace{5ex}
-    \fi
+    }
+    \centerline{ \heiti \zihao{3} 摘~~~~要 }
+    \bool_if:NTF \g_@@_bachelor_bool { \vskip 10bp \par }{ \vspace{5ex} }
     \setlength{\parindent}{24bp}
-    }{%
+}{
     \vskip 21bp
-    \ifbuaa@bachelor
-        \noindent
-    \fi
-    {\heiti\zihao{-4} 关键词：}\heiti\buaa@ckeyword
+    \bool_if:NT \g_@@_bachelor_bool {\noindent}
+    { \heiti \zihao{-4} 关键词：} { \heiti \tl_use:N \l_@@_keyword_tl }
 }
 
-% 英文摘要
-\newenvironment{eabstract}{%
-    \newpage
-    \vspace*{2bp}
-    \ifbuaa@bachelor
+\NewDocumentEnvironment{eabstract}{}{
+    \newpage \vspace*{2bp}
+    \bool_if:NT \g_@@_bachelor_bool {
         \begin{center}
             \begin{minipage}[h]{.75\textwidth}
-                \centering{\bf\zihao{3}\buaa@thesistitleeng}
-            \end{minipage}
+                \centering{ \bf \zihao{3} \tl_use:N \l_@@_thesis_title_eng_tl }
+            \end{minipage} \par
             \begin{minipage}[h]{.8\textwidth}
                 \begin{flushright}
-                    {\zihao{3}\heiti\buaa@thesissubtitleeng}
+                    {\zihao{3} \heiti \tl_use:N \l_@@_thesis_subtitle_eng_tl}
                 \end{flushright}
-            % subtitle should be flushright?
             \end{minipage}
-        \end{center}
-        \vskip 10bp
+        \end{center} \vskip 10bp
         \begin{flushright}
-            \ifbuaa@twoteacher
-                {\begin{tabular}{rl}
-                    Author:\ &\buaa@thesisauthoreng\\
-                    Tutor:\ &\buaa@teachereng\\
-                    ~~ & \buaa@subteachereng\\
-                \end{tabular}}
-            \else
-                {\begin{tabular}{rl}
-                    Author:\ &\buaa@thesisauthoreng\\
-                    Tutor:\ &\buaa@teachereng\\
-                \end{tabular}}
-            \fi
+            \begin{tabular}{rl}
+                Author:\ & \tl_use:N \l_@@_author_eng_tl \\
+                Tutor:\ & \tl_use:N \l_@@_teacher_eng_tl
+                \bool_if:NT \g_@@_bachelor_bool {
+                    \\ ~~ & \tl_use:N \l_@@_teacher_two_eng_tl
+                } \\
+            \end{tabular}
         \end{flushright}
-    \fi
+    }
     \centerline{\bf\zihao{3} Abstract}
-    \ifbuaa@bachelor
-        \vskip 10bp
-        \par
-    \else
+    \bool_if:NTF \g_@@_bachelor_bool {
+        \vskip 10bp \par
+    } {
         \vspace{5ex}
-    \fi
+    }
     \setlength{\parindent}{24bp}
-    }{%
+}{
     \vskip 21bp
-    \ifbuaa@bachelor
-        \noindent
-    \fi
-    {\bf\zihao{-4} Key words: }\buaa@ekeyword
+    \bool_if:NT \g_@@_bachelor_bool {\noindent}
+    {\bf\zihao{-4} Key~words:~} \tl_use:N \l_@@_keyword_eng_tl
 }
 
 %%%%%%%%%% announce %%%%%%%%%%
 % 本科生声明页
 
 \newcommand{\announce}{%
-    \clearemptydoublepage
-    \thispagestyle{empty}
-    \vspace*{54bp}
+    \clearemptydoublepage \thispagestyle{empty} \vspace*{54bp}
     \centerline{\bf\zihao{-2}\songti 本人声明}
     \vskip 27bp
-    \zihao{4}我声明，本论文及其研究工作是由本人在导师指导下独立完成的，在完成论文时所利用的一
-    切资料均已在参考文献中列出。\par
-    \vskip 63bp
+    \zihao{4} 我声明，本论文及其研究工作是由本人在导师指导下独立完成的，在完成论文时所利用的一
+    切资料均已在参考文献中列出。
+    \par \vskip 63bp
     \zihao{-4}
     \hfill
     \begin{tabular}{cl}
@@ -1297,7 +1267,7 @@
 
 %%%%%%%%%% assign %%%%%%%%%%
 % 本科生任务书
-\ExplSyntaxOn
+
 % 文字左对齐的下划线
 \NewDocumentCommand{\ulinel}{O{}m}{
     \uline{\makebox[#1\textwidth][l]{#2}}
@@ -1419,43 +1389,73 @@
     \linespread{1.5}
 }
 
-\ExplSyntaxOff
 %%%%%%%%%% nominate %%%%%%%%%%
 % 研究生提名页
 
-\newcommand{\timingye}{%
-    \clearemptydoublepage
-    \thispagestyle{empty}
+\NewDocumentCommand{\timingye}{}{
+    \clearemptydoublepage \thispagestyle{empty}
     \begin{flushleft}
-        {\zihao{5}\heiti\bfseries
-        中图分类号：\buaa@category\\
-        论\,\,文\,\,编\,\,号：\buaa@thesisID\\}
+        {
+            \zihao{5}\heiti\bfseries
+            中图分类号：\l_@@_clc_number_tl \\
+            论\,\,文\,\,编\,\,号：\l_@@_thesis_id_tl \\
+        }
     \end{flushleft}
+
     \begin{center}
         \vskip 130bp
-        {\zihao{-2}\heiti{\ziju{1.3}\buaa@degreetitle 论文}}
+        { \zihao{-2} \heiti { \ziju{1.3} \l_@@_degree_long_tl 论文 } }
         \vskip 120bp
         \begin{minipage}[h]{.85\textwidth}
-            \zihao{-1}\heiti\centering{\buaa@thesistitle}
+            \zihao{-1} \heiti
+            \centering{ \l_@@_thesis_title_tl }
         \end{minipage}
-
         \vskip 130bp
 
         \begin{spacing}{2.2}
-            {\zihao{-4}\songti
+            { \zihao{-4} \songti
             \begin{tabular}[b]{llll}
-                \makebox[6em][s]{作者姓名\hfill} & \buaa@thesisauthor& 申请学位级别 & \buaa@appdegree \\
-                指导教师姓名 & \makebox[9em][s]{\buaa@teacher\quad\buaa@subteacher\hfill} & 职\qquad 称 & \buaa@teacherdegree \\
-                \ifbuaa@professional
-                    \makebox[6em][s]{专业名称\hfill} & \buaa@major  &
-                \else
-                    \makebox[6em][s]{学科专业\hfill} & \buaa@major  &
-                \fi
-                \makebox[6em][s]{研究方向\hfill} & \buaa@direction \\
-                \makebox[6em][s]{学习时间自\hfill} &\buaa@thesisbeginyear~~年~~\buaa@thesisbeginmonth~~月~~\buaa@thesisbeginday~~日\qquad &
-                \makebox[6em][s]{\hfill 起至\hfill} & \buaa@thesisendyear~~年~~\buaa@thesisendmonth~~月~~\buaa@thesisendday~~日止\qquad\\
-                论文提交日期 &\buaa@commityear~~年~~\buaa@commitmonth~~月~~\buaa@commitday~~日\qquad & 论文答辩日期& \buaa@defenseyear~~年~~\buaa@defensemonth~~月~~\buaa@defenseday~~日~\qquad\\
-                学位授予单位 & \buaa@university &学位授予日期 &\buaa@awardyear~~年~~\buaa@awardmonth~~月~~\buaa@awardday~~日~\qquad\\
+                \makebox[6em][s]{作者姓名\hfill} & \l_@@_author_tl
+                & 申请学位级别 & \l_@@_applied_degree_tl 
+                \\
+                指导教师姓名 
+                & \makebox[9em][s]{
+                    \l_@@_teacher_tl \quad \l_@@_teacher_two_tl \hfill
+                } 
+                & 职\qquad 称 & \l_@@_teacher_title_tl 
+                \\
+                \bool_if:NTF \g_@@_professional_bool {
+                    \makebox[6em][s]{专业名称\hfill}
+                } {
+                    \makebox[6em][s]{学科专业\hfill}
+                } & \l_@@_major_tl
+                & \makebox[6em][s]{研究方向\hfill} & \l_@@_direction_tl 
+                \\
+                \makebox[6em][s]{学习时间自\hfill} 
+                & \l_@@_thesis_begin_year_tl \hspace{0.5em} 年 \hspace{0.5em}
+                \l_@@_thesis_begin_month_tl \hspace{0.5em} 月 \hspace{0.5em}
+                \l_@@_thesis_begin_day_tl \hspace{0.5em} 日 \qquad 
+                & \makebox[6em][s]{\hfill 起至\hfill} 
+                & \l_@@_thesis_end_year_tl \hspace{0.5em} 年 \hspace{0.5em}
+                \l_@@_thesis_end_month_tl \hspace{0.5em} 月 \hspace{0.5em}
+                \l_@@_thesis_end_day_tl \hspace{0.5em} 日止 \qquad
+                \\
+                论文提交日期 
+                & \l_@@_submission_year_tl \hspace{0.5em} 年 \hspace{0.5em}
+                \l_@@_submission_month_tl \hspace{0.5em} 月 \hspace{0.5em}
+                \l_@@_submission_day_tl \hspace{0.5em} 日 \qquad 
+                & 论文答辩日期
+                & \l_@@_defense_year_tl \hspace{0.5em} 年 \hspace{0.5em}
+                \l_@@_defense_month_tl \hspace{0.5em} 月 \hspace{0.5em}
+                \l_@@_defense_day_tl \hspace{0.5em} 日 \qquad
+                \\
+                学位授予单位 
+                & \l_@@_university_name_tl
+                & 学位授予日期 
+                & \l_@@_award_year_tl \hspace{0.5em} 年 \hspace{0.5em}
+                \l_@@_award_month_tl \hspace{0.5em} 月 \hspace{0.5em}
+                \l_@@_award_day_tl \hspace{0.5em} 日 \qquad
+                \\
             \end{tabular}}
         \end{spacing}
     \end{center}
@@ -1464,9 +1464,8 @@
 %%%%%%%%%% creation and use %%%%%%%%%%
 % 研究生独创性声明和授权书
 
-\newcommand{\creationanduse}{%
-    \clearemptydoublepage
-    \thispagestyle{empty}
+\NewDocumentCommand{\creationanduse}{}{
+    \clearemptydoublepage \thispagestyle{empty}
     \vspace*{50bp}
     \centerline{\zihao{3}\heiti 关于学位论文的独创性声明}
     \zihao{-4}\songti
@@ -1479,7 +1478,7 @@
     若有不实之处，本人愿意承担相关法律责任。\par
     ~~\par
     {\zihao{5}\ 学位论文作者签名：\uline{\mbox{\hspace{7em}}}\hspace{5em}日期：\hspace{7ex}年\hspace{5ex}月\hspace{5ex}日}
-    \vskip130bp
+    \vskip 130bp
     \centerline{\zihao{3}\heiti 学位论文使用授权书}
     ~~\par
         本人完全同意北京航空航天大学有权使用本学位论文（包括但不限于其印刷版和电子版），
@@ -1493,33 +1492,34 @@
     \ 指导教师签名：\uline{\mbox{\hspace{9em}}}\hspace{5em}日期：\hspace{7ex}年\hspace{5ex}月\hspace{5ex}日}
 }
 
+
+
 %%%%%%%%%% denotation %%%%%%%%%%
 % 符号对照表
 
-\newenvironment{denotation}
+\NewDocumentEnvironment{denotation}{}
+{
+    \chapter*{主要符号对照表\markboth{主要符号对照表}{}} % no tocline
+    \begin{list}{}
     {
-        \chapter*{主要符号对照表\markboth{主要符号对照表}{}} % no tocline
-        \begin{list}{}%
-        {
-            \zihao{-4}
-            \renewcommand\makelabel[1]{##1\hfil}
-            \setlength{\labelwidth}{2.5cm} % 标签盒子宽度
-            \setlength{\labelsep}{0.5cm} % 标签与列表文本距离
-            \setlength{\itemindent}{0cm} % 标签缩进量
-            \setlength{\leftmargin}{10em} % 左边界
-            \setlength{\rightmargin}{0cm}
-            \setlength{\parsep}{0cm} % 段落间距
-            \setlength{\itemsep}{0cm} % 标签间距
-            \setlength{\listparindent}{0cm} % 段落缩进量
-            \setlength{\topsep}{0cm} % 标签与上文的间距
-        }
+        \zihao{-4}
+        \renewcommand\makelabel[1]{##1\hfil}
+        \setlength{\labelwidth}{2.5cm} % 标签盒子宽度
+        \setlength{\labelsep}{0.5cm} % 标签与列表文本距离
+        \setlength{\itemindent}{0cm} % 标签缩进量
+        \setlength{\leftmargin}{10em} % 左边界
+        \setlength{\rightmargin}{0cm}
+        \setlength{\parsep}{0cm} % 段落间距
+        \setlength{\itemsep}{0cm} % 标签间距
+        \setlength{\listparindent}{0cm} % 段落缩进量
+        \setlength{\topsep}{0cm} % 标签与上文的间距
     }
-    {\end{list}}
+}
+{\end{list}}
 
 %%%%%%%%%% settings for custom pages %%%%%%%%%%
 % 首页重定义
 
-\ExplSyntaxOn
 \RenewDocumentCommand{\maketitle}{}{
     \titlech
     \bool_case:n {
