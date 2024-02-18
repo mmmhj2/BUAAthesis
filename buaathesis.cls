@@ -59,26 +59,6 @@
     }
     \msg_warning:nn {buaathesis} {error/notselected}
 }
-
-\newif\ifbuaa@bachelor\buaa@bachelorfalse
-\newif\ifbuaa@master\buaa@masterfalse
-\newif\ifbuaa@doctor\buaa@doctorfalse
-\newif\ifbuaa@professional\buaa@professionalfalse
-\newif\ifbuaa@classfied\buaa@classfiedfalse
-\newif\ifbuaa@color\buaa@colorfalse
-\newif\ifbuaa@twoteacher\buaa@twoteacherfalse
-\newif\ifbuaa@ktreport\buaa@ktreportfalse
-\DeclareOption{bachelor}{\buaa@bachelortrue}
-\DeclareOption{master}{\buaa@mastertrue}
-\DeclareOption{doctor}{\buaa@doctortrue}
-\DeclareOption{professional}{\buaa@professionaltrue}
-\DeclareOption{classfied}{\buaa@classfiedtrue}
-\DeclareOption{color}{\buaa@colortrue}
-\DeclareOption{twoteacher}{\buaa@twoteachertrue}
-\DeclareOption{ktreport}{\buaa@ktreporttrue}
-% 其余选项传递给ctexbook
-%\DeclareOption*{\PassOptionsToClass{\CurrentOption}{ctexbook}}
-\ProcessOptions\relax
 % 引用ctexbook及基本设置
 \LoadClass[zihao=-4,a4paper]{ctexbook}[2007/10/19]
 
@@ -370,10 +350,10 @@
 \setCJKfamilyfont{heiti}[AutoFakeBold = {2.17}]{SimHei}
 \setCJKfamilyfont{hwxingkai}[AutoFakeBold = {2.17}]{STXingkai}
 \setCJKfamilyfont{hwkaiti}[AutoFakeBold = {2.17}]{STKaiti}
-\newcommand{\songti}{\CJKfamily{songti}}
-\newcommand{\heiti}{\CJKfamily{heiti}}
-\newcommand{\hwxingkai}{\CJKfamily{hwxingkai}}
-\newcommand{\hwkaiti}{\CJKfamily{hwkaiti}}
+\NewDocumentCommand{\songti}{}{\CJKfamily{songti}}
+\NewDocumentCommand{\heiti}{}{\CJKfamily{heiti}}
+\NewDocumentCommand{\hwxingkai}{}{\CJKfamily{hwxingkai}}
+\NewDocumentCommand{\hwkaiti}{}{\CJKfamily{hwkaiti}}
 
 %%%%%%%%%% color %%%%%%%%%%
 % 颜色设置
@@ -589,9 +569,8 @@
 
 
 % 取消图片、表格目录中的章节空格
-\newcommand*{\noaddvspace}{\renewcommand*{\addvspace}[1]{}}
-\addtocontents{lof}{\protect\noaddvspace}
-\addtocontents{lot}{\protect\noaddvspace}
+\addtocontents{lof}{\exp_not:n {\exp_not:n {\renewcommand{\addvspace}[1]{}}}}
+\addtocontents{lot}{\exp_not:n {\exp_not:n {\renewcommand{\addvspace}[1]{}}}}
 
 %表目录图目录的格式设置
 %表目录与图目录数字前增加“表”与“图”字，并且使目录行间距与section行间距一致
@@ -601,18 +580,17 @@
 
 \titlecontents{table}[0pt]{\vspace{0.15\baselineskip}\songti\zihao{-4}}{\makebox[3em][l]{表~\thecontentslabel\quad}}{}
     {\hspace{.5em}\titlerule*[4pt]{$\cdot$}\contentspage}[\vspace{0.15\baselineskip}]
-\ExplSyntaxOff
 %%%%%%%%%% cross reference %%%%%%%%%%
 % 交叉引用
 
 % TODO: Update hyperref options
 \RequirePackage[xetex,unicode]{hyperref}
-\ifbuaa@color
+\bool_if:NTF \g_@@_color_bool {
     \hypersetup{colorlinks}
-\else
+} {
     \hypersetup{hidelinks}
-\fi
-\ifbuaa@ktreport
+}
+\bool_if:NTF \g_@@_proposal_bool {
     \hypersetup{
         bookmarksnumbered,
         bookmarksopen,
@@ -621,7 +599,7 @@
         pdfsubject={北航毕业设计开题报告/文献综述},
         pdfcreator={LaTeXed~By~BHOSC}
     }
-\else
+} {
     \hypersetup{
         bookmarksnumbered,
         bookmarksopen,
@@ -630,11 +608,10 @@
         pdfsubject={北航毕业设计论文},
         pdfcreator={LaTeXed~By~BHOSC}
     }
-\fi
+}
 
 %%%%%%%%%% table %%%%%%%%%%
 % 表格
-\ExplSyntaxOn
 % 重定义table/tabular/tabularx环境，使表格内为5号字
 % TODO(huxuan): 支持 longtable
 \let \oldtable \table
@@ -802,15 +779,18 @@
 }
 
 % 图片表格标题命令，主要用于混排
-\newcommand\figcaption{\def\@captype{figure}\caption}
-\newcommand\tabcaption{\def\@captype{table}\caption}
+\NewDocumentCommand{\figcaption}{}{
+    \def\@captype{figure}\caption
+}
+\NewDocumentCommand{\tabcaption}{}{
+    \def\@captype{table}\caption
+}
 
 %%%%%%%%%% other settings %%%%%%%%%%
 % 杂项
 
 % 设置<附录>的图表编号与当前附录章号关联
-
-\newcommand{\rmrelation}{
+\cs_new:Nn \@@_cs_reset_counter_for_appendix: {
     % 图、表、公式编号随 chapter 清零
     \@addtoreset{figure}{chapter}
     \@addtoreset{table}{chapter}
@@ -841,9 +821,11 @@
         \@arabic\c@equation
     }
 }
+
 \let\oldappendix\appendix
 \renewcommand{\appendix}{
-    \oldappendix\rmrelation
+    \oldappendix
+    \@@_cs_reset_counter_for_appendix:
 }
 
 % 正文前的页码设置位大写罗马数字
@@ -858,7 +840,7 @@
 }
 
 % 保证偶数页结束章节
-\newcommand{\clearemptydoublepage}{%
+\cs_new:Nn \@@_cs_clear_page_ensure_even: {
     \clearpage
     \legacy_if:nT { @twoside } {
         \int_if_odd:nF { \c@page } {
@@ -876,8 +858,12 @@
 % 本科生首页的右上角和底部的填写内容居中
 % cvrtc : CoVer - Right  - Top    - Center
 % cvcbc : CoVer - Center - Bottom - Center
-\newcommand{\ulinecvrtc}[1]{\uline{\makebox[9em][c]{\bf #1}}}
-\newcommand{\ulinecvcbc}[1]{\uline{\makebox[14em][c]{#1}}}
+
+\cs_new:Npn \@@_cs_create_ubox_bf:nn #1#2 {
+    \uline{ \makebox[#1][c]{ #2 } }
+}
+\cs_new:Npn \@@_cs_ulinecvrtc:n #1 { \@@_cs_create_ubox_bf:nn {9em} {#1} }
+\cs_new:Npn \@@_cs_ulinecvcbc:n #1 { \@@_cs_create_ubox_bf:nn {14em} {#1} }
 
 \cs_new:Nn \@@_cs_bachelor_proposal_tabular: {
     \begin{tabular}{c~p{0.55\textwidth}<{\raggedright}}
@@ -893,13 +879,13 @@
 \cs_new:Nn \@@_cs_bachelor_tabular: {
     \begin{tabular}{cc}
         学 \hspace{0.75em} 院 \hspace{0.75em} 名 \hspace{0.75em} 称 \hspace{0.75em} &
-        \ulinecvcbc{\buaa@school 学院} \\[.4ex]
+        \@@_cs_ulinecvcbc:n {\buaa@school 学院} \\[.4ex]
         专 \hspace{0.75em} 业 \hspace{0.75em} 名 \hspace{0.75em} 称 \hspace{0.75em} &
-        \ulinecvcbc{\buaa@major 专业} \\[.4ex]
+        \@@_cs_ulinecvcbc:n {\buaa@major 专业} \\[.4ex]
         学 \hspace{0.75em} 生 \hspace{0.75em} 姓 \hspace{0.75em} 名 \hspace{0.75em} &
-        \ulinecvcbc{\buaa@thesisauthor} \\[.4ex]
+        \@@_cs_ulinecvcbc:n {\buaa@thesisauthor} \\[.4ex]
         指 \hspace{0.75em} 导 \hspace{0.75em} 教 \hspace{0.75em} 师 \hspace{0.75em} &
-        \ulinecvcbc{\buaa@teacher \bool_if:NT \g_@@_twoteacher_bool {\quad \buaa@subteacher} } \\
+        \@@_cs_ulinecvcbc:n {\buaa@teacher \bool_if:NT \g_@@_twoteacher_bool {\quad \buaa@subteacher} } \\
     \end{tabular}
 }
 \cs_new:Nn \@@_cs_graduate_proposal_tabular: {
@@ -972,9 +958,12 @@
         \raisebox{-.2cm}[0pt][0pt]{
             \zihao{5}\heiti
             \begin{tabular}{c}
-                单位代码 \hspace{0.25em} \ulinecvrtc{\bf\buaa@unicode}\\[.1ex]
-                学 \qquad 号 \hspace{0.25em} \ulinecvrtc{\bf\buaa@studentID}\\[.1ex]
-                分 \hspace{0.5em} 类 \hspace{0.5em} 号 \hspace{0.25em} \ulinecvrtc{\bf\buaa@category}\\
+                单位代码 \hspace{0.25em} 
+                \@@_cs_ulinecvrtc:n {\textbf{\l_@@_unit_code_tl}} \\[.1ex]
+                学 \qquad 号 \hspace{0.25em} 
+                \@@_cs_ulinecvrtc:n {\textbf{\l_@@_student_id_tl}} \\[.1ex]
+                分 \hspace{0.5em} 类 \hspace{0.5em} 号 \hspace{0.25em} 
+                \@@_cs_ulinecvrtc:n {\textbf{\l_@@_clc_number_tl}}\\
             \end{tabular}
         }
         \skip_vertical:n{95bp}
@@ -1092,7 +1081,7 @@
     \end{tabular}
 }
 \cs_new:Nn \@@_cs_graduate_cover_page_eng: {
-    \clearemptydoublepage \thispagestyle{empty}
+    \@@_cs_clear_page_ensure_even: \thispagestyle{empty}
     \vspace*{\stretch{1}}
     \begin{center}
         \begin{minipage}[h]{.8\textwidth}
@@ -1194,7 +1183,7 @@
 % 本科生声明页
 
 \cs_new:Nn \@@_cs_bachelor_declaration_page: {
-    \clearemptydoublepage \thispagestyle{empty} \vspace*{54bp}
+    \@@_cs_clear_page_ensure_even: \thispagestyle{empty} \vspace*{54bp}
     \centerline{\bf\zihao{-2}\songti 本人声明}
     \vskip 27bp
     \zihao{4} 我声明，本论文及其研究工作是由本人在导师指导下独立完成的，在完成论文时所利用的一
@@ -1336,7 +1325,7 @@
 %%%%%%%%%% nominate %%%%%%%%%%
 % 研究生提名页
 \cs_new:Nn \@@_cs_graduate_title_page: {
-    \clearemptydoublepage \thispagestyle{empty}
+    \@@_cs_clear_page_ensure_even: \thispagestyle{empty}
     \begin{flushleft}
         {
             \zihao{5}\heiti\bfseries
@@ -1408,7 +1397,7 @@
 % 研究生独创性声明和授权书
 
 \cs_new:Nn \@@_cs_graduate_declaration_page: {
-    \clearemptydoublepage \thispagestyle{empty}
+    \@@_cs_clear_page_ensure_even: \thispagestyle{empty}
     \vspace*{50bp}
     \centerline{\zihao{3}\heiti 关于学位论文的独创性声明}
     \zihao{-4}\songti
@@ -1474,12 +1463,12 @@
             \pagestyle{fancy}
             \frontmatter
         }
-        { (\g_@@_master_bool || \g_@@_doctor_bool) && \g_@@_proposal_bool } { \clearemptydoublepage \frontmatter }
+        { (\g_@@_master_bool || \g_@@_doctor_bool) && \g_@@_proposal_bool } { \@@_cs_clear_page_ensure_even: \frontmatter }
         { \g_@@_master_bool || \g_@@_doctor_bool } {
             \@@_cs_graduate_cover_page_eng:             %研究生英文封面
             \@@_cs_graduate_title_page:                 %研究生题名页
             \@@_cs_graduate_declaration_page:           %研究生独创性声明和使用授权书
-            \clearemptydoublepage
+            \@@_cs_clear_page_ensure_even:
             \frontmatter
         }
     }
