@@ -942,18 +942,18 @@
 \cs_new:Nn \@@_cs_bachelor_proposal_cover_page: {
     \begin{titlepage}
         % 第二个()里的参数表示左移35pt，下移55pt
-        \hfill \vskip 45bp
+        \hfill \skip_vertical:n{45bp}
         \begin{center}
             \includegraphics[width=310bp]{figure/buaaname.pdf}
-            \\ \vskip 60bp \hspace{0.5em} \\
+            \\ \skip_vertical:n{60bp} \mode_leave_vertical: \\
             \centerline{\zihao{1} \heiti \textbf{\buaa@degree 论文\buaa@ktclass}}
-            \hspace{0.5em} \\ \vskip 60bp \hspace{0.5em} \\
+            \mode_leave_vertical: \\ \skip_vertical:n{60bp} \mode_leave_vertical: \\
             { \zihao{-3} \heiti \@@_cs_bachelor_proposal_tabular: }
-            \hspace{0.5em} \\ \vskip 75bp \hspace{0.5em} \\
+            \mode_leave_vertical: \\ \skip_vertical:n{75bp} \mode_leave_vertical: \\
             \centerline{
                 \heiti\zihao{3}\textbf{\buaa@university \buaa@school 学院}
             }
-            \vskip 20bp
+            \skip_vertical:n{20bp}
             \centerline{
                 \heiti\zihao{-3}
                 \buaa@thesisdateyear \hspace{0.5em} 年 \hspace{0.5em} 
@@ -977,25 +977,25 @@
                 分 \hspace{0.5em} 类 \hspace{0.5em} 号 \hspace{0.25em} \ulinecvrtc{\bf\buaa@category}\\
             \end{tabular}
         }
-        \vskip 95bp
+        \skip_vertical:n{95bp}
         \begin{center}
             \includegraphics[width=360bp]{figure/buaaname.pdf}
-            \vskip 45bp
+            \skip_vertical:n{45bp}
             \centerline{\zihao{-0}\heiti 毕业设计(论文)}
-            \hspace{0.5em} \\ \vspace*{\stretch{4}}
+            \mode_leave_vertical: \\ \vspace*{\stretch{4}}
             \begin{minipage}[h]{.8\textwidth}
                 \centering{\heiti\zihao{2}\buaa@thesistitle}
             \end{minipage}
-            \vskip 20bp
+            \skip_vertical:n{20bp}
             \begin{minipage}[h]{.75\textwidth}
                 \centering{\heiti\zihao{3}\buaa@thesissubtitle}
             \end{minipage}
-            \vspace*{\stretch{3}} \hspace{0.5em} \\
+            \vspace*{\stretch{3}} \mode_leave_vertical: \\
             {
                 \zihao{-3}\heiti
                 \@@_cs_bachelor_tabular:
             }
-            \vskip 60bp
+            \skip_vertical:n{60bp}
             \centerline{
                 \heiti\zihao{-3}
                 \buaa@thesisdateyear \hspace{0.5em} 年 \hspace{0.5em} 
@@ -1007,17 +1007,16 @@
 \cs_new:Nn \@@_cs_graduate_proposal_cover_page: {
     \begin{titlepage}
         % 第二个()里的参数表示左移35pt，下移55pt
-        \hfill
-        \vskip 45bp
+        \hfill \skip_vertical:n{45bp}
         \begin{center}
             \includegraphics[width=310bp]{figure/buaaname.pdf}
-            \hspace{0.5em} \\ \vskip 60bp \hspace{0.5em}\\
+            \mode_leave_vertical: \\ \skip_vertical:n{60bp} \mode_leave_vertical: \\
             \centerline{\zihao{1} \heiti \textbf{\buaa@degree 论文\buaa@ktclass}}
-            \hspace{0.5em}\\ \vskip 60bp \hspace{0.5em}\\
+            \mode_leave_vertical: \\ \skip_vertical:n{60bp} \mode_leave_vertical: \\
             { \zihao{-3} \heiti \@@_cs_graduate_proposal_tabular: }
-            \hspace{0.5em}\\ \vskip 75bp \hspace{0.5em}\\
+            \mode_leave_vertical: \\ \skip_vertical:n{75bp} \mode_leave_vertical: \\
             \centerline{\heiti\zihao{3}\textbf{\buaa@university\buaa@school 学院}}
-            \vskip 20bp
+            \skip_vertical:n{20bp}
             \centerline{
                 \heiti\zihao{-3}
                 \buaa@thesisdateyear \hspace{0.5em} 年 \hspace{0.5em}
@@ -1038,15 +1037,15 @@
                         \bool_if:nTF \g_@@_classified_bool {
                             \buaa@clevel\ding{73} \hspace{0.5em} \buaa@climit \\
                         } {
-                            \vskip 20bp
+                            \skip_vertical:n{20bp}
                         }
                     \end{flushleft}
                 }
-                \vskip 60bp
+                \skip_vertical:n{60bp}
                 \includegraphics[width=.5\textwidth]{figure/buaaname_ch.pdf}
-                \vskip 30bp
+                \skip_vertical:n{30bp}
                 \centerline{\zihao{0}\ziju{0.2}\hwxingkai\buaa@degree 论文}
-                \hspace{0.5em} \\
+                \mode_leave_vertical: \\
                 %\vskip 100bp
                 \vspace*{\stretch{5}}
                 \begin{minipage}[h]{.85\textwidth}
@@ -1063,7 +1062,7 @@
                     \end{spacing}
                 \end{minipage}
                 \vspace*{\stretch{4}}
-                \hspace{0.5em} \\
+                \mode_leave_vertical: \\
                 %\vskip 80bp
                 {
                     \heiti\zihao{4}\ziju{0.2}
