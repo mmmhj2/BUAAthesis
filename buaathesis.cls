@@ -654,7 +654,9 @@
 %     \zihao{5} \oldtabular[#1]{#2}
 % }{
 %     \endoldtabular
-%     \renewcommand{\arraystretch}{1}
+%     \renewcommand{\arraystretch}{1} 
+%     % tabular 不能以可展开的宏结束，否则会产生多余一行。
+%     % https://tex.stackexchange.com/questions/5198/etoolbox-conditional-causes-unwanted-empty-row-in-tabular
 % }
 
 \let\oldtabularx\tabularx\relax
@@ -867,7 +869,7 @@
         }
     }
 }
-\ExplSyntaxOff
+
 %%%%%%%%%% index %%%%%%%%%%
 % 首页
 
@@ -876,6 +878,76 @@
 % cvcbc : CoVer - Center - Bottom - Center
 \newcommand{\ulinecvrtc}[1]{\uline{\makebox[9em][c]{\bf #1}}}
 \newcommand{\ulinecvcbc}[1]{\uline{\makebox[14em][c]{#1}}}
+
+\cs_new:Nn \@@_cs_bachelor_proposal_tabular: {
+    \begin{tabular}{c~p{0.55\textwidth}<{\raggedright}}
+        \hwkaiti \textbf{论文题目}  : & \hwkaiti \buaa@thesistitle \\[.4ex]
+        \hwkaiti \textbf{专 \hspace{2em} 业}  : & \hwkaiti \buaa@major \\[.4ex]
+        \hwkaiti \textbf{姓 \hspace{2em} 名}  : & \hwkaiti \buaa@thesisauthor \\[.4ex]
+        \hwkaiti \textbf{学 \hspace{2em} 号}  : & \hwkaiti \buaa@studentID \\[.4ex]
+        \hwkaiti \textbf{指导教师}  : & \hwkaiti\buaa@teacher
+        \bool_if:NT \g_@@_twoteacher_bool { \quad \l_@@_teacher_two_tl }
+        \\
+    \end{tabular}
+}
+\NewDocumentCommand{\buaathesis@BachelorProposalTabular}{}{\@@_cs_bachelor_proposal_tabular:}
+
+\cs_new:Nn \@@_cs_bachelor_tabular: {
+    \begin{tabular}{cc}
+        学 \hspace{0.75em} 院 \hspace{0.75em} 名 \hspace{0.75em} 称 \hspace{0.75em} &
+        \ulinecvcbc{\buaa@school 学院} \\[.4ex]
+        专 \hspace{0.75em} 业 \hspace{0.75em} 名 \hspace{0.75em} 称 \hspace{0.75em} &
+        \ulinecvcbc{\buaa@major 专业} \\[.4ex]
+        学 \hspace{0.75em} 生 \hspace{0.75em} 姓 \hspace{0.75em} 名 \hspace{0.75em} &
+        \ulinecvcbc{\buaa@thesisauthor} \\[.4ex]
+        指 \hspace{0.75em} 导 \hspace{0.75em} 教 \hspace{0.75em} 师 \hspace{0.75em} &
+        \ulinecvcbc{\buaa@teacher \bool_if:NT \g_@@_twoteacher_bool {\quad \buaa@subteacher} } \\
+    \end{tabular}
+}
+\NewDocumentCommand{\buaathesis@@BachelorTabular}{}{\@@_cs_bachelor_tabular:}
+
+\cs_new:Nn \@@_cs_graduate_proposal_tabular: {
+    \begin{tabular}{c~p{0.55\textwidth}<{\raggedright}}
+        \hwkaiti \textbf{题 \hspace{2em} 目}  : 
+        & \hwkaiti\buaa@thesistitle \\[.4ex]
+        \hwkaiti \textbf{专 \hspace{2em} 业}  : 
+        & \hwkaiti\buaa@major \\[.4ex]
+        \hwkaiti \textbf{研究方向}  : 
+        & \hwkaiti\buaa@direction \\[.4ex]
+        \hwkaiti \textbf {
+            \bool_case:n {
+                { \g_@@_master_bool } {研 \hspace{0.5em} 究 \hspace{0.5em} 生}
+                { \g_@@_doctor_bool } {博 \hspace{0.5em} 士 \hspace{0.5em} 生}
+            }
+        }  : 
+        & \hwkaiti\buaa@thesisauthor \\[.4ex]
+        \hwkaiti \textbf{学 \hspace{2em} 号}  : 
+        & \hwkaiti\buaa@studentID \\[.4ex]
+        \hwkaiti \textbf{指导教师}  : 
+        & \hwkaiti\buaa@teacher \bool_if:nT \g_@@_twoteacher_bool {\quad \buaa@subteacher}\\
+    \end{tabular}
+}
+\NewDocumentCommand{\buaathesis@GraduateProposalTabular}{}{\@@_cs_graduate_proposal_tabular:}
+
+\cs_new:Nn \@@_cs_graduate_tabular: {
+    \begin{tabular}[b]{ll}
+        作 \hspace{0.5em} 者 \hspace{0.5em} 姓 \hspace{0.5em} 名 \hspace{0.5em} & \buaa@thesisauthor \\[.3ex]
+        \bool_if:NTF \g_@@_professional_bool {
+            专 \hspace{0.5em} 业 \hspace{0.5em} 名 \hspace{0.5em} 称 \hspace{0.5em} & \buaa@major\\[.3ex]
+        } {
+            学 \hspace{0.5em} 科 \hspace{0.5em} 专 \hspace{0.5em} 业 \hspace{0.5em} & \buaa@major\\[.3ex]
+        }
+        指 \hspace{0.5em} 导 \hspace{0.5em} 教 \hspace{0.5em} 师 \hspace{0.5em} & \buaa@teacher\quad\buaa@teacherdegree 
+        \bool_if:nT \g_@@_twoteacher_bool { 
+            \\[.3ex] \hspace{0.5em} & \buaa@subteacher\quad\buaa@subteacherdegree
+        }
+        \\[.3ex]
+        培 \hspace{0.5em} 养 \hspace{0.5em} 学 \hspace{0.5em} 院 \hspace{0.5em} & \buaa@school 学院\\
+    \end{tabular}
+}
+\NewDocumentCommand{\buaathesis@GraduateTabular}{}{\@@_cs_graduate_tabular:}
+
+\ExplSyntaxOff
 
 % 中文首页
 \newcommand{\titlech}{
@@ -896,23 +968,7 @@
                     ~~\\
                     {
                         \zihao{-3}\heiti
-                        \ifbuaa@twoteacher
-                            \begin{tabular}{c p{0.55\textwidth}<{\raggedright}}
-                                \hwkaiti \textbf{论文题目}  : &\hwkaiti\buaa@thesistitle\\[.4ex]
-                                \hwkaiti \textbf{专~~~~~~~~业}  : &\hwkaiti\buaa@major\\[.4ex]
-                                \hwkaiti \textbf{姓~~~~~~~~名}  : &\hwkaiti\buaa@thesisauthor\\[.4ex]
-                                \hwkaiti \textbf{学~~~~~~~~号}  : &\hwkaiti\buaa@studentID\\[.4ex]
-                                \hwkaiti \textbf{指导教师}  : &\hwkaiti\buaa@teacher \quad \buaa@subteacher\\
-                            \end{tabular}
-                        \else
-                            \begin{tabular}{c p{0.55\textwidth}<{\raggedright}}
-                                \hwkaiti \textbf{论文题目}  : &\hwkaiti\buaa@thesistitle\\[.4ex]
-                                \hwkaiti \textbf{专~~~~~~~~业}  : &\hwkaiti\buaa@major\\[.4ex]
-                                \hwkaiti \textbf{姓~~~~~~~~名}  : &\hwkaiti\buaa@thesisauthor\\[.4ex]
-                                \hwkaiti \textbf{学~~~~~~~~号}  : &\hwkaiti\buaa@studentID\\[.4ex]
-                                \hwkaiti \textbf{指导教师}  : &\hwkaiti\buaa@teacher\\
-                            \end{tabular}
-                        \fi
+                        \buaa@BachelorProposalTabular
                     }
                     ~~\\
                     \vskip 75bp
@@ -955,21 +1011,7 @@
                     ~~\\
                     {
                         \zihao{-3}\heiti
-                        \ifbuaa@twoteacher
-                            \begin{tabular}{cc}
-                                学~~~院~~~名~~~称~~&\ulinecvcbc{\buaa@school 学院}\\[.4ex]
-                                专~~~业~~~名~~~称~~&\ulinecvcbc{\buaa@major 专业}\\[.4ex]
-                                学~~~生~~~姓~~~名~~&\ulinecvcbc{\buaa@thesisauthor}\\[.4ex]
-                                指~~~导~~~教~~~师~~&\ulinecvcbc{\buaa@teacher \quad \buaa@subteacher}\\
-                            \end{tabular}
-                        \else
-                            \begin{tabular}{cc}
-                                学~~~院~~~名~~~称~~&\ulinecvcbc{\buaa@school 学院}\\[.4ex]
-                                专~~~业~~~名~~~称~~&\ulinecvcbc{\buaa@major 专业}\\[.4ex]
-                                学~~~生~~~姓~~~名~~&\ulinecvcbc{\buaa@thesisauthor}\\[.4ex]
-                                指~~~导~~~教~~~师~~&\ulinecvcbc{\buaa@teacher}\\
-                            \end{tabular}
-                        \fi
+                        \buaathesis@@BachelorTabular
                     }
                     \vskip 60bp
                     \centerline{\heiti\zihao{-3}\buaa@thesisdateyear ~~年~~\buaa@thesisdatemonth ~~月}
@@ -993,47 +1035,7 @@
                     ~~\\
                     {
                         \zihao{-3}\heiti
-                        \ifbuaa@master
-                            \ifbuaa@twoteacher
-                                \begin{tabular}{c p{0.55\textwidth}<{\raggedright}}
-                                    \hwkaiti \textbf{题~~~~~~~~目}  : &\hwkaiti\buaa@thesistitle\\[.4ex]
-                                    \hwkaiti \textbf{专~~~~~~~~业}  : &\hwkaiti\buaa@major\\[.4ex]
-                                    \hwkaiti \textbf{研究方向}  : &\hwkaiti\buaa@direction\\[.4ex]
-                                    \hwkaiti \textbf{研~~究~~生}  : &\hwkaiti\buaa@thesisauthor\\[.4ex]
-                                    \hwkaiti \textbf{学~~~~~~~~号}  : &\hwkaiti\buaa@studentID\\[.4ex]
-                                    \hwkaiti \textbf{指导教师}  : &\hwkaiti\buaa@teacher \quad \buaa@subteacher\\
-                                \end{tabular}
-                            \else
-                                \begin{tabular}{c p{0.55\textwidth}<{\raggedright}}
-                                    \hwkaiti \textbf{题~~~~~~~~目}  : &\hwkaiti\buaa@thesistitle\\[.4ex]
-                                    \hwkaiti \textbf{专~~~~~~~~业}  : &\hwkaiti\buaa@major\\[.4ex]
-                                    \hwkaiti \textbf{研究方向}  : &\hwkaiti\buaa@direction\\[.4ex]
-                                    \hwkaiti \textbf{研~~究~~生}  : &\hwkaiti\buaa@thesisauthor\\[.4ex]
-                                    \hwkaiti \textbf{学~~~~~~~~号}  : &\hwkaiti\buaa@studentID\\[.4ex]
-                                    \hwkaiti \textbf{指导教师}  : &\hwkaiti\buaa@teacher\\
-                                \end{tabular}
-                            \fi
-                        \else
-                            \ifbuaa@twoteacher
-                                \begin{tabular}{c p{0.55\textwidth}<{\raggedright}}
-                                    \hwkaiti \textbf{题~~~~~~~~目}  : &\hwkaiti\buaa@thesistitle\\[.4ex]
-                                    \hwkaiti \textbf{专~~~~~~~~业}  : &\hwkaiti\buaa@major\\[.4ex]
-                                    \hwkaiti \textbf{研究方向}  : &\hwkaiti\buaa@direction\\[.4ex]
-                                    \hwkaiti \textbf{博~~士~~生}  : &\hwkaiti\buaa@thesisauthor\\[.4ex]
-                                    \hwkaiti \textbf{学~~~~~~~~号}  : &\hwkaiti\buaa@studentID\\[.4ex]
-                                    \hwkaiti \textbf{指导教师}  : &\hwkaiti\buaa@teacher \quad \buaa@subteacher\\
-                                \end{tabular}
-                            \else
-                                \begin{tabular}{c p{0.55\textwidth}<{\raggedright}}
-                                    \hwkaiti \textbf{题~~~~~~~~目}  : &\hwkaiti\buaa@thesistitle\\[.4ex]
-                                    \hwkaiti \textbf{专~~~~~~~~业}  : &\hwkaiti\buaa@major\\[.4ex]
-                                    \hwkaiti \textbf{研究方向}  : &\hwkaiti\buaa@direction\\[.4ex]
-                                    \hwkaiti \textbf{博~~士~~生}  : &\hwkaiti\buaa@thesisauthor\\[.4ex]
-                                    \hwkaiti \textbf{学~~~~~~~~号}  : &\hwkaiti\buaa@studentID\\[.4ex]
-                                    \hwkaiti \textbf{指导教师}  : &\hwkaiti\buaa@teacher\\
-                                \end{tabular}
-                            \fi
-                        \fi
+                        \buaathesis@GraduateProposalTabular
                     }
                     ~~\\
                     \vskip 75bp
@@ -1084,30 +1086,7 @@
                         %\vskip 80bp
                         {
                             \heiti\zihao{4}\ziju{0.2}
-                            \ifbuaa@twoteacher
-                                \begin{tabular}[b]{ll}
-                                    作~~者~~姓~~名~~ & \buaa@thesisauthor\\[.3ex]
-                                    \ifbuaa@professional
-                                        专~~业~~名~~称~~ & \buaa@major\\[.3ex]
-                                    \else
-                                        学~~科~~专~~业~~ & \buaa@major\\[.3ex]
-                                    \fi
-                                    指~~导~~教~~师~~ & \buaa@teacher\quad\buaa@teacherdegree\\[.3ex]
-                                    ~~ & \buaa@subteacher\quad\buaa@subteacherdegree\\[.3ex]
-                                    培~~养~~学~~院~~ & \buaa@school 学院\\
-                                \end{tabular}
-                            \else
-                                \begin{tabular}[b]{ll}
-                                    作~~者~~姓~~名~~ & \buaa@thesisauthor\\[.4ex]
-                                    \ifbuaa@professional
-                                        专~~业~~名~~称~~ & \buaa@major\\[.4ex]
-                                    \else
-                                        学~~科~~专~~业~~ & \buaa@major\\[.4ex]
-                                    \fi
-                                    指~~导~~教~~师~~ & \buaa@teacher \quad\buaa@teacherdegree\\[.4ex]
-                                    培~~养~~学~~院~~ & \buaa@school 学院\\
-                                \end{tabular}
-                            \fi
+                            \buaathesis@GraduateTabular
                         }
                     \end{spacing}
                 \end{center}
