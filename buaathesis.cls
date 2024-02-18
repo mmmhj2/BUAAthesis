@@ -1072,7 +1072,6 @@
         \end{center}
     \end{titlepage}
 }
-
 % 中文首页
 \cs_new:Nn \@@_cs_cover_page: {
     \bool_case:n {
@@ -1083,53 +1082,45 @@
     }
 }
 
-\ExplSyntaxOff
-
-% 英文首页
-\newcommand{\titleeng}{
-    \clearemptydoublepage
-    \thispagestyle{empty}
+\cs_new:Nn \@@_cs_graduate_tabular_eng: {
+    \begin{tabular}{ll}
+        \textbf{Candidate:\ } & \textbf{\buaa@thesisauthoreng} \\[0.5ex]
+        \textbf{Supervisor:\ } & \textbf{\buaa@teacherdegreeeng \hspace{0.5em} \buaa@teachereng} 
+        \bool_if:NT \g_@@_twoteacher_bool {
+            \\ ~~ & \textbf{\buaa@subteacherdegreeeng \hspace{0.5em} \buaa@subteachereng}
+        } \\
+    \end{tabular}
+}
+\cs_new:Nn \@@_cs_graduate_cover_page_eng: {
+    \clearemptydoublepage \thispagestyle{empty}
     \vspace*{\stretch{1}}
     \begin{center}
-    \begin{minipage}[h]{.8\textwidth}
-    	\begin{spacing}{2}
-        	\centering{\zihao{-2}\textbf{\buaa@thesistitleeng}}
-        \end{spacing}
-    \end{minipage}
-    \vskip 20bp
-    \begin{minipage}[h]{.75\textwidth}
-        \centering{\zihao{-3}\buaa@thesissubtitleeng}
-    \end{minipage}
-    \vspace*{\stretch{1}}
-    ~~\\
-        {\zihao{4}A Dissertation Submitted for the Degree of \buaa@degreeeng}\\
-        \vskip 110bp
+        \begin{minipage}[h]{.8\textwidth}
+            \begin{spacing}{2}
+                \centering{ \zihao{-2} \textbf{\buaa@thesistitleeng} }
+            \end{spacing}
+        \end{minipage}
+        \skip_vertical:n {20bp}
+        \begin{minipage}[h]{.75\textwidth}
+            \centering{\zihao{-3}\buaa@thesissubtitleeng}
+        \end{minipage}
+        \vspace*{\stretch{1}} \mode_leave_vertical: \\
+        {\zihao{4} A~Dissertation~Submitted~for~the~Degree~of~\buaa@degreeeng} \\
+        \skip_vertical:n {110bp}
         \begin{center}
-            \zihao{-3}
-            \ifbuaa@twoteacher
-                \begin{tabular}{ll}
-                    \textbf{Candidate:\ }&\textbf{\buaa@thesisauthoreng}\\[0.5ex]
-                    \textbf{Supervisor:\ }&\textbf{\buaa@teacherdegreeeng ~~\buaa@teachereng}\\
-                    ~~ & \textbf{\buaa@subteacherdegreeeng ~~\buaa@subteachereng}\\
-                \end{tabular}
-            \else
-                \begin{tabular}{ll}
-                    \textbf{Candidate:\ }&\textbf{\buaa@thesisauthoreng}\\[0.5ex]
-                    \textbf{Supervisor:\ }&\textbf{\buaa@teacherdegreeeng ~~\buaa@teachereng}\\
-                \end{tabular}
-            \fi
+            \zihao{-3} \@@_cs_graduate_tabular_eng:
         \end{center}
-        \vskip 125bp
+        \skip_vertical:n {125bp}
         \zihao{3}{
-        \buaa@schooleng \\[1.8ex]
-        \buaa@universityeng , Beijing, China}
+            \buaa@schooleng \\[1.8ex]
+            \buaa@universityeng~,~Beijing,~China
+        }
     \end{center}
 }
-
+% 英文首页
 
 %%%%%%%%%% abstract %%%%%%%%%%
 % 摘要
-\ExplSyntaxOn
 % 中文摘要
 \NewDocumentEnvironment{cabstract}{}{
     \newpage \vspace*{2bp}
@@ -1485,7 +1476,7 @@
         }
         { (\g_@@_master_bool || \g_@@_doctor_bool) && \g_@@_proposal_bool } { \clearemptydoublepage \frontmatter }
         { \g_@@_master_bool || \g_@@_doctor_bool } {
-            \titleeng                 %研究生英文封面
+            \@@_cs_graduate_cover_page_eng:             %研究生英文封面
             \@@_cs_graduate_title_page:                 %研究生题名页
             \@@_cs_graduate_declaration_page:           %研究生独创性声明和使用授权书
             \clearemptydoublepage
@@ -1495,6 +1486,5 @@
     \songti
     \zihao{-4}
 }
-\ExplSyntaxOff
 
 %%%%% 'buaathesis.cls' %%%%% END
