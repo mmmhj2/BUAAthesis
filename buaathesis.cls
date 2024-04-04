@@ -89,7 +89,7 @@
 \RequirePackage{ulem}           % 下划线
 \RequirePackage{setspace}       % 设置行距
 
-\RequirePackage[style=gb7714-2015, backend=biber]{biblatex}
+\RequirePackage[style=gb7714-2015, gbnamefmt=lowercase, backend=biber]{biblatex}
 
 \graphicspath{{figure/}}
 
@@ -1116,7 +1116,7 @@
     \bool_if:NT \g_@@_bachelor_bool {
         \begin{center}
             \begin{minipage}[h]{.75\textwidth}
-                \centering{\zihao{3} \heiti \tl_use:N \l_@@_thesis_title_tl }
+                \centering{\zihao{-3} \heiti \tl_use:N \l_@@_thesis_title_tl }
             \end{minipage} \par
             \begin{minipage}[h]{.8\textwidth}
                 \begin{flushright}
@@ -1148,7 +1148,7 @@
     \bool_if:NT \g_@@_bachelor_bool {
         \begin{center}
             \begin{minipage}[h]{.75\textwidth}
-                \centering{ \bf \zihao{3} \tl_use:N \l_@@_thesis_title_eng_tl }
+                \centering{ \bf \zihao{-3} \tl_use:N \l_@@_thesis_title_eng_tl }
             \end{minipage} \par
             \begin{minipage}[h]{.8\textwidth}
                 \begin{flushright}
