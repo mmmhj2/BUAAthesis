@@ -103,8 +103,8 @@
 % 用户信息
 
 % 学校名称
-\@@_cs_declare_token_list:nn {\l_@@_university_name_tl}{\buaa@university}
-\@@_cs_declare_token_list:nn {\l_@@_university_name_eng_tl}{\buaa@universityeng}
+\tl_new:N \l_@@_university_name_tl
+\tl_new:N \l_@@_university_name_eng_tl
 \tl_set:Nn \l_@@_university_name_tl {北京航空航天大学}
 \tl_set:Nn \l_@@_university_name_eng_tl {Beihang University}
 \NewDocumentCommand{\university}{mm}{
@@ -112,24 +112,24 @@
     \tl_set:Nn \l_@@_university_name_eng_tl {#2}
 }
 % 学院
-\@@_cs_declare_token_list:nn {\l_@@_school_name_tl}{\buaa@school}
-\@@_cs_declare_token_list:nn {\l_@@_school_name_eng_tl}{\buaa@schooleng}
+\tl_new:N \l_@@_school_name_tl
+\tl_new:N \l_@@_school_name_eng_tl
 \NewDocumentCommand{\school}{mm}{
     \tl_set:Ne \l_@@_school_name_tl {#1}
     \tl_set:Ne \l_@@_school_name_eng_tl {#2}
 }
 % 专业
-\@@_cs_declare_token_list:nn {\l_@@_major_tl}{\buaa@major}
-\@@_cs_declare_token_list:nn {\l_@@_major_eng_tl}{\buaa@majoreng}
+\tl_new:N \l_@@_major_tl
+\tl_new:N \l_@@_major_eng_tl
 \NewDocumentCommand{\major}{mm}{
     \tl_set:Ne \l_@@_major_tl {#1}
     \tl_set:Ne \l_@@_major_eng_tl {#2}
 }
 % 论文标题和副标题
-\@@_cs_declare_token_list:nn {\l_@@_thesis_title_tl}{\buaa@thesistitle}
-\@@_cs_declare_token_list:nn {\l_@@_thesis_subtitle_tl}{\buaa@thesissubtitle}
-\@@_cs_declare_token_list:nn {\l_@@_thesis_title_eng_tl}{\buaa@thesistitleeng}
-\@@_cs_declare_token_list:nn {\l_@@_thesis_subtitle_eng_tl}{\buaa@thesissubtitleeng}
+\tl_new:N \l_@@_thesis_title_tl
+\tl_new:N \l_@@_thesis_subtitle_tl
+\tl_new:N \l_@@_thesis_title_eng_tl
+\tl_new:N \l_@@_thesis_subtitle_eng_tl
 \RenewDocumentCommand{\title}{mmmm}{
     \tl_set:Nn \l_@@_thesis_title_tl {#1}
     \tl_set:Nn \l_@@_thesis_subtitle_tl {#2}
@@ -138,23 +138,23 @@
 }
 \NewCommandCopy{\thesistitle}{\title}
 % 作者
-\@@_cs_declare_token_list:nn {\l_@@_author_tl}{\buaa@thesisauthor}
-\@@_cs_declare_token_list:nn {\l_@@_author_eng_tl}{\buaa@thesisauthoreng}
+\tl_new:N \l_@@_author_tl
+\tl_new:N \l_@@_author_eng_tl
 \RenewDocumentCommand{\author}{mm}{
     \tl_set:Nn \l_@@_author_tl {#1}
     \tl_set:Nn \l_@@_author_eng_tl {#2}
 }
 \NewCommandCopy{\thesisauthor}{\author}
 % 指导老师
-\@@_cs_declare_token_list:nn {\l_@@_teacher_tl}{\buaa@teacher}
-\@@_cs_declare_token_list:nn {\l_@@_teacher_eng_tl}{\buaa@teachereng}
+\tl_new:N \l_@@_teacher_tl
+\tl_new:N \l_@@_teacher_eng_tl
 \NewDocumentCommand{\teacher}{mm}{
     \tl_set:Nn \l_@@_teacher_tl {#1}
     \tl_set:Nn \l_@@_teacher_eng_tl {#2}
 }
 % 副指导老师
-\@@_cs_declare_token_list:nn {\l_@@_teacher_two_tl}{\buaa@subteacher}
-\@@_cs_declare_token_list:nn {\l_@@_teacher_two_eng_tl}{\buaa@subteachereng}
+\tl_new:N \l_@@_teacher_two_tl
+\tl_new:N \l_@@_teacher_two_eng_tl
 \NewDocumentCommand{\subteacher}{mm}{
     \tl_set:Nn \l_@@_teacher_two_tl {#1}
     \tl_set:Nn \l_@@_teacher_two_eng_tl {#2}
@@ -174,51 +174,46 @@
     }
 }
 % 分类号
-\@@_cs_declare_token_list:nn {\l_@@_clc_number_tl}{\buaa@category}
+\tl_new:N \l_@@_clc_number_tl
 \NewDocumentCommand{\category}{m}{ \tl_set:Nn \l_@@_clc_number_tl {#1} }
 % 论文开始时间
-\@@_cs_declare_token_list:nn {\l_@@_thesis_begin_year_tl}{\buaa@thesisbeginyear}
-\@@_cs_declare_token_list:nn {\l_@@_thesis_begin_month_tl}{\buaa@thesisbeginmonth}
-\@@_cs_declare_token_list:nn {\l_@@_thesis_begin_day_tl}{\buaa@thesisbeginday}
+\tl_new:N \l_@@_thesis_begin_year_tl
+\tl_new:N \l_@@_thesis_begin_month_tl
+\tl_new:N \l_@@_thesis_begin_day_tl
 \NewDocumentCommand{\thesisbegin}{mmm}{
     \tl_set:Nn \l_@@_thesis_begin_year_tl {#1}
     \tl_set:Nn \l_@@_thesis_begin_month_tl {#2}
     \tl_set:Nn \l_@@_thesis_begin_day_tl {#3}
 }
 % 论文结束时间
-\@@_cs_declare_token_list:nn {\l_@@_thesis_end_year_tl}{\buaa@thesisendyear}
-\@@_cs_declare_token_list:nn {\l_@@_thesis_end_month_tl}{\buaa@thesisendmonth}
-\@@_cs_declare_token_list:nn {\l_@@_thesis_end_day_tl}{\buaa@thesisendday}
+\tl_new:N \l_@@_thesis_end_year_tl
+\tl_new:N \l_@@_thesis_end_month_tl
+\tl_new:N \l_@@_thesis_end_day_tl
 \NewDocumentCommand{\thesisend}{mmm}{
     \tl_set:Nn \l_@@_thesis_end_year_tl {#1}
     \tl_set:Nn \l_@@_thesis_end_month_tl {#2}
     \tl_set:Nn \l_@@_thesis_end_day_tl {#3}
 }
 % 答辩时间
-\@@_cs_declare_token_list:nn {\l_@@_defense_year_tl}{\buaa@defenseyear}
-\@@_cs_declare_token_list:nn {\l_@@_defense_month_tl}{\buaa@defensemonth}
-\@@_cs_declare_token_list:nn {\l_@@_defense_day_tl}{\buaa@defenseday}
+\tl_new:N \l_@@_defense_year_tl
+\tl_new:N \l_@@_defense_month_tl
+\tl_new:N \l_@@_defense_day_tl
 \NewDocumentCommand{\defense}{mmm}{
     \tl_set:Nn \l_@@_defense_year_tl {#1}
     \tl_set:Nn \l_@@_defense_month_tl {#2}
     \tl_set:Nn \l_@@_defense_day_tl {#3}
 }
 % 中文摘要关键字
-\@@_cs_declare_token_list:nn {\l_@@_keyword_tl}{\buaa@ckeyword}
+\tl_new:N \l_@@_keyword_tl
 \NewDocumentCommand{\ckeyword}{m}{ \tl_set:Nn \l_@@_keyword_tl {#1} }
 % 英文摘要关键字
-\@@_cs_declare_token_list:nn {\l_@@_keyword_eng_tl}{\buaa@ekeyword}
+\tl_new:N \l_@@_keyword_eng_tl
 \NewDocumentCommand{\ekeyword}{m}{ \tl_set:Nn \l_@@_keyword_eng_tl {#1} }
 % 学位
-\def\buaa@degree{} % 中文首页
-\def\buaa@degreeeng{} % 英文首页
-\def\buaa@degreetitle{} % 题名页
-\def\buaa@degreehead{} % 页眉页脚
-
-\tl_new:N \l_@@_degree_long_tl
-\tl_new:N \l_@@_degree_long_eng_tl
-\tl_new:N \l_@@_degree_title_tl
-\tl_new:N \l_@@_degree_head_tl
+\tl_new:N \l_@@_degree_long_tl      % 中文首页
+\tl_new:N \l_@@_degree_long_eng_tl  % 英文首页
+\tl_new:N \l_@@_degree_title_tl     % 题名页
+\tl_new:N \l_@@_degree_head_tl      % 页眉页脚
 
 \bool_if:NT \g_@@_bachelor_bool {
     \tl_set:Nn \l_@@_degree_long_tl {学士学位}
@@ -247,12 +242,8 @@
     \tl_set:Nn \l_@@_degree_head_tl {博士}
 }
 
-\exp_args:NNV \def \buaa@degree \l_@@_degree_long_tl 
-\exp_args:NNV \def \buaa@degreeeng \l_@@_degree_long_eng_tl 
-\exp_args:NNV \def \buaa@degreetitle \l_@@_degree_title_tl 
-\exp_args:NNV \def \buaa@degreehead \l_@@_degree_head_tl 
 % 开题文件类别
-\@@_cs_declare_token_list:nn {\l_@@_proposal_class_tl}{\buaa@ktclass}
+\tl_new:N \l_@@_proposal_class_tl
 \NewDocumentCommand{\ktclass}{m}{ \tl_set:Nn \l_@@_proposal_class_tl {#1} }
 
 %%%%%%%%%% bachelor user info %%%%%%%%%%
@@ -433,11 +424,11 @@
     \bool_if:nT { \g_@@_bachelor_bool } {
         \bool_if:nTF {\g_@@_proposal_bool} {
             \fancyhead[C]{\zihao{-5}\hwkaiti
-                \buaa@degreehead 学位论文\buaa@ktclass\vspace{1.5mm}
+                \l_@@_degree_head_tl  学位论文\l_@@_proposal_class_tl\vspace{1.5mm}
             }
             \fancyfoot[C]{
                 \hspace{1.5mm}
-                \hwkaiti\zihao{-5}\buaa@university\buaa@school 学院
+                \hwkaiti\zihao{-5}\l_@@_university_name_tl\l_@@_school_name_tl 学院
                 \hfill\hfill
                 \songti\zihao{-5}$\cdot$\quad\thepage\quad$\cdot$
                 \hspace{1.5mm}
@@ -447,7 +438,7 @@
         } {
             \fancyhead[C]{
                 \includegraphics[width=37bp]{figure/buaamark.pdf}\hfill
-                \raisebox{2ex}{\heiti\zihao{4}\buaa@university 毕业设计(论文)}\hfill
+                \raisebox{2ex}{\heiti\zihao{4}\l_@@_university_name_tl 毕业设计(论文)}\hfill
                 \raisebox{2ex}{\songti\zihao{5}第\quad\thepage\quad 页}
             }
         }
@@ -457,11 +448,11 @@
         \bool_if:nTF { \g_@@_proposal_bool } {
             % 研究生开题报告/文献综述，与本科生格式基本一致
             \fancyhead[C]{\zihao{-5}\hwkaiti
-                \buaa@degreehead 学位论文\buaa@ktclass\vspace{1.5mm}
+                \l_@@_degree_head_tl  学位论文\l_@@_proposal_class_tl\vspace{1.5mm}
             }
             \fancyfoot[C]{
                 \hspace{1.5mm}
-                \hwkaiti\zihao{-5}\buaa@university\buaa@school 学院
+                \hwkaiti\zihao{-5}\l_@@_university_name_tl\l_@@_school_name_tl 学院
                 \hfill\hfill
                 \songti\zihao{-5}$\cdot$\quad\thepage\quad$\cdot$
                 \hspace{1.5mm}
@@ -471,13 +462,13 @@
         } {
             \legacy_if:nTF { @twoside } {
                 \fancyhead[CO]{\zihao{-5}\songti
-                    \buaa@university\buaa@degreehead 学位论文\vspace{1.5mm}
+                    \l_@@_university_name_tl\l_@@_degree_head_tl  学位论文\vspace{1.5mm}
                 }
                 \fancyhead[CE]{\zihao{-5}\songti\leftmark\vspace{1.5mm}}
             } {
                 \fancyhead[C]{\zihao{-5}\songti
                     \ifthenelse{\isodd{\value{page}}}
-                        {\buaa@university\buaa@degreehead 学位论文}
+                        {\l_@@_university_name_tl\l_@@_degree_head_tl  学位论文}
                         {\leftmark}
                     \vspace{1.5mm}
                 }
@@ -867,11 +858,11 @@
 
 \cs_new:Nn \@@_cs_bachelor_proposal_tabular: {
     \begin{tabular}{c~p{0.55\textwidth}<{\raggedright}}
-        \hwkaiti \textbf{论文题目}  : & \hwkaiti \buaa@thesistitle \\[.4ex]
-        \hwkaiti \textbf{专 \hspace{2em} 业}  : & \hwkaiti \buaa@major \\[.4ex]
-        \hwkaiti \textbf{姓 \hspace{2em} 名}  : & \hwkaiti \buaa@thesisauthor \\[.4ex]
+        \hwkaiti \textbf{论文题目}  : & \hwkaiti \l_@@_thesis_title_tl \\[.4ex]
+        \hwkaiti \textbf{专 \hspace{2em} 业}  : & \hwkaiti \l_@@_major_tl \\[.4ex]
+        \hwkaiti \textbf{姓 \hspace{2em} 名}  : & \hwkaiti \l_@@_author_tl \\[.4ex]
         \hwkaiti \textbf{学 \hspace{2em} 号}  : & \hwkaiti \buaa@studentID \\[.4ex]
-        \hwkaiti \textbf{指导教师}  : & \hwkaiti\buaa@teacher
+        \hwkaiti \textbf{指导教师}  : & \hwkaiti\l_@@_teacher_tl
         \bool_if:NT \g_@@_twoteacher_bool { \quad \l_@@_teacher_two_tl }
         \\
     \end{tabular}
@@ -879,21 +870,21 @@
 \cs_new:Nn \@@_cs_bachelor_tabular: {
     \begin{tabular}{cc}
         学 \hspace{0.75em} 院 \hspace{0.75em} 名 \hspace{0.75em} 称 \hspace{0.75em} &
-        \@@_cs_ulinecvcbc:n {\buaa@school 学院} \\[.4ex]
+        \@@_cs_ulinecvcbc:n {\l_@@_school_name_tl 学院} \\[.4ex]
         专 \hspace{0.75em} 业 \hspace{0.75em} 名 \hspace{0.75em} 称 \hspace{0.75em} &
-        \@@_cs_ulinecvcbc:n {\buaa@major 专业} \\[.4ex]
+        \@@_cs_ulinecvcbc:n {\l_@@_major_tl 专业} \\[.4ex]
         学 \hspace{0.75em} 生 \hspace{0.75em} 姓 \hspace{0.75em} 名 \hspace{0.75em} &
-        \@@_cs_ulinecvcbc:n {\buaa@thesisauthor} \\[.4ex]
+        \@@_cs_ulinecvcbc:n {\l_@@_author_tl} \\[.4ex]
         指 \hspace{0.75em} 导 \hspace{0.75em} 教 \hspace{0.75em} 师 \hspace{0.75em} &
-        \@@_cs_ulinecvcbc:n {\buaa@teacher \bool_if:NT \g_@@_twoteacher_bool {\quad \buaa@subteacher} } \\
+        \@@_cs_ulinecvcbc:n {\l_@@_teacher_tl \bool_if:NT \g_@@_twoteacher_bool {\quad \l_@@_teacher_two_tl} } \\
     \end{tabular}
 }
 \cs_new:Nn \@@_cs_graduate_proposal_tabular: {
     \begin{tabular}{c~p{0.55\textwidth}<{\raggedright}}
         \hwkaiti \textbf{题 \hspace{2em} 目}  : 
-        & \hwkaiti\buaa@thesistitle \\[.4ex]
+        & \hwkaiti\l_@@_thesis_title_tl \\[.4ex]
         \hwkaiti \textbf{专 \hspace{2em} 业}  : 
-        & \hwkaiti\buaa@major \\[.4ex]
+        & \hwkaiti\l_@@_major_tl \\[.4ex]
         \hwkaiti \textbf{研究方向}  : 
         & \hwkaiti\buaa@direction \\[.4ex]
         \hwkaiti \textbf {
@@ -902,27 +893,27 @@
                 { \g_@@_doctor_bool } {博 \hspace{0.5em} 士 \hspace{0.5em} 生}
             }
         }  : 
-        & \hwkaiti\buaa@thesisauthor \\[.4ex]
+        & \hwkaiti\l_@@_author_tl \\[.4ex]
         \hwkaiti \textbf{学 \hspace{2em} 号}  : 
         & \hwkaiti\buaa@studentID \\[.4ex]
         \hwkaiti \textbf{指导教师}  : 
-        & \hwkaiti\buaa@teacher \bool_if:nT \g_@@_twoteacher_bool {\quad \buaa@subteacher}\\
+        & \hwkaiti\l_@@_teacher_tl \bool_if:nT \g_@@_twoteacher_bool {\quad \l_@@_teacher_two_tl}\\
     \end{tabular}
 }
 \cs_new:Nn \@@_cs_graduate_tabular: {
     \begin{tabular}[b]{ll}
-        作 \hspace{0.5em} 者 \hspace{0.5em} 姓 \hspace{0.5em} 名 \hspace{0.5em} & \buaa@thesisauthor \\[.3ex]
+        作 \hspace{0.5em} 者 \hspace{0.5em} 姓 \hspace{0.5em} 名 \hspace{0.5em} & \l_@@_author_tl \\[.3ex]
         \bool_if:NTF \g_@@_professional_bool {
-            专 \hspace{0.5em} 业 \hspace{0.5em} 名 \hspace{0.5em} 称 \hspace{0.5em} & \buaa@major\\[.3ex]
+            专 \hspace{0.5em} 业 \hspace{0.5em} 名 \hspace{0.5em} 称 \hspace{0.5em} & \l_@@_major_tl\\[.3ex]
         } {
-            学 \hspace{0.5em} 科 \hspace{0.5em} 专 \hspace{0.5em} 业 \hspace{0.5em} & \buaa@major\\[.3ex]
+            学 \hspace{0.5em} 科 \hspace{0.5em} 专 \hspace{0.5em} 业 \hspace{0.5em} & \l_@@_major_tl\\[.3ex]
         }
-        指 \hspace{0.5em} 导 \hspace{0.5em} 教 \hspace{0.5em} 师 \hspace{0.5em} & \buaa@teacher\quad\buaa@teacherdegree 
+        指 \hspace{0.5em} 导 \hspace{0.5em} 教 \hspace{0.5em} 师 \hspace{0.5em} & \l_@@_teacher_tl\quad\buaa@teacherdegree 
         \bool_if:nT \g_@@_twoteacher_bool { 
-            \\[.3ex] \hspace{0.5em} & \buaa@subteacher\quad\buaa@subteacherdegree
+            \\[.3ex] \hspace{0.5em} & \l_@@_teacher_two_tl\quad\buaa@subteacherdegree
         }
         \\[.3ex]
-        培 \hspace{0.5em} 养 \hspace{0.5em} 学 \hspace{0.5em} 院 \hspace{0.5em} & \buaa@school 学院\\
+        培 \hspace{0.5em} 养 \hspace{0.5em} 学 \hspace{0.5em} 院 \hspace{0.5em} & \l_@@_school_name_tl 学院\\
     \end{tabular}
 }
 \cs_new:Nn \@@_cs_bachelor_proposal_cover_page: {
@@ -932,12 +923,12 @@
         \begin{center}
             \includegraphics[width=310bp]{figure/buaaname.pdf}
             \\ \skip_vertical:n{60bp} \mode_leave_vertical: \\
-            \centerline{\zihao{1} \heiti \textbf{\buaa@degree 论文\buaa@ktclass}}
+            \centerline{\zihao{1} \heiti \textbf{\l_@@_degree_long_tl 论文\l_@@_proposal_class_tl}}
             \mode_leave_vertical: \\ \skip_vertical:n{60bp} \mode_leave_vertical: \\
             { \zihao{-3} \heiti \@@_cs_bachelor_proposal_tabular: }
             \mode_leave_vertical: \\ \skip_vertical:n{75bp} \mode_leave_vertical: \\
             \centerline{
-                \heiti\zihao{3}\textbf{\buaa@university \buaa@school 学院}
+                \heiti\zihao{3}\textbf{\l_@@_university_name_tl \l_@@_school_name_tl 学院}
             }
             \skip_vertical:n{20bp}
             \centerline{
@@ -973,11 +964,11 @@
             \centerline{\zihao{-0}\heiti 毕业设计(论文)}
             \mode_leave_vertical: \\ \vspace*{\stretch{4}}
             \begin{minipage}[h]{.8\textwidth}
-                \centering{\heiti\zihao{2}\buaa@thesistitle}
+                \centering{\heiti\zihao{2}\l_@@_thesis_title_tl}
             \end{minipage}
             \skip_vertical:n{20bp}
             \begin{minipage}[h]{.75\textwidth}
-                \centering{\heiti\zihao{3}\buaa@thesissubtitle}
+                \centering{\heiti\zihao{3}\l_@@_thesis_subtitle_tl}
             \end{minipage}
             \vspace*{\stretch{3}} \mode_leave_vertical: \\
             {
@@ -1000,11 +991,11 @@
         \begin{center}
             \includegraphics[width=310bp]{figure/buaaname.pdf}
             \mode_leave_vertical: \\ \skip_vertical:n{60bp} \mode_leave_vertical: \\
-            \centerline{\zihao{1} \heiti \textbf{\buaa@degree 论文\buaa@ktclass}}
+            \centerline{\zihao{1} \heiti \textbf{\l_@@_degree_long_tl 论文\l_@@_proposal_class_tl}}
             \mode_leave_vertical: \\ \skip_vertical:n{60bp} \mode_leave_vertical: \\
             { \zihao{-3} \heiti \@@_cs_graduate_proposal_tabular: }
             \mode_leave_vertical: \\ \skip_vertical:n{75bp} \mode_leave_vertical: \\
-            \centerline{\heiti\zihao{3}\textbf{\buaa@university\buaa@school 学院}}
+            \centerline{\heiti\zihao{3}\textbf{\l_@@_university_name_tl\l_@@_school_name_tl 学院}}
             \skip_vertical:n{20bp}
             \centerline{
                 \heiti\zihao{-3}
@@ -1021,7 +1012,7 @@
                 {
                     \zihao{5}\heiti\bfseries
                     \begin{flushleft}
-                        中图分类号：\buaa@category  \\
+                        中图分类号：\l_@@_clc_number_tl  \\
                         论\,\,文\,\,编\,\,号：\buaa@thesisID\\
                         \bool_if:nTF \g_@@_classified_bool {
                             \buaa@clevel\ding{73} \hspace{0.5em} \buaa@climit \\
@@ -1033,21 +1024,21 @@
                 \skip_vertical:n{60bp}
                 \includegraphics[width=.5\textwidth]{figure/buaaname_ch.pdf}
                 \skip_vertical:n{30bp}
-                \centerline{\zihao{0}\ziju{0.2}\hwxingkai\buaa@degree 论文}
+                \centerline{\zihao{0}\ziju{0.2}\hwxingkai\l_@@_degree_long_tl 论文}
                 \mode_leave_vertical: \\
                 %\vskip 100bp
                 \vspace*{\stretch{5}}
                 \begin{minipage}[h]{.85\textwidth}
                     \begin{spacing}{3}
                         % actually, it should be 1.5, but I think 3 will be prefect.
-                        \centering{\zihao{-1}\songti\bfseries\buaa@thesistitle}
+                        \centering{\zihao{-1}\songti\bfseries\l_@@_thesis_title_tl}
                     \end{spacing}
                 \end{minipage} \par
                 %\vspace{5bp}
                 % the space between title and subtitle, however, it seems doesn't work.
                 \begin{minipage}[h]{.75\textwidth}
                     \begin{spacing}{1.5}
-                        \centering{\heiti\zihao{3}\buaa@thesissubtitle}
+                        \centering{\heiti\zihao{3}\l_@@_thesis_subtitle_tl}
                     \end{spacing}
                 \end{minipage}
                 \vspace*{\stretch{4}}
@@ -1073,10 +1064,10 @@
 
 \cs_new:Nn \@@_cs_graduate_tabular_eng: {
     \begin{tabular}{ll}
-        \textbf{Candidate:\ } & \textbf{\buaa@thesisauthoreng} \\[0.5ex]
-        \textbf{Supervisor:\ } & \textbf{\buaa@teacherdegreeeng \hspace{0.5em} \buaa@teachereng} 
+        \textbf{Candidate:\ } & \textbf{\l_@@_author_eng_tl} \\[0.5ex]
+        \textbf{Supervisor:\ } & \textbf{\buaa@teacherdegreeeng \hspace{0.5em} \l_@@_teacher_eng_tl} 
         \bool_if:NT \g_@@_twoteacher_bool {
-            \\ ~~ & \textbf{\buaa@subteacherdegreeeng \hspace{0.5em} \buaa@subteachereng}
+            \\ ~~ & \textbf{\buaa@subteacherdegreeeng \hspace{0.5em} \l_@@_teacher_two_eng_tl}
         } \\
     \end{tabular}
 }
@@ -1086,23 +1077,23 @@
     \begin{center}
         \begin{minipage}[h]{.8\textwidth}
             \begin{spacing}{2}
-                \centering{ \zihao{-2} \textbf{\buaa@thesistitleeng} }
+                \centering{ \zihao{-2} \textbf{\l_@@_thesis_title_eng_tl} }
             \end{spacing}
         \end{minipage}
         \skip_vertical:n {20bp}
         \begin{minipage}[h]{.75\textwidth}
-            \centering{\zihao{-3}\buaa@thesissubtitleeng}
+            \centering{\zihao{-3}\l_@@_thesis_subtitle_eng_tl}
         \end{minipage}
         \vspace*{\stretch{1}} \mode_leave_vertical: \\
-        {\zihao{4} A~Dissertation~Submitted~for~the~Degree~of~\buaa@degreeeng} \\
+        {\zihao{4} A~Dissertation~Submitted~for~the~Degree~of~\l_@@_degree_long_eng_tl} \\
         \skip_vertical:n {110bp}
         \begin{center}
             \zihao{-3} \@@_cs_graduate_tabular_eng:
         \end{center}
         \skip_vertical:n {125bp}
         \zihao{3}{
-            \buaa@schooleng \\[1.8ex]
-            \buaa@universityeng~,~Beijing,~China
+            \l_@@_university_name_tl \\[1.8ex]
+            \l_@@_university_name_eng_tl~,~Beijing,~China
         }
     \end{center}
 }
@@ -1192,7 +1183,7 @@
     \zihao{-4}
     \hfill
     \begin{tabular}{cl}
-        作者：&\buaa@thesisauthor\\
+        作者：&\l_@@_author_tl\\
         签字：&~~~~\\
         时间：& \buaa@thesisdateyear~年~\buaa@thesisdatemonth ~月
     \end{tabular}
@@ -1294,20 +1285,20 @@
             \int_incr:N \l_tmpa_int
         }
 
-        \ulinec[.28]{\buaa@school}学院
-        \ulinec[.28]{\buaa@major}~专业类~\ulinec[.15]{\buaa@class}班 \\
-        学生\ulinec[.3]{\buaa@thesisauthor} \\
+        \ulinec[.28]{\l_@@_school_name_tl}学院
+        \ulinec[.28]{\l_@@_major_tl}~专业类~\ulinec[.15]{\buaa@class}班 \\
+        学生\ulinec[.3]{\l_@@_author_tl} \\
         毕业设计(论文)时间：~~
-        \ulinec[.1]{\buaa@thesisbeginyear}年
-        \ulinec[.06]{\buaa@thesisbeginmonth}月
-        \ulinec[.06]{\buaa@thesisbeginday}日
-        至\ulinec[.1]{\buaa@thesisendyear}年
-        \ulinec[.06]{\buaa@thesisendmonth}月
-        \ulinec[.06]{\buaa@thesisendday}日 \\
+        \ulinec[.1]{\l_@@_thesis_begin_year_tl}年
+        \ulinec[.06]{\l_@@_thesis_begin_month_tl}月
+        \ulinec[.06]{\l_@@_thesis_begin_day_tl}日
+        至\ulinec[.1]{\l_@@_thesis_end_year_tl}年
+        \ulinec[.06]{\l_@@_thesis_end_month_tl}月
+        \ulinec[.06]{\l_@@_thesis_end_day_tl}日 \\
         答辩时间：
-        \ulinec[.16]{\buaa@defenseyear}年
-        \ulinec[.08]{\buaa@defensemonth}月
-        \ulinec[.08]{\buaa@defenseday}日 \\
+        \ulinec[.16]{\l_@@_defense_year_tl}年
+        \ulinec[.08]{\l_@@_defense_month_tl}月
+        \ulinec[.08]{\l_@@_defense_day_tl}日 \\
         成\qquad 绩：\ulinec[.3]{} \\
         指导教师：\ulinec[.3]{} \\
         兼职教师或答疑教师（并指出所负责部分）：\\
