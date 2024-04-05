@@ -335,16 +335,15 @@
 % \setCJKmainfont{宋体}
 % 重新定义了一下宋体和黑体，让其能支持textbf
 % 华文行楷、华文楷体同上
-\let\songti\relax
-\let\heiti\relax
+
 \setCJKfamilyfont{songti}[AutoFakeBold = {2.17}]{SimSun}
 \setCJKfamilyfont{heiti}[AutoFakeBold = {2.17}]{SimHei}
 \setCJKfamilyfont{hwxingkai}[AutoFakeBold = {2.17}]{STXingkai}
 \setCJKfamilyfont{hwkaiti}[AutoFakeBold = {2.17}]{STKaiti}
-\NewDocumentCommand{\songti}{}{\CJKfamily{songti}}
-\NewDocumentCommand{\heiti}{}{\CJKfamily{heiti}}
-\NewDocumentCommand{\hwxingkai}{}{\CJKfamily{hwxingkai}}
-\NewDocumentCommand{\hwkaiti}{}{\CJKfamily{hwkaiti}}
+\DeclareDocumentCommand{\songti}{}{\CJKfamily{songti}}
+\DeclareDocumentCommand{\heiti}{}{\CJKfamily{heiti}}
+\DeclareDocumentCommand{\hwxingkai}{}{\CJKfamily{hwxingkai}}
+\DeclareDocumentCommand{\hwkaiti}{}{\CJKfamily{hwkaiti}}
 
 %%%%%%%%%% color %%%%%%%%%%
 % 颜色设置
