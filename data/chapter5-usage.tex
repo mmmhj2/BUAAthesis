@@ -43,6 +43,50 @@
 	label={code-kaitireport-structure},
 ]{sample-kaitireport.tex}
 
+\section{编译方法}
+
+本模板使用 \verb|Biber| 后端实现参考文件管理，因此编译时必须使用该命令而非 \verb|bibtex| 命令。
+若计算机上没有安装适用的工具而只能使用手动编译，请使用以下工具链：\verb|xelatex -> biber -> xelatex -> xelatex|。
+
+若使用 VSCode 与 LaTeX Workshop 进行编写，则可参考以下配置文件。
+\begin{lstlisting}[caption={LaTeX Workshop 配置}]
+{
+    "latex-workshop.latex.recipes": [
+        {
+            "name": "xelatex",
+            "tools": ["xelatex"]
+        },
+        {
+            "name": "biber",
+            "tools": ["biber"]
+        },
+        {
+            "name": "Full",
+            "tools": ["xelatex", "biber", "xelatex", "xelatex"]
+        }
+    ],
+    "latex-workshop.latex.tools": [
+        {
+            "name": "xelatex",
+            "command": "xelatex",
+            "args": [
+                "-synctex=1",
+                "-interaction=nonstopmode",
+                "-file-line-error",
+                "%DOC%"
+            ]
+        },
+        {
+            "name": "biber",
+            "command": "biber",
+            "args": [
+                "%DOCFILE%"
+            ],
+        }
+    ]
+}
+\end{lstlisting}
+
 \section{模板选项}
 \subsection{学位选项}
     \begin{itemize}
@@ -82,10 +126,22 @@
 章节中的内容如何编写，请见\hyperref[chapter-basic]{第\ref{chapter-basic}章~~\LaTeX{}基础知识}。
 
 \subsection{参考文献}
-参考文献使用\texttt{BiBTeX}工具，参考文献的数据库为\texttt{bibs.bib}，可以使用记事本等文本编辑器进行编辑。具体如何进行编辑也可参照示例模板给出的范例来编写。在Winedt软件中有具体的增加参考文献的选项；在\url{book.google.com}中搜索到的书籍，在页面的最下方也有\texttt{BiBTeX}的导出选项。
+参考文献使用\verb|BiBLaTeX|宏包与\verb|Biber|工具，相较于较旧的\verb|BiBTeX|和\verb|natbib|能够提供更好的 Unicode 兼容与更多的功能支持。
+本模板还使用了 \verb|biblatex-gb7714-2015| 宏包作为参考文件引用的样式。
 
-\texttt{.bib}参考文献数据库文件中，每个类别后的第一个为标号，在示例的\texttt{bibs.bib}中第一个书箱的标号为\textbf{kottwitz2011latex}，在引用此文献时，使用\verb|\upcite{kottwitz2011latex}|即可得到此文献\upcite{kottwitz2011latex}的引用\footnote{左侧“文献”的右上方即得到了此文献的引用。}。
-使用\verb|\cite{kottwitz2011latex}|即可得到文献\cite{kottwitz2011latex}的引用\footnote{“文献”的后面得到了此文献的引用，不是上标形式。}。
+基于以上选择，可按以下步骤在论文中使用和管理参考文献：
+\begin{enumerate}
+    \item 获取参考文献：获取 \verb|BiBLaTeX|（或\verb|BiBTeX|） 格式的参考文件条目，常见的学术搜索引擎和线上期刊均会提供该格式的导出。也可以使用 Zotero 一类的管理工具进行导出。
+    \item 管理参考文献数据库：将参考文献条目存入 \verb|.bib| 拓展名的数据库文件中，并保存在主要的 \verb|.tex| 文件附近，如 \verb|data| 文件夹下，可参考本模板的 \verb|data\bibs.bib|文件。
+    \item 导入参考文献数据库：使用 \verb|\bibliography| 或 \verb|\addbibresource| 宏引入参考文献数据库，该宏的第一个参数即为 \verb|.bib| 数据库文件的相对路径。具体用法可参考本模板的 \verb|sample-*.tex|文件。
+    \item 引用参考文献：主要的引用方式有两种。其一是使用 \verb|\cite| 或 \verb|\upcite| 生成上标形式的引用，如 \verb|\cite{kottwitz2011latex}| 可得到这种\cite{kottwitz2011latex}引用。
+        其二是使用 \verb|\parencite| 生成正文形式的引用，如 \verb|\parencite{kottwitz2011latex}| 可生成这种\parencite{kottwitz2011latex}格式的引用。
+        这些宏的第一个参数须和参考文件条目中的唯一标识符（即第一个参数）一致，可参考本模板的 \verb|data\bibs.bib|文件。
+    \item 输出参考文献：使用 \verb|\printbibliography| 宏输出排版好的参考文献。可参考本模板的 \verb|data\reference.tex| 文件。
+\end{enumerate}
+
+每次更新参考文献数据库后，在编译时都需要重新运行 \verb|Biber|；若未更新数据库，则不需要重新运行它。
+如果最后未能生成参考文献引用或参考文献表，除了检查以上几点之外，还请检查编译命令是否正常，并尝试删除辅助文件（尤其是 \verb|.bcf| 文件）后重新编译。
 
 \section{正文之后的内容}
 \subsection{附录}
