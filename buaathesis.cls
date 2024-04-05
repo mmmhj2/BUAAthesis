@@ -8,11 +8,11 @@
 \NeedsTeXFormat{LaTeX2e}[2023/11/01]
 \ProvidesExplClass{buaathesis}{2024/02/17}{v0.10}{The LaTeX3 template for thesis of BUAA}
 
-\msg_new:nnn{buaathesis}{bootstrap/info}{
-    You ~ are ~ using ~ buaathesis ~ package ~ with ~ '#1' ~ (version~'#2')
-}
+%\msg_new:nnn{buaathesis}{bootstrap/info}{
+%    You ~ are ~ using ~ buaathesis ~ package ~ with ~ '#1' ~ (version~'#2')
+%}
 
-\msg_info:nnVV{buaathesis}{bootstrap/info}{\c_sys_engine_format_str}{\c_sys_engine_version_str}
+%\msg_info:nnVV{buaathesis}{bootstrap/info}{\c_sys_engine_format_str}{\c_sys_engine_version_str}
 
 %%%%%%%%%% class options %%%%%%%%%%
 % 模板选项
@@ -1120,7 +1120,7 @@
             \end{minipage} \par
             \begin{minipage}[h]{.8\textwidth}
                 \begin{flushright}
-                    {\zihao{3} \heiti \tl_use:N \l_@@_thesis_subtitle_tl}
+                    {\zihao{-3} \heiti \tl_use:N \l_@@_thesis_subtitle_tl}
                 \end{flushright}
             \end{minipage}
         \end{center}
@@ -1152,7 +1152,7 @@
             \end{minipage} \par
             \begin{minipage}[h]{.8\textwidth}
                 \begin{flushright}
-                    {\zihao{3} \heiti \tl_use:N \l_@@_thesis_subtitle_eng_tl}
+                    {\zihao{-3} \heiti \tl_use:N \l_@@_thesis_subtitle_eng_tl}
                 \end{flushright}
             \end{minipage}
         \end{center} \vskip 10bp
