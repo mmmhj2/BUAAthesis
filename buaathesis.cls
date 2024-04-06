@@ -66,7 +66,7 @@
 % 全局通用宏包
 
 \RequirePackage{ifthen}
-\RequirePackage{amsmath,amssymb,amsfonts,mathrsfs,bm}
+\RequirePackage{amsmath,amssymb,amsfonts,bm}
 \RequirePackage[amsmath,thmmarks,hyperref]{ntheorem}
 \RequirePackage{txfonts}
 \RequirePackage{hyphenat}
