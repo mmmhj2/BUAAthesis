@@ -94,12 +94,6 @@
 \graphicspath{{figure/}}
 
 %%%%%%%%%% common user info %%%%%%%%%%
-
-\cs_new_protected:Npn \@@_cs_declare_token_list:nn #1#2 {
-    \tl_new:N #1
-    \def #2 {\tl_use:N #1}
-}
-
 % 用户信息
 
 % 学校名称
@@ -250,18 +244,18 @@
 % 本科生信息
 
 % 班级
-\@@_cs_declare_token_list:nn {\l_@@_class_tl}{\buaa@class}
+\tl_new:N \l_@@_class_tl
 \NewDocumentCommand{\class}{m}{ \tl_set:Nn \l_@@_class_tl {#1} }
 % 单位代码
-\@@_cs_declare_token_list:nn {\l_@@_unit_code_tl}{\buaa@unicode}
+\tl_new:N \l_@@_unit_code_tl
 \tl_set:Nn \l_@@_unit_code_tl {1006}
 \NewDocumentCommand{\unicode}{m}{ \tl_set:Nn \l_@@_unit_code_tl {#1} }
 % 学号
-\@@_cs_declare_token_list:nn {\l_@@_student_id_tl}{\buaa@studentID}
+\tl_new:N \l_@@_student_id_tl
 \NewDocumentCommand{\studentID}{m}{ \tl_set:Nn \l_@@_student_id_tl{#1} }
 % 论文时间
-\@@_cs_declare_token_list:nn {\l_@@_bachelor_thesis_year_tl}{\buaa@thesisdateyear}
-\@@_cs_declare_token_list:nn {\l_@@_bachelor_thesis_month_tl}{\buaa@thesisdatemonth}
+\tl_new:N \l_@@_bachelor_thesis_year_tl
+\tl_new:N \l_@@_bachelor_thesis_month_tl
 \NewDocumentCommand{\thesisdate}{mm}{
     \tl_set:Nn \l_@@_bachelor_thesis_year_tl {#1}
     \tl_set:Nn \l_@@_bachelor_thesis_month_tl {#2}
@@ -271,48 +265,48 @@
 % 研究生信息
 
 % 保密等级
-\@@_cs_declare_token_list:nn {\l_@@_confidential_level_tl}{\buaa@clevel}
-\@@_cs_declare_token_list:nn {\l_@@_confidential_limit_tl}{\buaa@climit}
+\tl_new:N \l_@@_confidential_level_tl
+\tl_new:N \l_@@_confidential_limit_tl
 \NewDocumentCommand{\mibao}{mm}{
     \tl_set:Nn \l_@@_confidential_level_tl {#1}
     \tl_set:Nn \l_@@_confidential_limit_tl {#2}
 }
 % 研究方向
-\@@_cs_declare_token_list:nn {\l_@@_direction_tl}{\buaa@direction}
+\tl_new:N \l_@@_direction_tl
 \NewDocumentCommand{\direction}{m}{ \tl_set:Nn \l_@@_direction_tl {#1} }
 % 导师职称
-\@@_cs_declare_token_list:nn {\l_@@_teacher_title_tl}{\buaa@teacherdegree}
-\@@_cs_declare_token_list:nn {\l_@@_teacher_title_eng_tl}{\buaa@teacherdegreeeng}
+\tl_new:N \l_@@_teacher_title_tl
+\tl_new:N \l_@@_teacher_title_eng_tl
 \NewDocumentCommand{\teacherdegree}{mm}{
     \tl_set:Nn \l_@@_teacher_title_tl {#1}
     \tl_set:Nn \l_@@_teacher_title_eng_tl {#2}
 }
 % 副导师职称
-\@@_cs_declare_token_list:nn {\l_@@_teacher_two_title_tl}{\buaa@subteacherdegree}
-\@@_cs_declare_token_list:nn {\l_@@_teacher_two_title_eng_tl}{\buaa@subteacherdegreeeng}
+\tl_new:N \l_@@_teacher_two_title_tl
+\tl_new:N \l_@@_teacher_two_title_eng_tl
 \NewDocumentCommand{\subteacherdegree}{mm}{
     \tl_set:Nn \l_@@_teacher_two_title_tl {#1}
     \tl_set:Nn \l_@@_teacher_two_title_eng_tl {#2}
 }
 % 申请学位级别(题名页)
-\@@_cs_declare_token_list:nn {\l_@@_applied_degree_tl}{\buaa@appdegree}
+\tl_new:N \l_@@_applied_degree_tl
 \NewDocumentCommand{\applydegree}{m}{ \tl_set:Nn \l_@@_applied_degree_tl {#1} }
 % 论文编号
-\@@_cs_declare_token_list:nn {\l_@@_thesis_id_tl}{\buaa@thesisID}
+\tl_new:N \l_@@_thesis_id_tl
 \NewDocumentCommand{\thesisID}{m}{ \tl_set:Nn \l_@@_thesis_id_tl {#1} }
 % 论文提交时间
-\@@_cs_declare_token_list:nn {\l_@@_submission_year_tl}{\buaa@commityear}
-\@@_cs_declare_token_list:nn {\l_@@_submission_month_tl}{\buaa@commitmonth}
-\@@_cs_declare_token_list:nn {\l_@@_submission_day_tl}{\buaa@commitday}
+\tl_new:N \l_@@_submission_year_tl
+\tl_new:N \l_@@_submission_month_tl
+\tl_new:N \l_@@_submission_day_tl
 \NewDocumentCommand{\commit}{mmm}{
     \tl_set:Nn \l_@@_submission_year_tl {#1}
     \tl_set:Nn \l_@@_submission_month_tl {#2}
     \tl_set:Nn \l_@@_submission_day_tl {#3}
 }
 % 授予学位时间
-\@@_cs_declare_token_list:nn {\l_@@_award_year_tl}{\buaa@awardyear}
-\@@_cs_declare_token_list:nn {\l_@@_award_month_tl}{\buaa@awardmonth}
-\@@_cs_declare_token_list:nn {\l_@@_award_day_tl}{\buaa@awardday}
+\tl_new:N \l_@@_award_year_tl
+\tl_new:N \l_@@_award_month_tl
+\tl_new:N \l_@@_award_day_tl
 \NewDocumentCommand{\award}{mmm}{
     \tl_set:Nn \l_@@_award_year_tl {#1}
     \tl_set:Nn \l_@@_award_month_tl {#2}
@@ -336,10 +330,10 @@
 % 重新定义了一下宋体和黑体，让其能支持textbf
 % 华文行楷、华文楷体同上
 
-\setCJKfamilyfont{songti}[AutoFakeBold = {2.17}]{SimSun}
-\setCJKfamilyfont{heiti}[AutoFakeBold = {2.17}]{SimHei}
-\setCJKfamilyfont{hwxingkai}[AutoFakeBold = {2.17}]{STXingkai}
-\setCJKfamilyfont{hwkaiti}[AutoFakeBold = {2.17}]{STKaiti}
+\setCJKfamilyfont{songti}[AutoFakeBold = {2.17}]{宋体}
+\setCJKfamilyfont{heiti}[AutoFakeBold = {2.17}]{黑体}
+\setCJKfamilyfont{hwxingkai}[AutoFakeBold = {2.17}]{华文行楷}
+\setCJKfamilyfont{hwkaiti}[AutoFakeBold = {2.17}]{华文楷体}
 \DeclareDocumentCommand{\songti}{}{\CJKfamily{songti}}
 \DeclareDocumentCommand{\heiti}{}{\CJKfamily{heiti}}
 \DeclareDocumentCommand{\hwxingkai}{}{\CJKfamily{hwxingkai}}
@@ -860,7 +854,7 @@
         \hwkaiti \textbf{论文题目}  : & \hwkaiti \l_@@_thesis_title_tl \\[.4ex]
         \hwkaiti \textbf{专 \hspace{2em} 业}  : & \hwkaiti \l_@@_major_tl \\[.4ex]
         \hwkaiti \textbf{姓 \hspace{2em} 名}  : & \hwkaiti \l_@@_author_tl \\[.4ex]
-        \hwkaiti \textbf{学 \hspace{2em} 号}  : & \hwkaiti \buaa@studentID \\[.4ex]
+        \hwkaiti \textbf{学 \hspace{2em} 号}  : & \hwkaiti \l_@@_student_id_tl \\[.4ex]
         \hwkaiti \textbf{指导教师}  : & \hwkaiti\l_@@_teacher_tl
         \bool_if:NT \g_@@_twoteacher_bool { \quad \l_@@_teacher_two_tl }
         \\
@@ -885,7 +879,7 @@
         \hwkaiti \textbf{专 \hspace{2em} 业}  : 
         & \hwkaiti\l_@@_major_tl \\[.4ex]
         \hwkaiti \textbf{研究方向}  : 
-        & \hwkaiti\buaa@direction \\[.4ex]
+        & \hwkaiti\l_@@_direction_tl \\[.4ex]
         \hwkaiti \textbf {
             \bool_case:n {
                 { \g_@@_master_bool } {研 \hspace{0.5em} 究 \hspace{0.5em} 生}
@@ -894,7 +888,7 @@
         }  : 
         & \hwkaiti\l_@@_author_tl \\[.4ex]
         \hwkaiti \textbf{学 \hspace{2em} 号}  : 
-        & \hwkaiti\buaa@studentID \\[.4ex]
+        & \hwkaiti\l_@@_student_id_tl \\[.4ex]
         \hwkaiti \textbf{指导教师}  : 
         & \hwkaiti\l_@@_teacher_tl \bool_if:nT \g_@@_twoteacher_bool {\quad \l_@@_teacher_two_tl}\\
     \end{tabular}
@@ -907,9 +901,9 @@
         } {
             学 \hspace{0.5em} 科 \hspace{0.5em} 专 \hspace{0.5em} 业 \hspace{0.5em} & \l_@@_major_tl\\[.3ex]
         }
-        指 \hspace{0.5em} 导 \hspace{0.5em} 教 \hspace{0.5em} 师 \hspace{0.5em} & \l_@@_teacher_tl\quad\buaa@teacherdegree 
+        指 \hspace{0.5em} 导 \hspace{0.5em} 教 \hspace{0.5em} 师 \hspace{0.5em} & \l_@@_teacher_tl\quad\l_@@_teacher_title_tl 
         \bool_if:nT \g_@@_twoteacher_bool { 
-            \\[.3ex] \hspace{0.5em} & \l_@@_teacher_two_tl\quad\buaa@subteacherdegree
+            \\[.3ex] \hspace{0.5em} & \l_@@_teacher_two_tl\quad\l_@@_teacher_two_title_tl
         }
         \\[.3ex]
         培 \hspace{0.5em} 养 \hspace{0.5em} 学 \hspace{0.5em} 院 \hspace{0.5em} & \l_@@_school_name_tl 学院\\
@@ -932,8 +926,8 @@
             \skip_vertical:n{20bp}
             \centerline{
                 \heiti\zihao{-3}
-                \buaa@thesisdateyear \hspace{0.5em} 年 \hspace{0.5em} 
-                \buaa@thesisdatemonth \hspace{0.5em} 月
+                \l_@@_bachelor_thesis_year_tl \hspace{0.5em} 年 \hspace{0.5em} 
+                \l_@@_bachelor_thesis_month_tl \hspace{0.5em} 月
             }
         \end{center}
     \end{titlepage}
@@ -977,8 +971,8 @@
             \skip_vertical:n{60bp}
             \centerline{
                 \heiti\zihao{-3}
-                \buaa@thesisdateyear \hspace{0.5em} 年 \hspace{0.5em} 
-                \buaa@thesisdatemonth \hspace{0.5em} 月
+                \l_@@_bachelor_thesis_year_tl \hspace{0.5em} 年 \hspace{0.5em} 
+                \l_@@_bachelor_thesis_month_tl \hspace{0.5em} 月
             }
         \end{center}
     \end{titlepage}
@@ -998,8 +992,8 @@
             \skip_vertical:n{20bp}
             \centerline{
                 \heiti\zihao{-3}
-                \buaa@thesisdateyear \hspace{0.5em} 年 \hspace{0.5em}
-                \buaa@thesisdatemonth \hspace{0.5em} 月
+                \l_@@_bachelor_thesis_year_tl \hspace{0.5em} 年 \hspace{0.5em}
+                \l_@@_bachelor_thesis_month_tl \hspace{0.5em} 月
             }
         \end{center}
     \end{titlepage}
@@ -1012,9 +1006,9 @@
                     \zihao{5}\heiti\bfseries
                     \begin{flushleft}
                         中图分类号：\l_@@_clc_number_tl  \\
-                        论\,\,文\,\,编\,\,号：\buaa@thesisID\\
+                        论\,\,文\,\,编\,\,号：\l_@@_thesis_id_tl\\
                         \bool_if:nTF \g_@@_classified_bool {
-                            \buaa@clevel\ding{73} \hspace{0.5em} \buaa@climit \\
+                            \l_@@_confidential_level_tl\ding{73} \hspace{0.5em} \l_@@_confidential_limit_tl \\
                         } {
                             \skip_vertical:n{20bp}
                         }
@@ -1064,9 +1058,9 @@
 \cs_new:Nn \@@_cs_graduate_tabular_eng: {
     \begin{tabular}{ll}
         \textbf{Candidate:\ } & \textbf{\l_@@_author_eng_tl} \\[0.5ex]
-        \textbf{Supervisor:\ } & \textbf{\buaa@teacherdegreeeng \hspace{0.5em} \l_@@_teacher_eng_tl} 
+        \textbf{Supervisor:\ } & \textbf{\l_@@_teacher_title_eng_tl \hspace{0.5em} \l_@@_teacher_eng_tl} 
         \bool_if:NT \g_@@_twoteacher_bool {
-            \\ ~~ & \textbf{\buaa@subteacherdegreeeng \hspace{0.5em} \l_@@_teacher_two_eng_tl}
+            \\ ~~ & \textbf{\l_@@_teacher_two_title_eng_tl \hspace{0.5em} \l_@@_teacher_two_eng_tl}
         } \\
     \end{tabular}
 }
@@ -1184,7 +1178,7 @@
     \begin{tabular}{cl}
         作者：&\l_@@_author_tl\\
         签字：&~~~~\\
-        时间：& \buaa@thesisdateyear~年~\buaa@thesisdatemonth ~月
+        时间：& \l_@@_bachelor_thesis_year_tl~年~\l_@@_bachelor_thesis_month_tl ~月
     \end{tabular}
 }
 
@@ -1285,7 +1279,7 @@
         }
 
         \ulinec[.28]{\l_@@_school_name_tl}学院
-        \ulinec[.28]{\l_@@_major_tl}~专业类~\ulinec[.15]{\buaa@class}班 \\
+        \ulinec[.28]{\l_@@_major_tl}~专业类~\ulinec[.15]{\l_@@_class_tl}班 \\
         学生\ulinec[.3]{\l_@@_author_tl} \\
         毕业设计(论文)时间：~~
         \ulinec[.1]{\l_@@_thesis_begin_year_tl}年
