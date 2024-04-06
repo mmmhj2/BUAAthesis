@@ -43,7 +43,7 @@
 	label={code-kaitireport-structure},
 ]{sample-kaitireport.tex}
 
-\section{编译方法}
+\section{编译方法与错误排查}
 
 本模板使用 \verb|Biber| 后端实现参考文件管理，因此编译时必须使用该命令而非 \verb|bibtex| 命令。
 若计算机上没有安装适用的工具而只能使用手动编译，请使用以下工具链：\verb|xelatex -> biber -> xelatex -> xelatex|。
@@ -86,6 +86,30 @@
     ]
 }
 \end{lstlisting}
+
+\subsection{字体相关错误}
+
+若编译时出现未找到字体一类错误，请检查表 \ref{tab:font-list} 中所列的字体是否安装在计算机上。
+这可借助 \LaTeX{} 发行版中包含的 \verb|fc-list| 命令实现。
+在 Windows 下，可于命令提示符中执行以下命令：
+\begin{lstlisting}[caption={检查字体的批处理命令}]
+chcp 65001 >nul & fc-list :lang=zh | find "华文楷体"
+\end{lstlisting}
+若命令没有产生输出，则字体未安装或未正确安装。
+
+\begin{table}
+    \centering
+    \caption{使用的字体列表}
+    \label{tab:font-list}
+    \begin{tabular}{cc}
+        \hline 
+         字体族名 & 可能的字体文件名 \\ \hline
+         SimSun,宋体 & simsun.ttc \\
+         SimHei,黑体 & simhei.ttf \\
+         STXingkai,华文行楷 & STXINGKA.TTF \\
+         STKaiti,华文楷体 & STKAITI.TTF \\ \hline
+    \end{tabular}
+\end{table}
 
 \section{模板选项}
 \subsection{学位选项}
