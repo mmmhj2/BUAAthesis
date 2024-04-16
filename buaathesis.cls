@@ -30,6 +30,14 @@
 \bool_gset_false:N \g_@@_twoteacher_bool
 \bool_gset_false:N \g_@@_proposal_bool
 
+% Logo 位置
+\tl_new:N \g_@@_logo_filename_tl
+\tl_new:N \g_@@_name_filename_tl
+\tl_new:N \g_@@_name_eng_filename_tl
+\tl_gset:Nn \g_@@_logo_filename_tl {figure/buaamark.pdf}
+\tl_gset:Nn \g_@@_name_chn_only_filename_tl {figure/buaaname_ch.pdf}
+\tl_gset:Nn \g_@@_name_filename_tl {figure/buaaname.pdf}
+
 \keys_define:nn{buaathesis}{
     bachelor        .code:n = { \bool_gset_true:N \g_@@_bachelor_bool },
     master          .code:n = { \bool_gset_true:N \g_@@_master_bool },
@@ -430,7 +438,7 @@
             \renewcommand{\footrulewidth}{0.4bp}
         } {
             \fancyhead[C]{
-                \includegraphics[width=37bp]{figure/buaamark.pdf}\hfill
+                \includegraphics[width=37bp]{\g_@@_logo_filename_tl}\hfill
                 \raisebox{2ex}{\heiti\zihao{4}\l_@@_university_name_tl 毕业设计(论文)}\hfill
                 \raisebox{2ex}{\songti\zihao{5}第\quad\thepage\quad 页}
             }
@@ -914,7 +922,7 @@
         % 第二个()里的参数表示左移35pt，下移55pt
         \hfill \skip_vertical:n{45bp}
         \begin{center}
-            \includegraphics[width=310bp]{figure/buaaname.pdf}
+            \includegraphics[width=310bp]{\g_@@_name_filename_tl}
             \\ \skip_vertical:n{60bp} \mode_leave_vertical: \\
             \centerline{\zihao{1} \heiti \textbf{\l_@@_degree_long_tl 论文\l_@@_proposal_class_tl}}
             \mode_leave_vertical: \\ \skip_vertical:n{60bp} \mode_leave_vertical: \\
@@ -936,7 +944,7 @@
     \begin{titlepage}
         % 第二个()里的参数表示左移35pt，下移55pt
         \begin{picture}(0,0)(35,55)
-            \includegraphics[width=90pt]{figure/buaamark.pdf}
+            \includegraphics[width=90pt]{\g_@@_logo_filename_tl}
         \end{picture}
         \hfill
         \raisebox{-.2cm}[0pt][0pt]{
@@ -952,7 +960,7 @@
         }
         \skip_vertical:n{95bp}
         \begin{center}
-            \includegraphics[width=360bp]{figure/buaaname.pdf}
+            \includegraphics[width=360bp]{\g_@@_name_filename_tl}
             \skip_vertical:n{45bp}
             \centerline{\zihao{-0}\heiti 毕业设计(论文)}
             \mode_leave_vertical: \\ \vspace*{\stretch{4}}
@@ -982,7 +990,7 @@
         % 第二个()里的参数表示左移35pt，下移55pt
         \hfill \skip_vertical:n{45bp}
         \begin{center}
-            \includegraphics[width=310bp]{figure/buaaname.pdf}
+            \includegraphics[width=310bp]{\g_@@_name_filename_tl}
             \mode_leave_vertical: \\ \skip_vertical:n{60bp} \mode_leave_vertical: \\
             \centerline{\zihao{1} \heiti \textbf{\l_@@_degree_long_tl 论文\l_@@_proposal_class_tl}}
             \mode_leave_vertical: \\ \skip_vertical:n{60bp} \mode_leave_vertical: \\
@@ -1015,7 +1023,7 @@
                     \end{flushleft}
                 }
                 \skip_vertical:n{60bp}
-                \includegraphics[width=.5\textwidth]{figure/buaaname_ch.pdf}
+                \includegraphics[width=.5\textwidth]{\g_@@_name_chn_only_filename_tl}
                 \skip_vertical:n{30bp}
                 \centerline{\zihao{0}\ziju{0.2}\hwxingkai\l_@@_degree_long_tl 论文}
                 \mode_leave_vertical: \\
