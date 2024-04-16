@@ -18,16 +18,14 @@
 
 ## 依赖
 
-模板依赖 v2.0 及以上版本的 ctex 包，请使用较新版本的 LaTeX 发行版。
+模板依赖 v2.5.10 (2022/07/14) 及以上版本的 CTeX 包以及支持 LaTeX3 的内核，请尽量使用最新版本的 LaTeX 发行版。
 
 目前已经测试的 LaTeX 发行版包括：
 
-+ TeXLive 2015、TeXLive 2016、TeXLive 2019（** 推荐 **）
-+ CTeX 2.9.3
++ MikTeX 最新版（控制台版本 v4.9）
 
-对于老版本的 LaTeX 发行版，请通过包管理器升级 ctex 的版本。
-
-
+MikTeX 是滚动更新的，能够自动更新其中包含的所有宏包，在 MikTeX 控制台中选择`更新 -> 检查更新 -> 立即更新`即可。
+在编译使用本宏包的文件时，如果不希望手动确认新宏包的安装，请将 MikTeX 控制台中的 `设置 -> 常规 -> 自动安装缺失的宏包` 设定为“总是”。
 
 此外，对于非Windows环境，会需要额外安装两个字体：
 
@@ -63,13 +61,16 @@ sudo apt-get install -y ttf-mscorefonts-installer  # 安装微软核心字体库
 + `make clean` # 删除编译过程中生成的文件（除了 pdf）
 + `make depclean` # 删除编译过程中生成的文件（包括 pdf）
 
-3. 使用 Visual Studio Code 等软件进行编译，请使用 `xelatex->bibtex->xelatex*2` 方式进行编译；
+3. 使用 Visual Studio Code 等软件进行编译，请使用 `xelatex->biber->xelatex*2` 方式进行编译。
+
+详细的编译方式可参见样例文档中的说明部分。
 
 ## 参考文献相关
 
-模板参考文献格式采用国家标准 `GB/T 7714-2005` 《信息与文献 参考文献著录规则》之中描述的格式。代码实现为 `CTeX-org / gbt7714-bibtex-style` v2.0.1[https://github.com/CTeX-org/gbt7714-bibtex-style/](https://github.com/CTeX-org/gbt7714-bibtex-style/)。参考文献详细说明请见该项目 README.md 或 [https://mirror.ctan.org/biblio/bibtex/contrib/gbt7714/gbt7714.pdf](https://mirror.ctan.org/biblio/bibtex/contrib/gbt7714/gbt7714.pdf)。
-
-参考文献提供两种排序方式，分别为 ` 按出现顺序 `（默认）和 ` 按作者姓名和年份 `，请按需在模板 `data\reference.tex` 中做相应修改。
+模板参考文献格式采用国家标准 `GB/T 7714-2015` 《信息与文献 参考文献著录规则》之中描述的格式。
+代码实现为 `biblatex-gb7714-2015` v2.0.1，库主页[见此]。(https://github.com/hushidong/biblatex-gb7714-2015)。
+参考文献详细说明请见该项目 README.md 或[该宏包文档](http://mirrors.ctan.org/macros/latex/contrib/biblatex-contrib/biblatex-gb7714-2015/biblatex-gb7714-2015.pdf)。
+若已安装该宏包，也可以使用`texdoc biblatex-gb7714-2015`命令查看文件。
 
 注意：根据 `GB/T 7714-2005` 中 `8.4 节 出版项 ` 中相关规定：
 
@@ -86,9 +87,7 @@ sudo apt-get install -y ttf-mscorefonts-installer  # 安装微软核心字体库
 ## 文件格式相关
 
 目前论文提交网站不再要求必须提交 docx 等格式的 Word 文件，但部分老师会要求在 Word 文件上修改和批注。
-可使用如下方法将 Latex 文件（或编译后的 pdf 格式文件）转换为 Word 文件。
-
-**注意**：将未公开的论文上传至网络有风险，推荐在本地进行转换。
+可使用如下方法将 LaTeX 文件（或编译后的 pdf 格式文件）转换为 Word 文件。
 
 ### pandoc 本地转换
 
@@ -98,8 +97,9 @@ sudo apt-get install -y ttf-mscorefonts-installer  # 安装微软核心字体库
 
 ### 在线转换
 
+**注意**：将未公开的论文上传至网络有风险，推荐在本地进行转换。
+
 如下网址效果较好：
 
 - [ilovepdf](https://www.ilovepdf.com/)：整体效果好，包括页眉和页脚；公式支持差。
 - [nitro](https://cloud.gonitro.com/)：需要注册；对超链接、目录、段落格式和字体等支持较好；公式支持差。
-
