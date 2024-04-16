@@ -99,8 +99,6 @@
 
 \RequirePackage[style=gb7714-2015, gbnamefmt=lowercase, backend=biber]{biblatex}
 
-\graphicspath{{figure/}}
-
 %%%%%%%%%% common user info %%%%%%%%%%
 % 用户信息
 
