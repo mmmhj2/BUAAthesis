@@ -97,7 +97,7 @@
 \RequirePackage{ulem}           % 下划线
 \RequirePackage{setspace}       % 设置行距
 
-\RequirePackage[style=gb7714-2015, gbnamefmt=lowercase, backend=biber]{biblatex}
+\RequirePackage[style=gb7714-1987, gbtype=true, gbmedium=true, backend=biber]{biblatex}
 
 %%%%%%%%%% common user info %%%%%%%%%%
 % 用户信息
