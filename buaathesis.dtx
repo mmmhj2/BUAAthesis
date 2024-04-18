@@ -9,7 +9,7 @@
 % <class> \NeedsTeXFormat{LaTeX2e}[2023/11/01]
 % <class> \ProvidesExplClass{buaathesis}{2024/02/17}{v0.10}{The LaTeX3 template for thesis of BUAA}
 %<*driver>
-\documentclass{ltxdoc}
+\documentclass{l3doc}
 \usepackage{ctex}
 \EnableCrossrefs
 \CodelineIndex
@@ -21,15 +21,106 @@
 %</driver>
 % \fi
 % \changes{v1.0}{2024-04-18}{Convert to dtx}
+%
 % \GetFileInfo{buaathesis.dtx}
+%
 % \title{\textsf{buaathesis} 文档类}
+%
 % \author{mmmhj2}
+%
 % \maketitle
+%
 % \section{介绍}
+%
 % \section{用法}
+% \subsection{宏包选项}
+% 未在此处列出的选项会被转发至\pkg{ctexbook}文档类。
+% \begin{function}{bachelor, master, doctor}
+%	指定生成的论文的学位，分别为学士、硕士、博士学位。必须选择三者之一。
+% \end{function}
+% \begin{function}{professional} 指定该论文为专业研究生（专业硕士、专业博士）生成。 \end{function}
+% \begin{function}{classified} 指定该论文为保密论文。 \end{function}
+% \begin{function}{color} 指定该论文为彩色论文，主要影响代码高亮和引用超链接的颜色。 \end{function}
+% \begin{function}{twoteacher} 指定该论文具有副导师，谨慎使用。 \end{function}
+% \begin{function}{proposal} 指定该论文生成为开题报告或文献综述。 \end{function}
+%
+% \subsection{通用信息设定}
+% 本小节主要介绍用于设定通用信息的函数，这些信息本科生和研究生毕业论文中均需要填写。
+% \begin{function}{\university}
+%	 \begin{syntax}
+%		 \cs{university} \Arg{学校中文名} \Arg{学校英文名}
+%    \end{syntax}
+%	 替换模板中的学校中文名（北京航空航天大学）和英文名（Beihang University）。
+% \end{function}
+%
+% \begin{function}{\school, \major}
+%	 \begin{syntax}
+%		 \cs{school} \Arg{学院中文名} \Arg{学院英文名}
+%		 \cs{major} \Arg{专业中文名} \Arg{专业英文名}
+%    \end{syntax}
+%	 输入模板中的学院中文、英文名和专业中文、英文名。学院英文名可在校官网上查找得到。
+% \end{function}
+%
+% \begin{function}{\title, \thesistitle}
+%	 \begin{syntax}
+%		 \cs{title} \Arg{论文标题} \Arg{论文副标题} \Arg{英文论文标题} \Arg{英文论文副标题}
+%    \end{syntax}
+%	 输入模板中的论文中英文副标题。 \cs{thesistitle} 是 \cs{title} 的后向兼容别名。
+% \end{function}
+%
+% \begin{function}{\author, \thesisauthor}
+%	 \begin{syntax}
+%		 \cs{author} \Arg{作者姓名} \Arg{作者英文姓名}
+%    \end{syntax}
+%	 输入模板中的论文中英文姓名，原则上英文姓在前且大写。\cs{thesisauthor} 是 \cs{author} 的后向兼容别名。
+% \end{function}
+%
+% \begin{function}{\teacher, \subteacher}
+%	 \begin{syntax}
+%		 \cs{teacher} \Arg{导师姓名} \Arg{导师英文姓名}
+%		 \cs{subteacher} \Arg{副导师姓名} \Arg{副导师英文姓名}
+%    \end{syntax}
+%	 输入模板中的导师与副导师中英文姓名，原则上英文姓在前且大写。若输入了副导师信息但未指定 \env{twoteacher} 选项，则会自动选择该选项并发出警告。
+% \end{function}
+%
+% \begin{function}{\category}
+%	 \begin{syntax}
+%		 \cs{category} \Arg{分类号}
+%    \end{syntax}
+%	 论文的中国图书馆分类法分类号。
+% \end{function}
+%
+% \begin{function}{\thesisbegin, \thesisend, \defense}
+%	 \begin{syntax}
+%		 \cs{thesisbegin} \Arg{论文开始年} \Arg{论文开始月} \Arg{论文开始日}
+%		 \cs{thesisend} \Arg{论文结束年} \Arg{论文结束月} \Arg{论文结束日}
+%		 \cs{defense} \Arg{答辩年} \Arg{答辩月} \Arg{答辩日}
+%    \end{syntax}
+%	 设置论文开始与结束的日期和答辩日期，用于研究生提名页和本科生任务书。
+% \end{function}
+%
+% \begin{function}{\ckeyword, \ekeyword}
+%	 \begin{syntax}
+%		 \cs{ckeyword} \Arg{中文关键词}
+%		 \cs{ekeyword} \Arg{英文关键词}
+%    \end{syntax}
+%	 设置论文摘要后的关键词。
+% \end{function}
+%
+% \begin{function}{\ktclass}
+%	 \begin{syntax}
+%		 \cs{ktclass} \Arg{开题文件类别}
+%    \end{syntax}
+%	 设置论文开题文件的类别，一般是“开题报告”或“文献综述”二者择一。
+% \end{function}
+%
+% \subsection{本科生信息设定}
+% \subsection{研究生信息设定}
 % \MaybeStop{}
 % \section{实现}
 %<@@=buaathesis>
+% \begin{variable}{\g_@@_bachelor_bool,\g_@@_master_bool,\g_@@_doctor_bool,\g_@@_professional_bool,\g_@@_classified_bool,\g_@@_color_bool,\g_@@_twoteacher_bool,\g_@@_proposal_bool}
+% 宏包全局选项变量。
 %    \begin{macrocode}
 \bool_gset_false:N \g_@@_bachelor_bool
 \bool_gset_false:N \g_@@_master_bool
@@ -39,13 +130,21 @@
 \bool_gset_false:N \g_@@_color_bool
 \bool_gset_false:N \g_@@_twoteacher_bool
 \bool_gset_false:N \g_@@_proposal_bool
+%    \end{macrocode}
+% \end{variable}
+% \begin{variable}{\g_@@_logo_filename_tl, \g_@@_name_filename_tl, \g_@@_name_eng_filename_tl}
+% Logo 文件名。
+%    \begin{macrocode}
 \tl_new:N \g_@@_logo_filename_tl
 \tl_new:N \g_@@_name_filename_tl
 \tl_new:N \g_@@_name_eng_filename_tl
 \tl_gset:Nn \g_@@_logo_filename_tl {figure/buaamark.pdf}
 \tl_gset:Nn \g_@@_name_chn_only_filename_tl {figure/buaaname_ch.pdf}
 \tl_gset:Nn \g_@@_name_filename_tl {figure/buaaname.pdf}
-
+%    \end{macrocode}
+% \end{variable}
+% 使用键值对接口处理文档类选项。
+%    \begin{macrocode}
 \keys_define:nn{buaathesis}{
     bachelor        .code:n = { \bool_gset_true:N \g_@@_bachelor_bool },
     master          .code:n = { \bool_gset_true:N \g_@@_master_bool },
@@ -59,24 +158,16 @@
 }
 \ProcessKeyOptions[buaathesis]
 
-\bool_log:N \g_@@_bachelor_bool
-\bool_log:N \g_@@_master_bool
-\bool_log:N \g_@@_doctor_bool
-\bool_log:N \g_@@_professional_bool
-\bool_log:N \g_@@_classified_bool
-\bool_log:N \g_@@_color_bool
-\bool_log:N \g_@@_twoteacher_bool
-\bool_log:N \g_@@_proposal_bool
-
 \bool_if:nF { \g_@@_bachelor_bool || \g_@@_master_bool || \g_@@_doctor_bool } {
     \msg_new:nnn {buaathesis} {error/notselected} {
         None ~ of ~ the ~ degrees ~ is ~ selected. ~ Result ~ may ~ be ~ unexpected.
     }
     \msg_warning:nn {buaathesis} {error/notselected}
 }
-
+%    \end{macrocode}
+% 载入基础文档类 \file{ctexbook} 和其他依赖的宏包。
+%    \begin{macrocode}
 \LoadClass[zihao=-4,a4paper]{ctexbook}[2022/07/14]
-
 \RequirePackage{ifthen}
 \RequirePackage{amsmath,amssymb,amsfonts,bm}
 \RequirePackage[amsmath,thmmarks,hyperref]{ntheorem}
@@ -100,7 +191,9 @@
 \RequirePackage{caption}
 \RequirePackage{ulem}
 \RequirePackage{setspace}
-
+%    \end{macrocode}
+% 载入 \file{biblatex}，设定参考文献标准。
+%    \begin{macrocode}
 \RequirePackage[style=gb7714-1987, gbtype=true, gbmedium=true, backend=biber]{biblatex}
 
 \tl_new:N \l_@@_university_name_tl
