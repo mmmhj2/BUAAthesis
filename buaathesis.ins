@@ -3,7 +3,7 @@
 %% This file is licensed under GPLv3 and LPPL 1.3 dual licenses
 %% 
 
-\input docscript.tex
+\input docstrip.tex
 \usedir{tex/latex/buaathesis}
 
 \preamble
@@ -15,8 +15,5 @@ This file is licensed under GPLv3 and LPPL 1.3 dual licenses
 
 \endpreamble
 
-\generate{ 	\file{buaathesis-undergraduate.cls} {\from{buaathesis.dtx} {class,undergraduate}}
-			\file{buaathesis-master.cls} {\from{buaathesis.dtx} {class,master}}
-			\file{buaathesis-doctor.cls} {\from{buaathesis.dtx} {class,doctor}}
-			}
+\generate{ 	\file{buaathesis.cls} {\from{buaathesis.dtx} {class}} }
 \endbatchfile
