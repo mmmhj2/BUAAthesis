@@ -116,7 +116,7 @@
 %
 % \subsection{本科生信息设定}
 % \subsection{研究生信息设定}
-% \MaybeStop{}
+% \MaybeStop{\PrintIndex}
 % \section{实现}
 %<@@=buaathesis>
 % \begin{variable}{\g_@@_bachelor_bool,\g_@@_master_bool,\g_@@_doctor_bool,\g_@@_professional_bool,\g_@@_classified_bool,\g_@@_color_bool,\g_@@_twoteacher_bool,\g_@@_proposal_bool}
@@ -157,10 +157,13 @@
     unknown         .code:n = { \PassOptionsToClass{\CurrentOption}{ctexbook} }
 }
 \ProcessKeyOptions[buaathesis]
-
+%    \end{macrocode}
+% 未选中学位时发出警告。
+%    \begin{macrocode}
 \bool_if:nF { \g_@@_bachelor_bool || \g_@@_master_bool || \g_@@_doctor_bool } {
     \msg_new:nnn {buaathesis} {error/notselected} {
-        None ~ of ~ the ~ degrees ~ is ~ selected. ~ Result ~ may ~ be ~ unexpected.
+        None ~ of ~ the ~ degrees ~ is ~ selected.
+        ~ Result ~ may ~ be ~ unexpected.
     }
     \msg_warning:nn {buaathesis} {error/notselected}
 }
@@ -195,32 +198,113 @@
 % 载入 \file{biblatex}，设定参考文献标准。
 %    \begin{macrocode}
 \RequirePackage[style=gb7714-1987, gbtype=true, gbmedium=true, backend=biber]{biblatex}
-
+%    \end{macrocode}
+% \begin{variable}{\l_@@_university_name_tl, \l_@@_university_name_eng_tl}
+% 学校名以及学校英文名。
+%    \begin{macrocode}
 \tl_new:N \l_@@_university_name_tl
 \tl_new:N \l_@@_university_name_eng_tl
 \tl_set:Nn \l_@@_university_name_tl {北京航空航天大学}
 \tl_set:Nn \l_@@_university_name_eng_tl {Beihang University}
-\NewDocumentCommand{\university}{mm}{
-    \tl_set:Nn \l_@@_university_name_tl {#1}
-    \tl_set:Nn \l_@@_university_name_eng_tl {#2}
-}
-
+%    \end{macrocode}
+% \end{variable}
+% \begin{variable}{\l_@@_school_name_tl, \l_@@_school_name_eng_tl}
+% 学院名以及学院英文名。
+%    \begin{macrocode}
 \tl_new:N \l_@@_school_name_tl
 \tl_new:N \l_@@_school_name_eng_tl
-\NewDocumentCommand{\school}{mm}{
-    \tl_set:Ne \l_@@_school_name_tl {#1}
-    \tl_set:Ne \l_@@_school_name_eng_tl {#2}
-}
+%    \end{macrocode}
+% \end{variable}
+% \begin{variable}{\l_@@_major_tl, \l_@@_major_eng_tl}
+% 专业名以及专业英文名。
+%    \begin{macrocode}
 \tl_new:N \l_@@_major_tl
 \tl_new:N \l_@@_major_eng_tl
-\NewDocumentCommand{\major}{mm}{
-    \tl_set:Ne \l_@@_major_tl {#1}
-    \tl_set:Ne \l_@@_major_eng_tl {#2}
-}
+%    \end{macrocode}
+% \end{variable}
+% \begin{variable}{\l_@@_thesis_title_tl, \l_@@_thesis_subtitle_tl, \l_@@_thesis_title_eng_tl, \l_@@_thesis_subtitle_eng_tl}
+% 论文中英文标题以及副标题。
+%    \begin{macrocode}
 \tl_new:N \l_@@_thesis_title_tl
 \tl_new:N \l_@@_thesis_subtitle_tl
 \tl_new:N \l_@@_thesis_title_eng_tl
 \tl_new:N \l_@@_thesis_subtitle_eng_tl
+%    \end{macrocode}
+% \end{variable}
+% \begin{variable}{\l_@@_author_tl, \l_@@_author_eng_tl}
+% 作者名以及作者英文名。
+%    \begin{macrocode}
+\tl_new:N \l_@@_author_tl
+\tl_new:N \l_@@_author_eng_tl
+%    \end{macrocode}
+% \end{variable}
+% \begin{variable}{\l_@@_teacher_tl, \l_@@_teacher_eng_tl, \l_@@_teacher_two_tl, \l_@@_teacher_two_eng_tl}
+% 导师与副导师的中英文名。
+%    \begin{macrocode}
+\tl_new:N \l_@@_teacher_tl
+\tl_new:N \l_@@_teacher_eng_tl
+\tl_new:N \l_@@_teacher_two_tl
+\tl_new:N \l_@@_teacher_two_eng_tl
+%    \end{macrocode}
+% \end{variable}
+% \begin{variable}{\l_@@_clc_number_tl}
+% 中图法分类号。
+%    \begin{macrocode}
+\tl_new:N \l_@@_clc_number_tl
+%    \end{macrocode}
+% \end{variable}
+% \begin{variable}{\l_@@_thesis_begin_year_tl, \l_@@_thesis_begin_month_tl, \l_@@_thesis_begin_day_tl}
+% 论文开始日期。
+%    \begin{macrocode}
+\tl_new:N \l_@@_thesis_begin_year_tl
+\tl_new:N \l_@@_thesis_begin_month_tl
+\tl_new:N \l_@@_thesis_begin_day_tl
+%    \end{macrocode}
+% \end{variable}
+% \begin{variable}{\l_@@_thesis_end_year_tl, \l_@@_thesis_end_month_tl, \l_@@_thesis_end_day_tl}
+% 论文结束日期。
+%    \begin{macrocode}
+\tl_new:N \l_@@_thesis_end_year_tl
+\tl_new:N \l_@@_thesis_end_month_tl
+\tl_new:N \l_@@_thesis_end_day_tl
+%    \end{macrocode}
+% \end{variable}
+% \begin{variable}{\l_@@_defense_year_tl, \l_@@_defense_month_tl, \l_@@_defense_day_tl}
+% 答辩日期。
+%    \begin{macrocode}
+\tl_new:N \l_@@_defense_year_tl
+\tl_new:N \l_@@_defense_month_tl
+\tl_new:N \l_@@_defense_day_tl
+%    \end{macrocode}
+% \end{variable}
+% \begin{variable}{\l_@@_keyword_tl, \l_@@_keyword_eng_tl}
+% 中英文关键词。
+%    \begin{macrocode}
+\tl_new:N \l_@@_keyword_tl
+\tl_new:N \l_@@_keyword_eng_tl
+%    \end{macrocode}
+% \end{variable}
+% \begin{variable}{\l_@@_proposal_class_tl}
+% 开题文件类别。
+%    \begin{macrocode}
+\tl_new:N \l_@@_proposal_class_tl
+%    \end{macrocode}
+% \end{variable}
+% \begin{function}{\university, \school, \major, \title, \thesistitle, \author, \thesisauthor, \teacher}
+% 提供设定各个变量的接口。
+%    \begin{macrocode}
+\NewDocumentCommand{\university}{mm}{
+    \tl_set:Nn \l_@@_university_name_tl {#1}
+    \tl_set:Nn \l_@@_university_name_eng_tl {#2}
+}
+\NewDocumentCommand{\school}{mm}{
+    \tl_set:Ne \l_@@_school_name_tl {#1}
+    \tl_set:Ne \l_@@_school_name_eng_tl {#2}
+}
+\NewDocumentCommand{\major}{mm}{
+    \tl_set:Ne \l_@@_major_tl {#1}
+    \tl_set:Ne \l_@@_major_eng_tl {#2}
+}
 \RenewDocumentCommand{\title}{mmmm}{
     \tl_set:Nn \l_@@_thesis_title_tl {#1}
     \tl_set:Nn \l_@@_thesis_subtitle_tl {#2}
@@ -228,74 +312,76 @@
     \tl_set:Nn \l_@@_thesis_subtitle_eng_tl {#4}
 }
 \NewCommandCopy{\thesistitle}{\title}
-\tl_new:N \l_@@_author_tl
-\tl_new:N \l_@@_author_eng_tl
 \RenewDocumentCommand{\author}{mm}{
     \tl_set:Nn \l_@@_author_tl {#1}
     \tl_set:Nn \l_@@_author_eng_tl {#2}
 }
 \NewCommandCopy{\thesisauthor}{\author}
-\tl_new:N \l_@@_teacher_tl
-\tl_new:N \l_@@_teacher_eng_tl
 \NewDocumentCommand{\teacher}{mm}{
     \tl_set:Nn \l_@@_teacher_tl {#1}
     \tl_set:Nn \l_@@_teacher_eng_tl {#2}
 }
-\tl_new:N \l_@@_teacher_two_tl
-\tl_new:N \l_@@_teacher_two_eng_tl
+%    \end{macrocode}
+% \end{function}
+% \begin{function}{\subteacher}
+% 提供设定各个变量的接口。
+%    \begin{macrocode}
 \NewDocumentCommand{\subteacher}{mm}{
     \tl_set:Nn \l_@@_teacher_two_tl {#1}
     \tl_set:Nn \l_@@_teacher_two_eng_tl {#2}
-
+%    \end{macrocode}
+% 副导师设置与文档类选项不一致时发出警告。
+%    \begin{macrocode}
     \regex_match:nnTF {.+}{ \tl_use:N \l_@@_teacher_two_tl }{
         \bool_gset_true:N \g_@@_twoteacher_bool
 
         \msg_new:nnn {buaathesis}{autotwoteacher}{
-            subteacher~command~was~issued,~and~twoteacher~option~will~be~automatically~selected.
+            subteacher~command~was~issued,
+            ~and~twoteacher~option~will~be
+            ~automatically~selected.
         }
         \msg_info:nn {buaathesis}{autotwoteacher}
     }{
         \msg_new:nnn {buaathesis}{notwoteacher}{
-            subteacher~command~was~issued,~but~no~teacher~two~could~be~found.
+            subteacher~command~was~issued,
+            ~but~no~teacher~two~could~be~found.
         }
         \msg_warning:nn {buaathesis}{notwoteacher}
     }
 }
-\tl_new:N \l_@@_clc_number_tl
+%    \end{macrocode}
+% \end{function}
+% \begin{function}{\category, \thesisbegin, \thesisend, \defense, \ckeyword, \ekeyword, \ktclass}
+% 提供设定各个变量的接口。
+%    \begin{macrocode}
 \NewDocumentCommand{\category}{m}{ \tl_set:Nn \l_@@_clc_number_tl {#1} }
-\tl_new:N \l_@@_thesis_begin_year_tl
-\tl_new:N \l_@@_thesis_begin_month_tl
-\tl_new:N \l_@@_thesis_begin_day_tl
 \NewDocumentCommand{\thesisbegin}{mmm}{
     \tl_set:Nn \l_@@_thesis_begin_year_tl {#1}
     \tl_set:Nn \l_@@_thesis_begin_month_tl {#2}
     \tl_set:Nn \l_@@_thesis_begin_day_tl {#3}
 }
-\tl_new:N \l_@@_thesis_end_year_tl
-\tl_new:N \l_@@_thesis_end_month_tl
-\tl_new:N \l_@@_thesis_end_day_tl
 \NewDocumentCommand{\thesisend}{mmm}{
     \tl_set:Nn \l_@@_thesis_end_year_tl {#1}
     \tl_set:Nn \l_@@_thesis_end_month_tl {#2}
     \tl_set:Nn \l_@@_thesis_end_day_tl {#3}
 }
-\tl_new:N \l_@@_defense_year_tl
-\tl_new:N \l_@@_defense_month_tl
-\tl_new:N \l_@@_defense_day_tl
 \NewDocumentCommand{\defense}{mmm}{
     \tl_set:Nn \l_@@_defense_year_tl {#1}
     \tl_set:Nn \l_@@_defense_month_tl {#2}
     \tl_set:Nn \l_@@_defense_day_tl {#3}
 }
-\tl_new:N \l_@@_keyword_tl
 \NewDocumentCommand{\ckeyword}{m}{ \tl_set:Nn \l_@@_keyword_tl {#1} }
-\tl_new:N \l_@@_keyword_eng_tl
 \NewDocumentCommand{\ekeyword}{m}{ \tl_set:Nn \l_@@_keyword_eng_tl {#1} }
+\NewDocumentCommand{\ktclass}{m}{ \tl_set:Nn \l_@@_proposal_class_tl {#1} }
+%    \end{macrocode}
+% \end{function}
+% \begin{variable}{\l_@@_degree_long_tl, \l_@@_degree_long_eng_tl, \l_@@_degree_title_tl, \l_@@_degree_head_tl}
+% 学位的全称与简称，用于标题、页眉等位置。
+%    \begin{macrocode}
 \tl_new:N \l_@@_degree_long_tl
 \tl_new:N \l_@@_degree_long_eng_tl
 \tl_new:N \l_@@_degree_title_tl
 \tl_new:N \l_@@_degree_head_tl
-
 \bool_if:NT \g_@@_bachelor_bool {
     \tl_set:Nn \l_@@_degree_long_tl {学士学位}
     \tl_set:Nn \l_@@_degree_long_eng_tl {Bachelor}
@@ -322,10 +408,9 @@
     \tl_set:Nn \l_@@_degree_title_tl {博士学位}
     \tl_set:Nn \l_@@_degree_head_tl {博士}
 }
-
-\tl_new:N \l_@@_proposal_class_tl
-\NewDocumentCommand{\ktclass}{m}{ \tl_set:Nn \l_@@_proposal_class_tl {#1} }
-
+%    \end{macrocode}
+% \end{variable}
+%    \begin{macrocode}
 \tl_new:N \l_@@_class_tl
 \NewDocumentCommand{\class}{m}{ \tl_set:Nn \l_@@_class_tl {#1} }
 \tl_new:N \l_@@_unit_code_tl
