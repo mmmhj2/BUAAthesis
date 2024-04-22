@@ -485,55 +485,115 @@
 }
 %    \end{macrocode}
 % \end{variable}
+% \begin{variable}{\l_@@_class_tl}
+% 班级变量。
 %    \begin{macrocode}
 \tl_new:N \l_@@_class_tl
-\NewDocumentCommand{\class}{m}{ \tl_set:Nn \l_@@_class_tl {#1} }
+%    \end{macrocode}
+% \end{variable}
+% \begin{variable}{\l_@@_unit_code_tl}
+% 单位代码变量。
+%    \begin{macrocode}
 \tl_new:N \l_@@_unit_code_tl
 \tl_set:Nn \l_@@_unit_code_tl {1006}
-\NewDocumentCommand{\unicode}{m}{ \tl_set:Nn \l_@@_unit_code_tl {#1} }
+%    \end{macrocode}
+% \end{variable}
+% \begin{variable}{\l_@@_student_id_tl}
+% 学号变量。
+%    \begin{macrocode}
 \tl_new:N \l_@@_student_id_tl
-\NewDocumentCommand{\studentID}{m}{ \tl_set:Nn \l_@@_student_id_tl{#1} }
+%    \end{macrocode}
+% \end{variable}
+% \begin{variable}{\l_@@_bachelor_thesis_year_tl, \l_@@_bachelor_thesis_month_tl}
+% 本科论文日期。
+%    \begin{macrocode}
 \tl_new:N \l_@@_bachelor_thesis_year_tl
 \tl_new:N \l_@@_bachelor_thesis_month_tl
+%    \end{macrocode}
+% \end{variable}
+% \begin{variable}{\l_@@_confidential_level_tl, \l_@@_confidential_limit_tl}
+% 保密等级和保密期限。
+%    \begin{macrocode}
+\tl_new:N \l_@@_confidential_level_tl
+\tl_new:N \l_@@_confidential_limit_tl
+%    \end{macrocode}
+% \end{variable}
+% \begin{variable}{\l_@@_direction_tl}
+% 研究方向。
+%    \begin{macrocode}
+\tl_new:N \l_@@_direction_tl
+%    \end{macrocode}
+% \end{variable}
+% \begin{variable}{\l_@@_teacher_title_tl, \l_@@_teacher_title_eng_tl}
+% 中英文导师职称。
+%    \begin{macrocode}
+\tl_new:N \l_@@_teacher_title_tl
+\tl_new:N \l_@@_teacher_title_eng_tl
+%    \end{macrocode}
+% \end{variable}
+% \begin{variable}{\l_@@_teacher_two_title_tl, \l_@@_teacher_two_title_eng_tl}
+% 中英文副导师职称。
+%    \begin{macrocode}
+\tl_new:N \l_@@_teacher_two_title_tl
+\tl_new:N \l_@@_teacher_two_title_eng_tl
+%    \end{macrocode}
+% \end{variable}
+% \begin{variable}{\l_@@_applied_degree_tl}
+% 申请学位。
+%    \begin{macrocode}
+\tl_new:N \l_@@_applied_degree_tl
+%    \end{macrocode}
+% \end{variable}
+% \begin{variable}{\l_@@_thesis_id_tl}
+% 论文编号。
+%    \begin{macrocode}
+\tl_new:N \l_@@_thesis_id_tl
+%    \end{macrocode}
+% \end{variable}
+% \begin{variable}{\l_@@_submission_year_tl, \l_@@_submission_month_tl, \l_@@_submission_day_tl}
+% 论文提交日期。
+%    \begin{macrocode}
+\tl_new:N \l_@@_submission_year_tl
+\tl_new:N \l_@@_submission_month_tl
+\tl_new:N \l_@@_submission_day_tl
+%    \end{macrocode}
+% \end{variable}
+% \begin{variable}{\l_@@_award_year_tl, \l_@@_award_month_tl, \l_@@_award_day_tl}
+% 学位授予日期。
+%    \begin{macrocode}
+\tl_new:N \l_@@_award_year_tl
+\tl_new:N \l_@@_award_month_tl
+\tl_new:N \l_@@_award_day_tl
+%    \end{macrocode}
+% \end{variable}
+%    \begin{macrocode}
+\NewDocumentCommand{\class}{m}{ \tl_set:Nn \l_@@_class_tl {#1} }
+\NewDocumentCommand{\unicode}{m}{ \tl_set:Nn \l_@@_unit_code_tl {#1} }
+\NewDocumentCommand{\studentID}{m}{ \tl_set:Nn \l_@@_student_id_tl{#1} }
 \NewDocumentCommand{\thesisdate}{mm}{
     \tl_set:Nn \l_@@_bachelor_thesis_year_tl {#1}
     \tl_set:Nn \l_@@_bachelor_thesis_month_tl {#2}
 }
-\tl_new:N \l_@@_confidential_level_tl
-\tl_new:N \l_@@_confidential_limit_tl
 \NewDocumentCommand{\mibao}{mm}{
     \tl_set:Nn \l_@@_confidential_level_tl {#1}
     \tl_set:Nn \l_@@_confidential_limit_tl {#2}
 }
-\tl_new:N \l_@@_direction_tl
 \NewDocumentCommand{\direction}{m}{ \tl_set:Nn \l_@@_direction_tl {#1} }
-\tl_new:N \l_@@_teacher_title_tl
-\tl_new:N \l_@@_teacher_title_eng_tl
 \NewDocumentCommand{\teacherdegree}{mm}{
     \tl_set:Nn \l_@@_teacher_title_tl {#1}
     \tl_set:Nn \l_@@_teacher_title_eng_tl {#2}
 }
-\tl_new:N \l_@@_teacher_two_title_tl
-\tl_new:N \l_@@_teacher_two_title_eng_tl
 \NewDocumentCommand{\subteacherdegree}{mm}{
     \tl_set:Nn \l_@@_teacher_two_title_tl {#1}
     \tl_set:Nn \l_@@_teacher_two_title_eng_tl {#2}
 }
-\tl_new:N \l_@@_applied_degree_tl
 \NewDocumentCommand{\applydegree}{m}{ \tl_set:Nn \l_@@_applied_degree_tl {#1} }
-\tl_new:N \l_@@_thesis_id_tl
 \NewDocumentCommand{\thesisID}{m}{ \tl_set:Nn \l_@@_thesis_id_tl {#1} }
-\tl_new:N \l_@@_submission_year_tl
-\tl_new:N \l_@@_submission_month_tl
-\tl_new:N \l_@@_submission_day_tl
 \NewDocumentCommand{\commit}{mmm}{
     \tl_set:Nn \l_@@_submission_year_tl {#1}
     \tl_set:Nn \l_@@_submission_month_tl {#2}
     \tl_set:Nn \l_@@_submission_day_tl {#3}
 }
-\tl_new:N \l_@@_award_year_tl
-\tl_new:N \l_@@_award_month_tl
-\tl_new:N \l_@@_award_day_tl
 \NewDocumentCommand{\award}{mmm}{
     \tl_set:Nn \l_@@_award_year_tl {#1}
     \tl_set:Nn \l_@@_award_month_tl {#2}
