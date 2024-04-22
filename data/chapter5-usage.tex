@@ -90,6 +90,7 @@
 \subsection{字体相关错误}
 
 若编译时出现未找到字体一类错误，请检查表 \ref{tab:font-list} 中所列的字体是否安装在计算机上。
+本模板使用表中带有下划线的字体族名引用字体，因此尤其注意检查这些字体与名字是否对应。
 这可借助 \LaTeX{} 发行版中包含的 \verb|fc-list| 命令实现。
 在 Windows 下，可于命令提示符中执行以下命令：
 \begin{lstlisting}[caption={检查字体的批处理命令}]
@@ -104,10 +105,10 @@ chcp 65001 >nul & fc-list :lang=zh | find "华文楷体"
     \begin{tabular}{cc}
         \hline 
          字体族名 & 可能的字体文件名 \\ \hline
-         SimSun,宋体 & simsun.ttc \\
-         SimHei,黑体 & simhei.ttf \\
-         STXingkai,华文行楷 & STXINGKA.TTF \\
-         STKaiti,华文楷体 & STKAITI.TTF \\ \hline
+         SimSun,\underline{宋体} & simsun.ttc \\
+         SimHei,\underline{黑体} & simhei.ttf \\
+         STXingkai,\underline{华文行楷} & STXINGKA.TTF \\
+         STKaiti,\underline{华文楷体} & STKAITI.TTF \\ \hline
     \end{tabular}
 \end{table}
 
