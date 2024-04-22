@@ -34,7 +34,8 @@
 %
 % \section{用法}
 % \subsection{宏包选项}
-% 未在此处列出的选项会被转发至\pkg{ctexbook}文档类。
+% 未在此处列出的选项会被转发至\pkg{ctexbook}文档类，常见的选项有 \file{openany} / \file{openright} 和 \file{oneside} / \file{twoside}。
+% 前者指定章节开头可在奇数或偶数页或只能在偶数页，后者指定单面打印或双面打印。
 % \begin{function}{bachelor, master, doctor}
 %	指定生成的论文的学位，分别为学士、硕士、博士学位。必须选择三者之一。
 % \end{function}
@@ -58,7 +59,7 @@
 %		 \cs{school} \Arg{学院中文名} \Arg{学院英文名}
 %		 \cs{major} \Arg{专业中文名} \Arg{专业英文名}
 %    \end{syntax}
-%	 输入模板中的学院中文、英文名和专业中文、英文名。学院英文名可在校官网上查找得到。
+%	 输入模板中的学院中文、英文名和专业中文、英文名。学院英文名可在校官网上查找得到。中文学院和专业名最后的“学院”和“专业”会由模板自动附加，不需要额外输入。
 % \end{function}
 %
 % \begin{function}{\title, \thesistitle}
@@ -115,7 +116,81 @@
 % \end{function}
 %
 % \subsection{本科生信息设定}
+%
+% \begin{function}{\class}
+%   \begin{syntax}
+%       \cs{class} \Arg{班级号}
+%   \end{syntax}
+%   设定作者的班级号，用于本科生任务书。
+% \end{function}
+%
+% \begin{function}{\studentID}
+%   \begin{syntax}
+%       \cs{studentID} \Arg{学号}
+%   \end{syntax}
+%   设定作者的学号，用于本科生论文题名页以及开题报告题名页。
+% \end{function}
+%
+% \begin{function}{\unicode}
+%   \begin{syntax}
+%       \cs{unicode} \Arg{单位代码}
+%   \end{syntax}
+%   设定单位代码，用于本科生论文题名页。默认为“10006”。
+% \end{function}
+%
+% \begin{function}{\thesisdate}
+%   \begin{syntax}
+%       \cs{thesisdate} \Arg{论文年份} \Arg{论文月份}
+%   \end{syntax}
+%   设定论文的年份和月份，用于本科生论文题名页。
+% \end{function}
+%
 % \subsection{研究生信息设定}
+%
+% \begin{function}{\direction}
+%   \begin{syntax}
+%       \cs{direction} \Arg{研究方向}
+%   \end{syntax}
+%   设定作者的研究方向。
+% \end{function}
+%
+% \begin{function}{\teacherdegree, \subteacherdegree}
+%   \begin{syntax}
+%       \cs{teacherdegree} \Arg{导师职称} \Arg{导师英文职称}
+%       \cs{subteacherdegree} \Arg{副导师职称} \Arg{副导师英文职称}
+%   \end{syntax}
+%   设定导师和副导师的中英文职称。慎用“副导师”，见北航研究生毕业论文规范
+% \end{function}
+%
+% \begin{function}{\mibao}
+%   \begin{syntax}
+%       \cs{mibao} \Arg{保密等级} \Arg{保密期限}
+%   \end{syntax}
+%   设定论文的保密等级与保密期限。非保密论文不需要此设置。
+% \end{function}
+%
+% \begin{function}{\applydegree}
+%   \begin{syntax}
+%       \cs{applydegree} \Arg{申请学位}
+%   \end{syntax}
+%   作者申请的学位。
+% \end{function}
+%
+% \begin{function}{\thesisID}
+%   \begin{syntax}
+%       \cs{thesisID} \Arg{论文编号}
+%   \end{syntax}
+%   论文的编号，通常为“10006”加作者学号。
+% \end{function}
+%
+% \begin{function}{\commit, \award}
+%   \begin{syntax}
+%       \cs{commit} \Arg{论文提交年} \Arg{论文提交月} \Arg{论文提交日}
+%       \cs{award} \Arg{学位授予年} \Arg{学位授予月} \Arg{学位授予日}
+%   \end{syntax}
+%   设定论文提交与学位授予的日期。
+% \end{function}
+%
 % \MaybeStop{\PrintIndex}
 % \section{实现}
 %<@@=buaathesis>
