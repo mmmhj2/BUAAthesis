@@ -272,7 +272,41 @@
 %    \end{macrocode}
 % 载入 \file{biblatex}，设定参考文献标准。
 %    \begin{macrocode}
-\RequirePackage[style=gb7714-1987, gbtype=true, gbmedium=true, backend=biber]{biblatex}
+\RequirePackage[style=gb7714-2015, url=false, gbnamefmt=lowercase, backend=biber]{biblatex}
+%    \end{macrocode}
+% 修改 @inproceedings 的格式，参考 https://github.com/hushidong/biblatex-gb7714-2015/issues/145
+%    \begin{macrocode}
+\DeclareStyleSourcemap{
+    \maps[datatype=bibtex]{
+        \map[overwrite]{
+         \pertype{inproceedings}
+        \step[fieldset=usera,fieldvalue={A}]
+        }
+    }
+}
+\renewbibmacro*{booktitle}{%
+  \ifboolexpr{
+    test {\iffieldundef{booktitle}}
+    and
+    test {\iffieldundef{booksubtitle}}
+  }
+    {}
+    {\printtext[booktitle]{%
+       \printfield[titlecase]{booktitle}%
+       }%
+     }%
+  \ifentrytype{inproceedings}{\printtext{[C]}\newunit}
+  }
+\renewbibmacro*{in:}{%
+ \iftoggle{bbx:gbpunctin}{
+ \ifentrytype{inproceedings}{\unspace\printtext{\allowbreak{\SlashFont//}\allowbreak}}
+ {\printtext{\allowbreak{\SlashFont//}\allowbreak}}
+ }%\addthinspace
+                         {\setunit{\adddot\addspace}%
+                         \iffieldequalstr{userd}{chinese}%
+                         {\printtext{\bibstring{incn}}}%
+                         {\printtext{\bibstring{in}}}%
+                         }}%\newunit\newblock\intitlepunct
 %    \end{macrocode}
 % \begin{variable}{\l_@@_university_name_tl, \l_@@_university_name_eng_tl}
 % 学校名以及学校英文名。
