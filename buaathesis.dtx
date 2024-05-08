@@ -274,12 +274,13 @@
 %    \begin{macrocode}
 \RequirePackage[style=gb7714-2015, url=false, gbnamefmt=lowercase, backend=biber]{biblatex}
 %    \end{macrocode}
-% 修改 @inproceedings 的格式，参考 https://github.com/hushidong/biblatex-gb7714-2015/issues/145
+% 修改 @inproceedings 和 @inbook 的格式，参考 https://github.com/hushidong/biblatex-gb7714-2015/issues/145。
 %    \begin{macrocode}
 \DeclareStyleSourcemap{
     \maps[datatype=bibtex]{
         \map[overwrite]{
          \pertype{inproceedings}
+         \pertype{inbook}
         \step[fieldset=usera,fieldvalue={A}]
         }
     }
@@ -295,7 +296,8 @@
        \printfield[titlecase]{booktitle}%
        }%
      }%
-  \ifentrytype{inproceedings}{\printtext{[C]}\newunit}
+  \ifentrytype{inproceedings}{\printtext{[C]}\newunit}{}%
+  \ifentrytype{inbook}{\printtext{[M]}\newunit}{}
   }
 \renewbibmacro*{in:}{%
  \iftoggle{bbx:gbpunctin}{
@@ -307,6 +309,12 @@
                          {\printtext{\bibstring{incn}}}%
                          {\printtext{\bibstring{in}}}%
                          }}%\newunit\newblock\intitlepunct
+%    \end{macrocode}
+% 要求 Biblatex 强制输出 bookauthor，即使与 author 相同。
+%    \begin{macrocode}
+\renewbibmacro*{bybookauthor}{%
+\printnames{bookauthor}
+}
 %    \end{macrocode}
 % \begin{variable}{\l_@@_university_name_tl, \l_@@_university_name_eng_tl}
 % 学校名以及学校英文名。
