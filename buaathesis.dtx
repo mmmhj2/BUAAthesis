@@ -31,7 +31,11 @@
 % \maketitle
 %
 % \section{介绍}
-%
+% \subsection{编译方法}
+% 现存的三个主流 \LaTeX{} 引擎中，以 XeLaTeX 对中文的支持最好，因此本文推荐使用该引擎进行编译。
+% 为生成参考文献数据库，本文档类以 \file{biber} 作为默认的后端，因此须在编译时使用它。
+% 本文档类推荐使用以下方法进行编译： XeLaTeX -> Biber -> XeLaTeX -> XeLaTeX。
+% 若 \LaTeX{} 发行版中包括了 \file{latexmk}，则推荐使用该工具进行编译，可通过 \file{-xelatex} 参数指定使用 XeLaTeX 引擎进行编译。
 % \section{用法}
 % \subsection{宏包选项}
 % 未在此处列出的选项会被转发至\pkg{ctexbook}文档类，常见的选项有 \file{openany} / \file{openright} 和 \file{oneside} / \file{twoside}。
@@ -191,6 +195,49 @@
 %   设定论文提交与学位授予的日期。
 % \end{function}
 %
+% \section{宏包与字体依赖}
+% 本文档类显式地依赖于以下宏包：
+% \begin{enumerate}
+%    \item \CTeX{} 宏包（v2.5.10 及以上)，用于实现中文排版。
+%    \item \file{amsmath}、\file{amssymb}、\file{amsfonts} 美国数学学会提供的常用数学宏定义。
+%    \item \file{bm}、\file{txfonts}、\file{pifont} 字体类支持。
+%    \item \file{ntheorem} 增强的数学定理环境。
+%    \item \file{hyphenat} 增强的断词支持。
+%    \item \file{xcolor} 增强的色彩支持。
+%    \item \file{geometry} 设置文件的几何参数（页边距等）。
+%    \item \file{titletoc} 增强的标题与目录格式设置。
+%    \item \file{booktabs}、\file{longtable}、\file{multirow}、\file{tabularx}、\file{array} 增强的表格支持。
+%    \item \file{fancyhdr} 增强的页眉和页脚支持。
+%    \item \file{graphicx} 图片插入支持。
+%    \item \file{subcaption} 子图支持。
+%    \item \file{enumitem} 增强的有序和无序列表支持。
+%    \item \file{listings} 代码高亮支持。
+%    \item \file{dirtree} 目录树支持。
+%    \item \file{caption} 自定义浮动环境的标题。
+%    \item \file{ulem} 下划线支持。
+%    \item \file{setspace} 更细节的空间控制。
+%    \item \file{biblatex}、\file{biblatex-gb7714-2015} 参考文件支持。
+%    \item \file{hyperref} 启用文中的超链接。
+% \end{enumerate}
+% 这些宏包中大部分的文档可通过 \file{texdoc} 命令查询。
+% 若使用 \file{MikTeX} 发行版进行编译，可通过在控制台中设置 “自动安装缺失的宏包” 来自动安装这些宏包。
+% 本宏包的参考文献数据库默认使用 \file{biber} 后端生成，因此亦依赖于该软件。
+%
+% 本文档类还使用了表中所列的中文字体。
+% \begin{table}
+%     \centering
+%     \caption{使用的字体列表}
+%     \label{tab:font-list}
+%     \begin{tabular}{cc}
+%         \hline 
+%          字体族名 & 可能的字体文件名 \\ \hline
+%          SimSun,\underline{宋体} & simsun.ttc \\
+%          SimHei,\underline{黑体} & simhei.ttf \\
+%          STXingkai,\underline{华文行楷} & STXINGKA.TTF \\
+%          STKaiti,\underline{华文楷体} & STKAITI.TTF \\ \hline
+%     \end{tabular}
+% \end{table}
+% 这些字体的安装情况可使用 \file{fc-list} 实用工具进行检查。
 % \MaybeStop{\PrintIndex}
 % \section{实现}
 %<@@=buaathesis>
@@ -310,7 +357,7 @@
                          {\printtext{\bibstring{in}}}%
                          }}%\newunit\newblock\intitlepunct
 %    \end{macrocode}
-% 要求 Biblatex 强制输出 bookauthor，即使与 author 相同。
+% 要求 biblatex 强制输出 bookauthor，即使与 author 相同。
 %    \begin{macrocode}
 \renewbibmacro*{bybookauthor}{%
 \printnames{bookauthor}
