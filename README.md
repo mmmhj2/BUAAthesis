@@ -51,6 +51,9 @@ sudo apt-get install -y ttf-mscorefonts-installer  # 安装微软核心字体库
 
 ## 使用方法
 
+本宏包采用 Documented LaTeX 源文件格式（扩展名为 .dtx），下载所有文件后，执行`xelatex buaathesis.cls`以生成宏包文档（`buaathesis.pdf`），执行`xelatex buaathesis.ins`以生成宏包文件（`buaathesis.cls`）。
+在执行编译之前，务必生成宏包文件，该文件才是用于编译的模板内容。
+
 1. 可以使用命令行或 PowerShell 等，配合项目中的 `mamske.bat` 批处理文件进行编译，详细使用方法请见 `mamske.bat` 文件；
 
 2. 使用 Makefile，需要所使用的命令行环境支持 Make，cd 到 BUAAthesis 相应目录，目前支持以下功能
