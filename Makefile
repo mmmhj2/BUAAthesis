@@ -1,20 +1,28 @@
-bachelor:
+buaathesis.cls:
+	xelatex buaathesis.dtx
+	xelatex buaathesis.ins
+
+bachelor: buaathesis.cls
 	xelatex sample-bachelor.tex
-	-bibtex  sample-bachelor.aux
+	-biber  sample-bachelor.aux
 	xelatex sample-bachelor.tex
 	xelatex sample-bachelor.tex
-master:
+
+master: buaathesis.cls
 	xelatex sample-master.tex
-	-bibtex  sample-master.aux
+	-biber  sample-master.aux
 	xelatex sample-master.tex
 	xelatex sample-master.tex
-kaitireport:
+
+kaitireport: buaathesis.cls
 	xelatex sample-kaitireport.tex
-	-bibtex  sample-kaitireport.aux
+	-biber  sample-kaitireport.aux
 	xelatex sample-kaitireport.tex
 	xelatex sample-kaitireport.tex
+
 clean:
 	find . -name '*.aux' -print0 | xargs -0 rm -rf
 	rm -rf *.lof *.log *.lot *.out *.toc *.bbl *.blg *.thm
+
 depclean: clean
 	rm -rf *.pdf
