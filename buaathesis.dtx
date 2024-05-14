@@ -11,6 +11,7 @@
 %<*driver>
 \documentclass{l3doc}
 \usepackage{ctex}
+\usepackage{hyperref}
 \EnableCrossrefs
 \CodelineIndex
 \RecordChanges
@@ -31,11 +32,70 @@
 % \maketitle
 %
 % \section{介绍}
-% \subsection{编译方法}
+%
+% \LaTeX{} 是学术文献排版的常用工具，能够实现高印刷质量的科技和数学、物理文档的快速生成。
+% 然而，对大多数人而言，熟练掌握 \LaTeX{} 语法已是十分不易，而要熟悉 CTAN 上不可计数的宏包，并利用它们修改自己论文的格式，使其符合数十年官僚主义结晶之规范更是天方夜谭一般的空想。
+% 幸而，互联网上筚路蓝缕的先辈们不辞辛劳地开发了诸多模板，以使后来者能够将精力集中在论文内容上，而不必永世轮回于 \verb|\expandafter| 之无间地狱中。
+%
+% 本模板则是基于这样一个模板改进之后的结果。
+% 二零一二年，北京航空航天大学开源俱乐部（BHOSC）开发了用于实现北航毕业设计论文排版的第一个 \LaTeX{} 模板，彼时，CTeX 宏包的版本尚且还停留在 1.0 版，而 \LaTeX 3 发布更是遥遥无期。
+% 十年以来，学术论文排版界已有翻天覆地之变化。
+% CTeX 虽屡受打击，但其对中文的支持愈发完善；\LaTeX 3 终于并入主流 \LaTeX{} 发行版；诸如 Typst 等新星冉冉升起；而本宏包的前身却已基本停止维护。
+%
+% 该宏包出色的完成了其历史使命，帮助莘莘学子完成了毕业设计。
+% 然而，该模板缺少文档和统一的用户接口，所有功能均只在样例文档中标出，为使用带来了较大的不便。
+% 此外，文档源代码缺少注释与说明，难以理解。
+% 而且，使用了较多较老的 \LaTeX{} 宏包（如 \file{color}）、工具（如 \file{natbib}）和语法，对现代的排版工作支持不佳。
+% 因此，本宏包使用更新的技术，替换了原有的老旧内容，并通过使用带文档的 \LaTeX{} 源文件格式（Documented LaTeX Source，DTX），为所有接口提供了文档，并为代码撰写了注释，以期提供更好的用户体验。
+%
+% \subsection{安装及编译方法}
+% 本宏包主要由三个部分构成：首先是宏包本体文件，包括 \file{buaathesis.dtx} 和 \file{.ins} 两个文件，用于生成本文档文件和对应的 \file{buaathesis.cls} 文档类文件。
+% 其次是校徽图像文件，这些文件被文档类使用，包括 \file{figure} 文件夹下的三个 \file{buaa} 开头的 \file{pdf} 文件。
+% 最后是排版样例文件，包括 \file{sample} 开头的 \file{tex} 文件与 \file{data} 目录下的所有文件。
+% 
+% 为使用本宏包，首先执行 \verb|xelatex buaathesis.ins| 命令，该文件会生成 \file{buaathesis.cls} 文件。
+% 将该文件放置于与论文主 \file{.tex} 文件同目录下，并将 \file{figure} 文件夹也复制至该目录下，然后在开头使用 \verb|\documentclass{buaathesis}| 指定文档类即可，具体使用方法可参照样例文档。
+% 如果希望生成本文档，则执行 \verb|xelatex buaathesis.dtx| 命令，即可生成 \file{buaathesis.pdf} 文件，该文件即为宏包的文档文件，也就是本文件。
+%
 % 现存的三个主流 \LaTeX{} 引擎中，以 XeLaTeX 对中文的支持最好，因此本文推荐使用该引擎进行编译。
 % 为生成参考文献数据库，本文档类以 \file{biber} 作为默认的后端，因此须在编译时使用它。
 % 本文档类推荐使用以下方法进行编译： XeLaTeX -> Biber -> XeLaTeX -> XeLaTeX。
 % 若 \LaTeX{} 发行版中包括了 \file{latexmk}，则推荐使用该工具进行编译，可通过 \file{-xelatex} 参数指定使用 XeLaTeX 引擎进行编译。
+%
+% \subsection{\LaTeX{} 学习参考}
+%
+% 此处提供一些 \LaTeX{} 的学习参考，可作为快速入门的手册使用。
+% 首先列举中文文档。
+% \begin{enumerate}
+%    \item OIWiki 上有一篇不错的\href{https://oi-wiki.org/tools/latex/}{入门级文章}。
+%    \item 如果能够访问，维基教科书上的\href{https://zh.wikibooks.org/wiki/LaTeX}{一系列文章}值得一读。
+%    \item \href{https://github.com/CTeX-org/lshort-zh-cn/releases/download/v6.04/lshort-zh-cn.pdf}{《一份不太简短的 \LaTeX{} 介绍》}是 \LaTeX{} 入门的经典教程，该文档由 CTeX 社区翻译，托管在 Github 上。若该无法访问该连接，可以标题在搜索引擎上搜索。
+%    \item 知乎等网络问答平台上有一系列高质量的答案可供参考，CTeX 社区（现托管在 Github 上）也值得一去。
+% \end{enumerate}
+%
+% 如果有能力阅读英文，则可参考以下文档：
+% \begin{enumerate}
+%    \item \href{https://www.latex-project.org/help/documentation/usrguide.pdf}{\LaTeX{} 官方的教程}是首选参考。
+%    \item Overleaf 是广受欢迎的在线 \LaTeX{} 编辑器，其上有一系列教程可供参考，有一部分已被翻译为中文。
+%    \item \href{https://www.learnlatex.org/en/}{LearnLaTeX} 上有由浅入深的大量教程。
+%    \item 大量宏包的源文件托管在 \href{https://ctan.org}{CTAN} 上，出现问题时可首先于此处查阅宏包的文档。（也可使用 \verb|texdoc| 命令。）若国内访问有困难，可使用\href{https://mirrors.tuna.tsinghua.edu.cn/CTAN/}{清华大学社团提供的镜像}。
+%    \item 如果遇到其他困难，可去 \href{https://tex.stackexchange.com/}{StackExchange} 上提问或寻找答案。
+% \end{enumerate}
+%
+% 还有一些其他方面的文件值得一读：
+% \begin{enumerate}
+%    \item \LaTeX{} 的前身 \TeX{} 是高德纳为《计算机程序设计艺术》排版而开发的，该书是广受赞誉的计算机领域参考书。
+%    \item 科技论文排版方面的国家标准和相关文献可供参考，主要包括：
+%        \begin{enumerate}
+%            \item GB 3101-93 有关量、单位和符号的一般原则；
+%            \item GB 3102.11-93 物理科学和技术中使用的数学符号；
+%            \item GB/T 7713.2-2022 学术论文编写规则；
+%            \item GB/T 7714-2015 参考文献著录规则；
+%            \item 对排版技术特别有兴趣的，可参考 W3C 的\href{https://www.w3.org/TR/clreq/}{中文排版要求}。
+%        \end{enumerate}
+%    \item 若对撰写宏包有兴趣，可参考\href{https://www.latex-project.org/help/documentation/clsguide.pdf}{此官方教程文件}。
+% \end{enumerate}
+%
 % \section{用法}
 % \subsection{宏包选项}
 % 未在此处列出的选项会被转发至\pkg{ctexbook}文档类，常见的选项有 \file{openany} / \file{openright} 和 \file{oneside} / \file{twoside}。
