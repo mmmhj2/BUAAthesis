@@ -71,7 +71,7 @@ sudo apt-get install -y ttf-mscorefonts-installer  # 安装微软核心字体库
 ## 参考文献相关
 
 模板参考文献格式采用国家标准 `GB/T 7714-2015` 《信息与文献 参考文献著录规则》之中描述的格式。
-代码实现为 `biblatex-gb7714-2015` v2.0.1，库主页[见此]。(https://github.com/hushidong/biblatex-gb7714-2015)。
+代码实现为 `biblatex-gb7714-2015` v2.0.1，库主页[见此](https://github.com/hushidong/biblatex-gb7714-2015)。
 参考文献详细说明请见该项目 README.md 或[该宏包文档](http://mirrors.ctan.org/macros/latex/contrib/biblatex-contrib/biblatex-gb7714-2015/biblatex-gb7714-2015.pdf)。
 若已安装该宏包，也可以使用`texdoc biblatex-gb7714-2015`命令查看文件。
 
