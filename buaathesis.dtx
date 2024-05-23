@@ -528,11 +528,43 @@
     \tl_set:Nn \l_@@_thesis_subtitle_tl {#2}
     \tl_set:Nn \l_@@_thesis_title_eng_tl {#3}
     \tl_set:Nn \l_@@_thesis_subtitle_eng_tl {#4}
+%    \end{macrocode}
+% 设定标题时，同时更新 PDF 元数据。
+%    \begin{macrocode}
+    \tl_if_blank:nTF {\l_@@_thesis_title_tl} {
+        \msg_new:nnn {buaathesis} {error/notitle} {
+            \\title~ command~ is~ called,~ but~ no~ title~ is~ specified.
+        }
+        \msg_warning:nn {buaathesis} {error/notitle}
+    } {
+        \tl_if_blank:nTF {\l_@@_thesis_subtitle_tl } {
+            \hypersetup{
+                pdftitle = { \l_@@_thesis_title_tl }
+            }
+        } {
+            \hypersetup{
+                pdftitle = { \l_@@_thesis_title_tl —— \l_@@_thesis_subtitle_tl }
+            }
+        }
+    }
 }
 \NewCommandCopy{\thesistitle}{\title}
 \RenewDocumentCommand{\author}{mm}{
     \tl_set:Nn \l_@@_author_tl {#1}
     \tl_set:Nn \l_@@_author_eng_tl {#2}
+    \tl_if_blank:nTF {\l_@@_thesis_title_tl} {
+        \msg_new:nnn {buaathesis} {error/noauthor} {
+            \\author~ command~ is~ called,~ but~ no~ author~ is~ specified.
+        }
+        \msg_warning:nn {buaathesis} {error/noauthor}
+    } {
+%    \end{macrocode}
+% 设定作者时，同时更新 PDF 元数据。
+%    \begin{macrocode}
+        \hypersetup{
+            pdfauthor = { \l_@@_author_tl }
+        }
+    }
 }
 \NewCommandCopy{\thesisauthor}{\author}
 \NewDocumentCommand{\teacher}{mm}{
