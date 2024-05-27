@@ -1503,22 +1503,22 @@
 % 设定图表等标题格式。
 %    \begin{macrocode}
 \DeclareCaptionFormat{bachelorfigure}{
-    \songti\zihao{5}{#1\textrm{#2}#3}
+    \songti{\zihao{5}{#1\textrm{#2}#3}}
 }
 \DeclareCaptionFormat{bachelortable}{
-    \heiti\bf\zihao{5}{#1\textrm{#2}#3}
+    \heiti{\textbf{\zihao{5}{#1\textrm{#2}#3}}}
 }
 \DeclareCaptionFormat{bachelorlstlisting}{
-    \songti\bf\zihao{5}{#1\textrm{#2}#3}
+    \songti{\textbf{\zihao{5}{#1\textrm{#2}#3}}}
 }
 \DeclareCaptionFormat{masterfigure}{
-    \bf\songti\zihao{5}{#1\textrm{#2}#3}
+    \songti{\textbf{\zihao{5}{#1\textrm{#2}#3}}}
 }
 \DeclareCaptionFormat{mastertable}{
-    \bf\songti\zihao{5}{#1\textrm{#2}#3}
+    \songti{\textbf{\zihao{5}{#1\textrm{#2}#3}}}
 }
 \DeclareCaptionFormat{masterlstlisting}{
-    \bf\songti\zihao{5}{#1\textrm{#2}#3}
+    \songti{\textbf{\zihao{5}{#1\textrm{#2}#3}}}
 }
 
 \bool_if:nTF \g_@@_bachelor_bool {
@@ -1645,12 +1645,19 @@
 %    \begin{macrocode}
 \cs_new:Nn \@@_cs_bachelor_proposal_tabular: {
     \begin{tabular}{c~p{0.55\textwidth}<{\raggedright}}
-        \hwkaiti \textbf{论文题目}  : & \hwkaiti \l_@@_thesis_title_tl \\[.4ex]
-        \hwkaiti \textbf{专 \hspace{2em} 业}  : & \hwkaiti \l_@@_major_tl \\[.4ex]
-        \hwkaiti \textbf{姓 \hspace{2em} 名}  : & \hwkaiti \l_@@_author_tl \\[.4ex]
-        \hwkaiti \textbf{学 \hspace{2em} 号}  : & \hwkaiti \l_@@_student_id_tl \\[.4ex]
-        \hwkaiti \textbf{指导教师}  : & \hwkaiti\l_@@_teacher_tl
-        \bool_if:NT \g_@@_twoteacher_bool { \quad \l_@@_teacher_two_tl }
+        \hwkaiti \textbf{论文题目}  : & 
+        \hwkaiti \l_@@_thesis_title_tl \\[.4ex]
+        \hwkaiti \textbf{专 \hspace{2em} 业}  : & 
+        \hwkaiti \l_@@_major_tl \\[.4ex]
+        \hwkaiti \textbf{姓 \hspace{2em} 名}  : & 
+        \hwkaiti \l_@@_author_tl \\[.4ex]
+        \hwkaiti \textbf{学 \hspace{2em} 号}  : & 
+        \hwkaiti \l_@@_student_id_tl \\[.4ex]
+        \hwkaiti \textbf{指导教师}  : & 
+        \hwkaiti\l_@@_teacher_tl
+        \bool_if:NT \g_@@_twoteacher_bool {
+            \quad \l_@@_teacher_two_tl
+        }
         \\
     \end{tabular}
 }
@@ -1750,19 +1757,29 @@
                     \l_@@_degree_long_tl 论文\l_@@_proposal_class_tl
                 }
             }
-            \mode_leave_vertical: \\ \skip_vertical:n{60bp} \mode_leave_vertical: \\
+
+            \mode_leave_vertical: \\ 
+            \skip_vertical:n{60bp} 
+            \mode_leave_vertical: \\
             { \zihao{-3} \heiti \@@_cs_bachelor_proposal_tabular: }
-            \mode_leave_vertical: \\ \skip_vertical:n{75bp} \mode_leave_vertical: \\
+
+            \mode_leave_vertical: \\ 
+            \skip_vertical:n{75bp} 
+            \mode_leave_vertical: \\
             \centerline{
                 \heiti \zihao{3} \textbf{
-                    \l_@@_university_name_tl \l_@@_school_name_tl 学院
+                    \l_@@_university_name_tl 
+                    \l_@@_school_name_tl 学院
                 }
             }
+
             \skip_vertical:n{20bp}
             \centerline{
                 \heiti\zihao{-3}
-                \l_@@_bachelor_thesis_year_tl \hspace{0.5em} 年 \hspace{0.5em}
-                \l_@@_bachelor_thesis_month_tl \hspace{0.5em} 月
+                \l_@@_bachelor_thesis_year_tl 
+                \hspace{0.5em} 年 \hspace{0.5em}
+                \l_@@_bachelor_thesis_month_tl 
+                \hspace{0.5em} 月
             }
         \end{center}
     \end{titlepage}
@@ -1811,8 +1828,10 @@
             \skip_vertical:n{60bp}
             \centerline{
                 \heiti\zihao{-3}
-                \l_@@_bachelor_thesis_year_tl \hspace{0.5em} 年 \hspace{0.5em}
-                \l_@@_bachelor_thesis_month_tl \hspace{0.5em} 月
+                \l_@@_bachelor_thesis_year_tl
+                \hspace{0.5em} 年 \hspace{0.5em}
+                \l_@@_bachelor_thesis_month_tl
+                \hspace{0.5em} 月
             }
         \end{center}
     \end{titlepage}
@@ -2031,7 +2050,9 @@
     \bool_if:NT \g_@@_bachelor_bool {
         \begin{center}
             \begin{minipage}[h]{.75\textwidth}
-                \centering{ \bf \zihao{-3} \tl_use:N \l_@@_thesis_title_eng_tl }
+                \centering{ 
+                    \textbf{\zihao{-3}{\tl_use:N \l_@@_thesis_title_eng_tl}} 
+                }
             \end{minipage} \par
             \begin{minipage}[h]{.8\textwidth}
                 \begin{flushright}
@@ -2049,7 +2070,7 @@
             \end{tabular}
         \end{flushright}
     }
-    \centerline{\bf\zihao{3} Abstract}
+    \centerline{\textbf{\zihao{3}{Abstract}}}
     \bool_if:NTF \g_@@_bachelor_bool {
         \vskip 10bp \par
     } {
@@ -2067,18 +2088,22 @@
 % 本科生独立性声明。
 %    \begin{macrocode}
 \cs_new:Nn \@@_cs_bachelor_declaration_page: {
-    \@@_cs_clear_page_ensure_even: \thispagestyle{empty} \vspace*{54bp}
-    \centerline{\bf\zihao{-2}\songti 本人声明}
+    \@@_cs_clear_page_ensure_even: 
+    \thispagestyle{empty} \vspace*{54bp}
+    \centerline{\textbf{\zihao{-2}{\songti{本人声明}}}}
     \vskip 27bp
-    \zihao{4} 我声明，本论文及其研究工作是由本人在导师指导下独立完成的，在完成论文时所利用的一
-    切资料均已在参考文献中列出。
+    \zihao{4} 我声明，
+    本论文及其研究工作是由本人在导师指导下独立完成的，
+    在完成论文时所利用的一切资料均已在参考文献中列出。
     \par \vskip 63bp
     \zihao{-4}
     \hfill
     \begin{tabular}{cl}
         作者：&\l_@@_author_tl\\
         签字：&~~~~\\
-        时间：& \l_@@_bachelor_thesis_year_tl~年~\l_@@_bachelor_thesis_month_tl ~月
+        时间：& 
+        \l_@@_bachelor_thesis_year_tl~年~
+        \l_@@_bachelor_thesis_month_tl ~月
     \end{tabular}
 }
 %    \end{macrocode}
@@ -2138,7 +2163,9 @@
         \zihao{2}
         {
             \renewcommand{\CJKglue}{\hskip 1pt}
-            \centerline{ \hwxingkai{ \tl_use:N \l_@@_university_name_tl } }
+            \centerline{ 
+                \hwxingkai{ \tl_use:N \l_@@_university_name_tl } 
+            }
         }
         {
             \renewcommand{\CJKglue}{\hskip 1.2pt}
@@ -2156,7 +2183,9 @@
         \Roman{assign}、毕业设计（论文）使用的原始资料（数据）及设计技术要求： \\[2.5ex]
         \int_set:Nn \l_tmpa_int {1}
         \int_while_do:nNnn { \l_tmpa_int } < { 6 } {
-            \ulinel{ \seq_item:NV \l_@@_bachelor_asgnmt_requirement_seq \l_tmpa_int } \\
+            \ulinel{ 
+                \seq_item:NV \l_@@_bachelor_asgnmt_requirement_seq \l_tmpa_int
+            } \\
             \int_incr:N \l_tmpa_int
         }
 
@@ -2174,13 +2203,17 @@
             \Roman{assign}、主要参考资料： \\[1.5ex]
             \int_set:Nn \l_tmpa_int {1}
             \int_while_do:nNnn { \l_tmpa_int } < { 9 } {
-                \ulinel{ \seq_item:NV \l_@@_bachelor_asgnmt_reference_seq \l_tmpa_int } \\
+                \ulinel{ 
+                    \seq_item:NV \l_@@_bachelor_asgnmt_reference_seq \l_tmpa_int 
+                } \\
                 \int_incr:N \l_tmpa_int
             }
 
             \ulinec[.28]{\l_@@_school_name_tl}学院
-            \ulinec[.28]{\l_@@_major_tl}~专业类~\ulinec[.15]{\l_@@_class_tl}班 \\
+            \ulinec[.28]{\l_@@_major_tl}~专业类
+            ~\ulinec[.15]{\l_@@_class_tl}班 \\
             学生\ulinec[.3]{\l_@@_author_tl} \\
+
             毕业设计(论文)时间：~~
             \ulinec[.1]{\l_@@_thesis_begin_year_tl}年
             \ulinec[.06]{\l_@@_thesis_begin_month_tl}月
@@ -2188,6 +2221,7 @@
             至\ulinec[.1]{\l_@@_thesis_end_year_tl}年
             \ulinec[.06]{\l_@@_thesis_end_month_tl}月
             \ulinec[.06]{\l_@@_thesis_end_day_tl}日 \\
+
             答辩时间：
             \ulinec[.16]{\l_@@_defense_year_tl}年
             \ulinec[.08]{\l_@@_defense_month_tl}月
@@ -2290,25 +2324,36 @@
     \zihao{-4}\songti
     ~~\par
     本人郑重声明：所呈交的论文是本人在指导教师指导下独立进行研究工作所取得的成果，
-    论文中有关资料和数据是实事求是的。尽我所知，除文中已经加以标注和致谢外，
-    本论文不包含其他人已经发表或撰写的研究成果，也不包含本人或他人为获得北京航空航天大学
-    或其它教育机构的学位或学历证书而使用过的材料。与我一同工作的同志对研究所做的任何贡献
+    论文中有关资料和数据是实事求是的。尽我所知，
+    除文中已经加以标注和致谢外，
+    本论文不包含其他人已经发表或撰写的研究成果，
+    也不包含本人或他人为获得北京航空航天大学
+    或其它教育机构的学位或学历证书而使用过的材料。
+    与我一同工作的同志对研究所做的任何贡献
     均已在论文中作出了明确的说明。\par
     若有不实之处，本人愿意承担相关法律责任。\par
     ~~\par
-    {\zihao{5}\ 学位论文作者签名：\uline{\mbox{\hspace{7em}}}\hspace{5em}日期：\hspace{7ex}年\hspace{5ex}月\hspace{5ex}日}
+    {\zihao{5}\ 学位论文作者签名：\uline{\mbox{\hspace{7em}}}\hspace{5em}
+    日期：\hspace{7ex}年\hspace{5ex}月\hspace{5ex}日
+    }
     \vskip 130bp
     \centerline{\zihao{3}\heiti 学位论文使用授权书}
     ~~\par
     本人完全同意北京航空航天大学有权使用本学位论文（包括但不限于其印刷版和电子版），
-    使用方式包括但不限于：保留学位论文，按规定向国家有关部门（机构）送交学位论文，
-    以学术交流为目的赠送和交换学位论文，允许学位论文被查阅、借阅和复印，将学位论文的全部
-    或部分内容编入有关数据库进行检索，采用影印、缩印或其他复制手段保存学位论文。\par
+    使用方式包括但不限于：保留学位论文，
+    按规定向国家有关部门（机构）送交学位论文，
+    以学术交流为目的赠送和交换学位论文，
+    允许学位论文被查阅、借阅和复印，将学位论文的全部
+    或部分内容编入有关数据库进行检索，
+    采用影印、缩印或其他复制手段保存学位论文。\par
     保密学位论文在解密后的使用授权同上。\par
     ~~\par
     {\zihao{5}
-        \ 学位论文作者签名：\uline{\mbox{\hspace{7em}}}\hspace{5em}日期：\hspace{7ex}年\hspace{5ex}月\hspace{5ex}日\par
-        \ 指导教师签名：\uline{\mbox{\hspace{9em}}}\hspace{5em}日期：\hspace{7ex}年\hspace{5ex}月\hspace{5ex}日}
+        \ 学位论文作者签名：\uline{\mbox{\hspace{7em}}}\hspace{5em}
+        日期：\hspace{7ex}年\hspace{5ex}月\hspace{5ex}日\par
+        \ 指导教师签名：\uline{\mbox{\hspace{9em}}}\hspace{5em}
+        日期：\hspace{7ex}年\hspace{5ex}月\hspace{5ex}日
+    }
 }
 %    \end{macrocode}
 % \end{macro}
