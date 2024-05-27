@@ -314,19 +314,24 @@
 \bool_gset_false:N \g_@@_proposal_bool
 %    \end{macrocode}
 % \end{variable}
-% \begin{variable}{\g_@@_logo_filename_tl, \g_@@_name_filename_tl, \g_@@_name_eng_filename_tl}
+% \begin{variable}{\g_@@_logo_filename_tl, \g_@@_name_chn_only_filename_tl, \g_@@_name_filename_tl}
 % Logo 文件名。
 %    \begin{macrocode}
 \tl_new:N \g_@@_logo_filename_tl
+\tl_new:N \g_@@_name_chn_only_filename_tl
 \tl_new:N \g_@@_name_filename_tl
-\tl_new:N \g_@@_name_eng_filename_tl
-\tl_gset:Nn \g_@@_logo_filename_tl {figure/buaamark.pdf}
-\tl_gset:Nn \g_@@_name_chn_only_filename_tl {figure/buaaname_ch.pdf}
-\tl_gset:Nn \g_@@_name_filename_tl {figure/buaaname.pdf}
 %    \end{macrocode}
 % \end{variable}
 % 使用键值对接口处理文档类选项。
 %    \begin{macrocode}
+\keys_define:nn{buaathesis / figures}{
+    logo            .tl_gset:N = \g_@@_logo_filename_tl,
+    logo            .initial:n = {figure/buaamark.pdf},
+    namechn         .tl_gset:N = \g_@@_name_chn_only_filename_tl,
+    namechn         .initial:n = {figure/buaaname_ch.pdf},
+    name            .tl_gset:N = \g_@@_name_filename_tl,
+    name            .initial:n = {figure/buaaname.pdf}
+}
 \keys_define:nn{buaathesis}{
     bachelor        .code:n = { \bool_gset_true:N \g_@@_bachelor_bool },
     master          .code:n = { \bool_gset_true:N \g_@@_master_bool },
@@ -381,7 +386,7 @@
 %    \begin{macrocode}
 \RequirePackage[style=gb7714-2015, url=false, gbnamefmt=givenahead, backend=biber, doi=false]{biblatex}
 %    \end{macrocode}
-% 修改 @inproceedings 和 @inbook 的格式，参考 https://github.com/hushidong/biblatex-gb7714-2015/issues/145。
+% 修改 @inproceedings 和 @inbook 的格式，参考 \url{https://github.com/hushidong/biblatex-gb7714-2015/issues/145}。
 %    \begin{macrocode}
 \DeclareStyleSourcemap{
     \maps[datatype=bibtex]{
@@ -392,36 +397,44 @@
         }
     }
 }
-\renewbibmacro*{booktitle}{%
+\renewbibmacro*{booktitle}{
   \ifboolexpr{
     test {\iffieldundef{booktitle}}
     and
     test {\iffieldundef{booksubtitle}}
   }
     {}
-    {\printtext[booktitle]{%
-       \printfield[titlecase]{booktitle}%
-       }%
-     }%
-  \ifentrytype{inproceedings}{\printtext{[C]}\newunit}{}%
+    {\printtext[booktitle]{
+       \printfield[titlecase]{booktitle}
+       }
+    }
+  \ifentrytype{inproceedings}{\printtext{[C]}\newunit}{}
   \ifentrytype{inbook}{\printtext{[M]}\newunit}{}
   }
-\renewbibmacro*{in:}{%
- \iftoggle{bbx:gbpunctin}{
- \ifentrytype{inproceedings}{\unspace\printtext{\allowbreak{\SlashFont//}\allowbreak}}
- {\printtext{\allowbreak{\SlashFont//}\allowbreak}}
- }%\addthinspace
-                         {\setunit{\adddot\addspace}%
-                         \iffieldequalstr{userd}{chinese}%
-                         {\printtext{\bibstring{incn}}}%
-                         {\printtext{\bibstring{in}}}%
-                         }}%\newunit\newblock\intitlepunct
+\renewbibmacro*{in:}{
+  \iftoggle{bbx:gbpunctin}{
+    \ifentrytype{inproceedings}{
+      \unspace\printtext{\allowbreak{\SlashFont//}\allowbreak}
+    }{
+      \printtext{\allowbreak{\SlashFont//}\allowbreak}
+    }
+  }{
+    \setunit{\adddot\addspace}
+    \iffieldequalstr{userd}{chinese}{
+      \printtext{\bibstring{incn}}
+    }{
+      \printtext{\bibstring{in}}
+    }
+  }
+}
 %    \end{macrocode}
 % 重设在线文档（@online）的格式。
 %    \begin{macrocode}
 \DeclareBibliographyDriver{online}{
-  \usebibmacro{bibindex} \usebibmacro{begentry} \usebibmacro{author/editor+others/translator+others}
-  \ifnameundef{namea}{}{\setunit{\labelnamepunct}\newblock} % 这一段用于去除作者不存在时多出的标点
+  \usebibmacro{bibindex}
+  \usebibmacro{begentry}
+  \usebibmacro{author/editor+others/translator+others}
+  \ifnameundef{namea}{}{\setunit{\labelnamepunct}\newblock}
   \usebibmacro{title}
   \iftoggle{bbx:gbstrict}{}{
     \newunit \printlist{language} \newunit\newblock
@@ -468,8 +481,6 @@
 %    \begin{macrocode}
 \tl_new:N \l_@@_university_name_tl
 \tl_new:N \l_@@_university_name_eng_tl
-\tl_set:Nn \l_@@_university_name_tl {北京航空航天大学}
-\tl_set:Nn \l_@@_university_name_eng_tl {Beihang University}
 %    \end{macrocode}
 % \end{variable}
 % \begin{variable}{\l_@@_school_name_tl, \l_@@_school_name_eng_tl}
@@ -554,7 +565,7 @@
 \tl_new:N \l_@@_proposal_class_tl
 %    \end{macrocode}
 % \end{variable}
-% \begin{function}{\university, \school, \major, \title, \thesistitle, \author, \thesisauthor, \teacher}
+% \begin{function}{\university, \school, \major}
 % 提供设定各个变量的接口。
 %    \begin{macrocode}
 \NewDocumentCommand{\university}{mm}{
@@ -569,6 +580,11 @@
     \tl_set:Ne \l_@@_major_tl {#1}
     \tl_set:Ne \l_@@_major_eng_tl {#2}
 }
+%    \end{macrocode}
+% \end{function}
+% \begin{function}{\title, \thesistitle}
+% 提供设定论文标题的接口。
+%    \begin{macrocode}
 \RenewDocumentCommand{\title}{mmmm}{
     \tl_set:Nn \l_@@_thesis_title_tl {#1}
     \tl_set:Nn \l_@@_thesis_subtitle_tl {#2}
@@ -595,6 +611,11 @@
     }
 }
 \NewCommandCopy{\thesistitle}{\title}
+%    \end{macrocode}
+% \end{function}
+% \begin{function}{\author, \thesisauthor}
+% 提供设定论文作者的接口。
+%    \begin{macrocode}
 \RenewDocumentCommand{\author}{mm}{
     \tl_set:Nn \l_@@_author_tl {#1}
     \tl_set:Nn \l_@@_author_eng_tl {#2}
@@ -613,6 +634,11 @@
     }
 }
 \NewCommandCopy{\thesisauthor}{\author}
+%    \end{macrocode}
+% \end{function}
+% \begin{function}{\teacher}
+% 提供设定指导教师名的接口。
+%    \begin{macrocode}
 \NewDocumentCommand{\teacher}{mm}{
     \tl_set:Nn \l_@@_teacher_tl {#1}
     \tl_set:Nn \l_@@_teacher_eng_tl {#2}
@@ -716,7 +742,6 @@
 % 单位代码变量。
 %    \begin{macrocode}
 \tl_new:N \l_@@_unit_code_tl
-\tl_set:Nn \l_@@_unit_code_tl {1006}
 %    \end{macrocode}
 % \end{variable}
 % \begin{variable}{\l_@@_student_id_tl}
@@ -819,6 +844,92 @@
     \tl_set:Nn \l_@@_award_year_tl {#1}
     \tl_set:Nn \l_@@_award_month_tl {#2}
     \tl_set:Nn \l_@@_award_day_tl {#3}
+}
+%    \end{macrocode}
+% 暴露通用信息的键-值对接口。
+%    \begin{macrocode}
+\keys_define:nn{buaathesis / info / common / thesis_begin}{
+    year    .tl_set:N = \l_@@_thesis_begin_year_tl,
+    month   .tl_set:N = \l_@@_thesis_begin_month_tl,
+    day     .tl_set:N = \l_@@_thesis_begin_day_tl
+}
+\keys_define:nn{buaathesis / info / common / thesis_end}{
+    year    .tl_set:N = \l_@@_thesis_end_year_tl,
+    month   .tl_set:N = \l_@@_thesis_end_month_tl,
+    day     .tl_set:N = \l_@@_thesis_end_day_tl
+}
+\keys_define:nn{buaathesis / info / common / thesis_defense}{
+    year    .tl_set:N = \l_@@_defense_year_tl,
+    month   .tl_set:N = \l_@@_defense_month_tl,
+    day     .tl_set:N = \l_@@_defense_day_tl
+}
+\keys_define:nn{buaathesis / info / common}{
+    university          .tl_set:N = \l_@@_university_name_tl,
+    university          .initial:n = {北京航空航天大学},
+    universityEng       .tl_set:N = \l_@@_university_name_eng_tl,
+    universityEng       .initial:n = {Beihang University},
+    school              .tl_set:N = \l_@@_school_name_tl,
+    schoolEng           .tl_set:N = \l_@@_school_name_eng_tl,
+    major               .tl_set:N = \l_@@_major_tl,
+    majorEng            .tl_set:N = \l_@@_major_eng_tl,
+    teacher             .tl_set:N = \l_@@_teacher_tl,
+    teacherEng          .tl_set:N = \l_@@_teacher_eng_tl,
+    teacherTwo          .tl_set:N = \l_@@_teacher_two_tl,
+    teacherTwoEng       .tl_set:N = \l_@@_teacher_two_eng_tl,
+    clcnum              .tl_set:N = \l_@@_clc_number_tl,
+    thesisBegin         .meta:nn = {buaathesis / info / common / thesis_begin}{#1},
+    thesisEnd           .meta:nn = {buaathesis / info / common / thesis_end}{#1},
+    defense             .meta:nn = {buaathesis / info / common / thesis_defense}{#1},
+    proposalClass       .tl_set:N = \l_@@_proposal_class_tl
+}
+\DeclareDocumentCommand \BUAACommonInfoSet {m} {
+    \keys_set:nn{buaathesis / info / common}{#1}
+}
+%    \end{macrocode}
+% 暴露本科生信息的键-值对接口。
+%    \begin{macrocode}
+\keys_define:nn{buaathesis / info / bachelor / thesis_date}{
+    year        .tl_set:N = \l_@@_bachelor_thesis_year_tl,
+    month       .tl_set:N = \l_@@_bachelor_thesis_month_tl
+}
+\keys_define:nn{buaathesis / info / bachelor}{
+    class           .tl_set:N = \l_@@_class_tl,
+    studentID       .tl_set:N = \l_@@_student_id_tl,
+    unitcode        .tl_set:N = \l_@@_unit_code_tl,
+    unitcode        .initial:n = {1006},
+    thesisDate      .meta:nn = {buaathesis / info / bachelor / thesis_date}{#1}
+}
+\DeclareDocumentCommand \BUAABachelorInfoSet {m} {
+    \keys_set:nn{buaathesis / info / bachelor}{#1}
+}
+%    \end{macrocode}
+% 暴露研究生信息的键-值对接口。
+%    \begin{macrocode}
+\keys_define:nn{buaathesis / info / graduate / submission}{
+    year    .tl_set:N = \l_@@_submission_year_tl,
+    month   .tl_set:N = \l_@@_submission_month_tl,
+    day     .tl_set:N = \l_@@_submission_day_tl
+}
+\keys_define:nn{buaathesis / info / graduate / award}{
+    year    .tl_set:N = \l_@@_award_year_tl,
+    month   .tl_set:N = \l_@@_award_month_tl,
+    day     .tl_set:N = \l_@@_award_day_tl
+}
+\keys_define:nn{buaathesis / info / graduate}{
+    confidentialLevel       .tl_set:N = \l_@@_confidential_level_tl,
+    confidentialLimit       .tl_set:N = \l_@@_confidential_limit_tl,
+    direction               .tl_set:N = \l_@@_direction_tl,
+    teacherTitle            .tl_set:N = \l_@@_teacher_title_tl,
+    teacherTitleEng         .tl_set:N = \l_@@_teacher_title_eng_tl,
+    teacherTwoTitle         .tl_set:N = \l_@@_teacher_two_title_tl,
+    teacherTwoTitleEng      .tl_set:N = \l_@@_teacher_two_title_eng_tl,
+    appliedDegree           .tl_set:N = \l_@@_applied_degree_tl,
+    thesisID                .tl_set:N = \l_@@_thesis_id_tl,
+    submission              .meta:nn = {buaathesis / info / graduate / submission}{#1},
+    award                   .meta:nn = {buaathesis / info / graduate / award}{#1}
+}
+\DeclareDocumentCommand \BUAAGraduateInfoSet {m} {
+    \keys_set:nn{buaathesis / info / graduate}{#1}
 }
 %    \end{macrocode}
 % 设定全文使用的字体。
