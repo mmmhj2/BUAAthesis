@@ -740,7 +740,7 @@
 \tl_new:N \l_@@_proposal_class_tl
 %    \end{macrocode}
 % \end{variable}
-% \begin{function}{\university, \school, \major}
+% \begin{macro}{\university, \school, \major}
 % 提供设定各个变量的接口。
 %    \begin{macrocode}
 \NewDocumentCommand{\university}{mm}{
@@ -756,8 +756,8 @@
     \tl_set:Ne \l_@@_major_eng_tl {#2}
 }
 %    \end{macrocode}
-% \end{function}
-% \begin{function}{\title, \thesistitle}
+% \end{macro}
+% \begin{macro}{\title, \thesistitle}
 % 提供设定论文标题的接口。
 %    \begin{macrocode}
 \RenewDocumentCommand{\title}{mmmm}{
@@ -787,8 +787,8 @@
 }
 \NewCommandCopy{\thesistitle}{\title}
 %    \end{macrocode}
-% \end{function}
-% \begin{function}{\author, \thesisauthor}
+% \end{macro}
+% \begin{macro}{\author, \thesisauthor}
 % 提供设定论文作者的接口。
 %    \begin{macrocode}
 \RenewDocumentCommand{\author}{mm}{
@@ -810,8 +810,8 @@
 }
 \NewCommandCopy{\thesisauthor}{\author}
 %    \end{macrocode}
-% \end{function}
-% \begin{function}{\teacher}
+% \end{macro}
+% \begin{macro}{\teacher}
 % 提供设定指导教师名的接口。
 %    \begin{macrocode}
 \NewDocumentCommand{\teacher}{mm}{
@@ -819,8 +819,8 @@
     \tl_set:Nn \l_@@_teacher_eng_tl {#2}
 }
 %    \end{macrocode}
-% \end{function}
-% \begin{function}{\subteacher}
+% \end{macro}
+% \begin{macro}{\subteacher}
 % 提供设定各个变量的接口。
 %    \begin{macrocode}
 \NewDocumentCommand{\subteacher}{mm}{
@@ -847,8 +847,8 @@
     }
 }
 %    \end{macrocode}
-% \end{function}
-% \begin{function}{\category, \thesisbegin, \thesisend, \defense, \ckeyword, \ekeyword, \ktclass}
+% \end{macro}
+% \begin{macro}{\category, \thesisbegin, \thesisend, \defense, \ckeyword, \ekeyword, \ktclass}
 % 提供设定各个变量的接口。
 %    \begin{macrocode}
 \NewDocumentCommand{\category}{m}{ \tl_set:Nn \l_@@_clc_number_tl {#1} }
@@ -871,7 +871,7 @@
 \NewDocumentCommand{\ekeyword}{m}{ \tl_set:Nn \l_@@_keyword_eng_tl {#1} }
 \NewDocumentCommand{\ktclass}{m}{ \tl_set:Nn \l_@@_proposal_class_tl {#1} }
 %    \end{macrocode}
-% \end{function}
+% \end{macro}
 % \begin{variable}{\l_@@_degree_long_tl, \l_@@_degree_long_eng_tl, \l_@@_degree_title_tl, \l_@@_degree_head_tl}
 % 学位的全称与简称，用于标题、页眉等位置。
 %    \begin{macrocode}
@@ -1057,10 +1057,14 @@
     defense             .meta:nn = {buaathesis / info / common / thesis_defense}{#1},
     proposalClass       .tl_set:N = \l_@@_proposal_class_tl
 }
-\DeclareDocumentCommand \BUAACommonInfoSet {m} {
+%    \end{macrocode}
+% \begin{macro}{\BUAACommonInfoSetup}
+%    \begin{macrocode}
+\DeclareDocumentCommand \BUAACommonInfoSetup {m} {
     \keys_set:nn{buaathesis / info / common}{#1}
 }
 %    \end{macrocode}
+% \end{macro}
 % 暴露本科生信息的键-值对接口。
 %    \begin{macrocode}
 \keys_define:nn{buaathesis / info / bachelor / thesis_date}{
@@ -1074,10 +1078,14 @@
     unitcode        .initial:n = {1006},
     thesisDate      .meta:nn = {buaathesis / info / bachelor / thesis_date}{#1}
 }
+%    \end{macrocode}
+% \begin{macro}{\BUAABachelorInfoSet}
+%    \begin{macrocode}
 \DeclareDocumentCommand \BUAABachelorInfoSet {m} {
     \keys_set:nn{buaathesis / info / bachelor}{#1}
 }
 %    \end{macrocode}
+% \end{macro}
 % 暴露研究生信息的键-值对接口。
 %    \begin{macrocode}
 \keys_define:nn{buaathesis / info / graduate / submission}{
@@ -1103,10 +1111,14 @@
     submission              .meta:nn = {buaathesis / info / graduate / submission}{#1},
     award                   .meta:nn = {buaathesis / info / graduate / award}{#1}
 }
+%    \end{macrocode}
+% \begin{macro}{\BUAAGraduateInfoSetup}
+%    \begin{macrocode}
 \DeclareDocumentCommand \BUAAGraduateInfoSetup {m} {
     \keys_set:nn{buaathesis / info / graduate}{#1}
 }
 %    \end{macrocode}
+% \end{macro}
 % 设定全文使用的字体。
 %    \begin{macrocode}
 \setmainfont{Times~New~Roman}
@@ -1174,21 +1186,30 @@
     \bool_if:nT { \g_@@_bachelor_bool } {
         \bool_if:nTF {\g_@@_proposal_bool} {
             \fancyhead[C]{\zihao{-5}\hwkaiti
-                \l_@@_degree_head_tl  学位论文\l_@@_proposal_class_tl\vspace{1.5mm}
+                \l_@@_degree_head_tl  学位论文
+                \l_@@_proposal_class_tl\vspace{1.5mm}
             }
             \fancyfoot[C]{
                 \hspace{1.5mm}
-                \hwkaiti\zihao{-5}\l_@@_university_name_tl\l_@@_school_name_tl 学院
-                \hfill\hfill
-                \songti\zihao{-5}$\cdot$\quad\thepage\quad$\cdot$
+                \hwkaiti \zihao{-5}
+                \l_@@_university_name_tl
+                \l_@@_school_name_tl 学院
+                \hfill \hfill
+                \songti \zihao{-5} $\cdot$
+                \quad \thepage \quad $\cdot$
                 \hspace{1.5mm}
             }
             \renewcommand{\footrulewidth}{0.4bp}
         } {
             \fancyhead[C]{
                 \includegraphics[width=37bp]{\g_@@_logo_filename_tl}\hfill
-                \raisebox{2ex}{\ziju{0.1}\heiti\zihao{4}\l_@@_university_name_tl 毕业设计(论文)}\hfill
-                \raisebox{2ex}{\songti\zihao{5}第\quad\thepage\quad 页}
+                \raisebox{2ex}{
+                    \ziju{0.1}\heiti\zihao{4}
+                    \l_@@_university_name_tl 毕业设计(论文)
+                }\hfill
+                \raisebox{2ex}{
+                    \songti\zihao{5}第\quad\thepage\quad 页
+                }
             }
         }
     }
@@ -1196,26 +1217,35 @@
     \bool_if:nT { \g_@@_master_bool || \g_@@_doctor_bool } {
         \bool_if:nTF { \g_@@_proposal_bool } {
             \fancyhead[C]{\zihao{-5}\hwkaiti
-                \l_@@_degree_head_tl  学位论文\l_@@_proposal_class_tl\vspace{1.5mm}
+                \l_@@_degree_head_tl  学位论文
+                \l_@@_proposal_class_tl\vspace{1.5mm}
             }
             \fancyfoot[C]{
                 \hspace{1.5mm}
-                \hwkaiti\zihao{-5}\l_@@_university_name_tl\l_@@_school_name_tl 学院
+                \hwkaiti\zihao{-5}\l_@@_university_name_tl
+                \l_@@_school_name_tl 学院
                 \hfill\hfill
-                \songti\zihao{-5}$\cdot$\quad\thepage\quad$\cdot$
+                \songti\zihao{-5} $\cdot$
+                \quad\thepage\quad $\cdot$
                 \hspace{1.5mm}
             }
             \renewcommand{\footrulewidth}{0.4bp}
         } {
             \legacy_if:nTF { @twoside } {
                 \fancyhead[CO]{\zihao{-5}\songti
-                    \l_@@_university_name_tl\l_@@_degree_head_tl  学位论文\vspace{1.5mm}
+                    \l_@@_university_name_tl
+                    \l_@@_degree_head_tl  学位论文\vspace{1.5mm}
                 }
-                \fancyhead[CE]{\zihao{-5}\songti\leftmark\vspace{1.5mm}}
+                \fancyhead[CE]{
+                    \zihao{-5}\songti\leftmark\vspace{1.5mm}
+                }
             } {
                 \fancyhead[C]{\zihao{-5}\songti
                     \ifthenelse{\isodd{\value{page}}}
-                    {\l_@@_university_name_tl\l_@@_degree_head_tl  学位论文}
+                    {
+                        \l_@@_university_name_tl
+                        \l_@@_degree_head_tl  学位论文
+                    }
                     {\leftmark}
                     \vspace{1.5mm}
                 }
@@ -1286,19 +1316,40 @@
 % 设定目录格式。
 %    \begin{macrocode}
 \bool_if:nTF \g_@@_bachelor_bool {
-    \titlecontents{chapter}[0pt]{\heiti\zihao{-4}}{\thecontentslabel\ }{}
-    {\hspace{.5em}\titlerule*[4pt]{$\cdot$}\contentspage}
-    \titlecontents{section}[2em]{\vspace{0.1\baselineskip}\songti\zihao{-4}}{\thecontentslabel\ }{}
-    {\hspace{.5em}\titlerule*[4pt]{$\cdot$}\contentspage}
-    \titlecontents{subsection}[4em]{\vspace{0.1\baselineskip}\songti\zihao{-4}}{\thecontentslabel\ }{}
-    {\hspace{.5em}\titlerule*[4pt]{$\cdot$}\contentspage}
+    \titlecontents{chapter}[0pt]{
+        \heiti\zihao{-4}}{\thecontentslabel\ 
+    }{}{
+        \hspace{.5em}\titlerule*[4pt]{$\cdot$}\contentspage
+    }
+
+    \titlecontents{section}[2em]{
+        \vspace{0.1\baselineskip}\songti\zihao{-4}
+    }{\thecontentslabel\ }{}{
+        \hspace{.5em}\titlerule*[4pt]{$\cdot$}\contentspage
+    }
+
+    \titlecontents{subsection}[4em]{
+        \vspace{0.1\baselineskip}\songti\zihao{-4}
+    }{\thecontentslabel\ }{}{
+        \hspace{.5em}\titlerule*[4pt]{$\cdot$}\contentspage
+    }
 } {
-    \titlecontents{chapter}[0pt]{\vspace{-0.25\baselineskip}\heiti\zihao{4}}{\thecontentslabel\ }{}
-    {\hspace{.5em}\titlerule*[4pt]{$\cdot$}{\zihao{-4}\contentspage}}[\vspace{0.07\baselineskip}]
+    \titlecontents{chapter}[0pt]{
+        \vspace{-0.25\baselineskip}\heiti\zihao{4}
+    }{\thecontentslabel\ }{}{
+        \hspace{.5em}\titlerule*[4pt]{$\cdot$}{\zihao{-4}\contentspage}
+    }[\vspace{0.07\baselineskip}]
+
     \titlecontents{section}[2em]{\songti\zihao{-4}}{\thecontentslabel\ }{}
-    {\hspace{.5em}\titlerule*[4pt]{$\cdot$}{\zihao{-4}\contentspage}}[\vspace{0.1\baselineskip}]
-    \titlecontents{subsection}[4em]{\vspace{-0.2\baselineskip}\songti\zihao{5}}{\thecontentslabel\ }{}
-    {\hspace{.5em}\titlerule*[4pt]{$\cdot$}{\zihao{-4}\contentspage}}[\vspace{0.1\baselineskip}]
+    {
+        \hspace{.5em}\titlerule*[4pt]{$\cdot$}{\zihao{-4}\contentspage}
+    }[\vspace{0.1\baselineskip}]
+
+    \titlecontents{subsection}[4em]{
+        \vspace{-0.2\baselineskip}\songti\zihao{5}
+    }{\thecontentslabel\ }{}{
+        \hspace{.5em}\titlerule*[4pt]{$\cdot$}{\zihao{-4}\contentspage}
+    }[\vspace{0.1\baselineskip}]
 }
 %    \end{macrocode}
 % 禁止目录中产生额外的编号。
@@ -1308,10 +1359,22 @@
 %    \end{macrocode}
 % 设定图表目录的格式。
 %    \begin{macrocode}
-\titlecontents{figure}[0pt]{\vspace{0.15\baselineskip}\songti\zihao{-4}}{\makebox[3em][l]{图~\thecontentslabel\quad}}{}
-{\hspace{.5em}\titlerule*[4pt]{$\cdot$}\contentspage}[\vspace{0.15\baselineskip}]
-\titlecontents{table}[0pt]{\vspace{0.15\baselineskip}\songti\zihao{-4}}{\makebox[3em][l]{表~\thecontentslabel\quad}}{}
-{\hspace{.5em}\titlerule*[4pt]{$\cdot$}\contentspage}[\vspace{0.15\baselineskip}]
+\titlecontents{figure}[0pt]{
+    \vspace{0.15\baselineskip}\songti\zihao{-4}
+}{
+    \makebox[3em][l]{图~\thecontentslabel\quad}
+}{}
+{
+    \hspace{.5em}\titlerule*[4pt]{$\cdot$}\contentspage
+}[\vspace{0.15\baselineskip}]
+
+\titlecontents{table}[0pt]{
+    \vspace{0.15\baselineskip}\songti\zihao{-4}
+}{
+    \makebox[3em][l]{表~\thecontentslabel\quad}
+}{}{
+    \hspace{.5em}\titlerule*[4pt]{$\cdot$}\contentspage
+}[\vspace{0.15\baselineskip}]
 %    \end{macrocode}
 % 设置 \file{hyperref} 产生的超链接格式。
 %    \begin{macrocode}
@@ -1370,10 +1433,8 @@
 \setlist[enumerate,1]{label=\arabic*、}
 \setlist[enumerate,2]{label=（\arabic*）}
 \setlist{
-    topsep=0pt,
-    itemsep=0pt,
-    partopsep=0pt,
-    parsep=\parskip,
+    topsep=0pt, itemsep=0pt,
+    partopsep=0pt, parsep=\parskip,
 }
 
 \lstset{
@@ -1381,24 +1442,17 @@
     basicstyle=\zihao{5}\ttfamily,
     columns=flexible,
     breakatwhitespace=false,
-    breaklines=true,
-    captionpos=b,
-    frame=single,
-    numbers=left,
-    numbersep=5pt,
-    showspaces=false,
+    breaklines=true, captionpos=b,
+    frame=single, numbers=left,
+    numbersep=5pt, showspaces=false,
     showstringspaces=false,
-    showtabs=false,
-    stepnumber=1,
+    showtabs=false, stepnumber=1,
     rulecolor=\color{black},
-    tabsize=2,
-    texcl=true,
+    tabsize=2, texcl=true,
     title=\lstname,
     escapeinside={\%*}{*)},
-    extendedchars=false,
-    mathescape=true,
-    xleftmargin=3em,
-    xrightmargin=3em,
+    extendedchars=false, mathescape=true,
+    xleftmargin=3em, xrightmargin=3em,
 }
 
 \bool_if:nTF \g_@@_color_bool {
@@ -1418,7 +1472,9 @@
 }
 
 \renewcommand{\lstlistingname}{代码}
-
+%    \end{macrocode}
+% 设定定理相关环境。
+%    \begin{macrocode}
 \theoremsymbol{\ensuremath{\square}}
 \newtheorem*{proof}{证明}
 \theoremstyle{plain}
@@ -1436,23 +1492,40 @@
 \newtheorem{remark}{注释}[chapter]
 \newtheorem{problem}{问题}[chapter]
 \newtheorem{conjecture}{猜想}[chapter]
-
+%    \end{macrocode}
+% 设定目录树环境。
+%    \begin{macrocode}
 \bool_if:nT \g_@@_color_bool {
     \renewcommand*\DTstylecomment{\ttfamily\color{dkgreen}}
     \renewcommand*\DTstyle{\ttfamily\color{red}}
 }
-
-\DeclareCaptionFormat{bachelorfigure}{\songti\zihao{5}{#1\textrm{#2}#3}}
-\DeclareCaptionFormat{bachelortable}{\heiti\bf\zihao{5}{#1\textrm{#2}#3}}
-\DeclareCaptionFormat{bachelorlstlisting}{\songti\bf\zihao{5}{#1\textrm{#2}#3}}
-\DeclareCaptionFormat{masterfigure}{\bf\songti\zihao{5}{#1\textrm{#2}#3}}
-\DeclareCaptionFormat{mastertable}{\bf\songti\zihao{5}{#1\textrm{#2}#3}}
-\DeclareCaptionFormat{masterlstlisting}{\bf\songti\zihao{5}{#1\textrm{#2}#3}}
+%    \end{macrocode}
+% 设定图表等标题格式。
+%    \begin{macrocode}
+\DeclareCaptionFormat{bachelorfigure}{
+    \songti\zihao{5}{#1\textrm{#2}#3}
+}
+\DeclareCaptionFormat{bachelortable}{
+    \heiti\bf\zihao{5}{#1\textrm{#2}#3}
+}
+\DeclareCaptionFormat{bachelorlstlisting}{
+    \songti\bf\zihao{5}{#1\textrm{#2}#3}
+}
+\DeclareCaptionFormat{masterfigure}{
+    \bf\songti\zihao{5}{#1\textrm{#2}#3}
+}
+\DeclareCaptionFormat{mastertable}{
+    \bf\songti\zihao{5}{#1\textrm{#2}#3}
+}
+\DeclareCaptionFormat{masterlstlisting}{
+    \bf\songti\zihao{5}{#1\textrm{#2}#3}
+}
 
 \bool_if:nTF \g_@@_bachelor_bool {
     \captionsetup[figure]{format=bachelorfigure,labelsep=quad}
     \captionsetup[table]{format=bachelortable,labelsep=quad}
     \captionsetup[lstlisting]{format=bachelorlstlisting,labelsep=quad}
+
     \renewcommand{\thefigure}{\arabic{chapter}.\arabic{figure}}
     \renewcommand{\thetable}{\arabic{chapter}.\arabic{table}}
     \renewcommand{\theequation}{\arabic{chapter}.\arabic{equation}}
@@ -1461,15 +1534,18 @@
         \captionsetup[figure]{format=masterfigure,labelsep=quad}
         \captionsetup[table]{format=mastertable,labelsep=quad}
         \captionsetup[lstlisting]{format=masterlstlisting,labelsep=quad}
+
         \renewcommand{\thefigure}{\arabic{chapter}.\arabic{figure}}
         \renewcommand{\thetable}{\arabic{chapter}.\arabic{table}}
         \renewcommand{\theequation}{\arabic{chapter}.\arabic{equation}}
     } {
         \@removefromreset{table}{chapter}
         \@removefromreset{figure}{chapter}
+
         \captionsetup[figure]{format=masterfigure,labelsep=quad}
         \captionsetup[table]{format=mastertable,labelsep=quad}
         \captionsetup[lstlisting]{format=masterlstlisting,labelsep=quad}
+
         \renewcommand{\thefigure}{\arabic{figure}}
         \renewcommand{\thetable}{\arabic{table}}
         \renewcommand{\theequation}{\arabic{chapter}.\arabic{equation}}
@@ -1482,7 +1558,10 @@
 \NewDocumentCommand{\tabcaption}{}{
     \def\@captype{table}\caption
 }
-
+%    \end{macrocode}
+% \begin{macro}[int]{\@@_cs_reset_counter_for_appendix:}
+% 在附录前清零所有编号。
+%    \begin{macrocode}
 \cs_new:Nn \@@_cs_reset_counter_for_appendix: {
     % 图、表、公式编号随 chapter 清零
     \@addtoreset{figure}{chapter}
@@ -1514,7 +1593,10 @@
         \@arabic\c@equation
     }
 }
-
+%    \end{macrocode}
+% \end{macro}
+% 重定义附录和首部内容。
+%    \begin{macrocode}
 \let\oldappendix\appendix
 \renewcommand{\appendix}{
     \oldappendix
@@ -1531,6 +1613,10 @@
     }
 }
 
+%    \end{macrocode}
+% \begin{macro}[int]{\@@_cs_clear_page_ensure_even:}
+% 插入分页，并确保下一有内容的页在偶数页上。
+%    \begin{macrocode}
 \cs_new:Nn \@@_cs_clear_page_ensure_even: {
     \clearpage
     \legacy_if:nT { @twoside } {
@@ -1542,13 +1628,21 @@
         }
     }
 }
-
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}[int]{\@@_cs_create_ubox_bf:nn, \@@_cs_ulinecvrtc:n, \@@_cs_ulinecvcbc:n}
+% 用于创建下划线的辅助宏定义。
+%    \begin{macrocode}
 \cs_new:Npn \@@_cs_create_ubox_bf:nn #1#2 {
     \uline{ \makebox[#1][c]{ #2 } }
 }
 \cs_new:Npn \@@_cs_ulinecvrtc:n #1 { \@@_cs_create_ubox_bf:nn {9em} {#1} }
 \cs_new:Npn \@@_cs_ulinecvcbc:n #1 { \@@_cs_create_ubox_bf:nn {14em} {#1} }
-
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}[int]{\@@_cs_bachelor_proposal_tabular:}
+% 本科开题报告题名页信息表。
+%    \begin{macrocode}
 \cs_new:Nn \@@_cs_bachelor_proposal_tabular: {
     \begin{tabular}{c~p{0.55\textwidth}<{\raggedright}}
         \hwkaiti \textbf{论文题目}  : & \hwkaiti \l_@@_thesis_title_tl \\[.4ex]
@@ -1560,6 +1654,11 @@
         \\
     \end{tabular}
 }
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}[int]{\@@_cs_bachelor_tabular:}
+% 本科开题报告题名页信息表。
+%    \begin{macrocode}
 \cs_new:Nn \@@_cs_bachelor_tabular: {
     \begin{tabular}{cc}
         学 \hspace{0.75em} 院 \hspace{0.75em} 名 \hspace{0.75em} 称 \hspace{0.75em} &
@@ -1569,9 +1668,18 @@
         学 \hspace{0.75em} 生 \hspace{0.75em} 姓 \hspace{0.75em} 名 \hspace{0.75em} &
         \@@_cs_ulinecvcbc:n {\l_@@_author_tl} \\[.4ex]
         指 \hspace{0.75em} 导 \hspace{0.75em} 教 \hspace{0.75em} 师 \hspace{0.75em} &
-        \@@_cs_ulinecvcbc:n {\l_@@_teacher_tl \bool_if:NT \g_@@_twoteacher_bool {\quad \l_@@_teacher_two_tl} } \\
+        \@@_cs_ulinecvcbc:n {\l_@@_teacher_tl 
+            \bool_if:NT \g_@@_twoteacher_bool {
+                \quad \l_@@_teacher_two_tl
+            }
+        } \\
     \end{tabular}
 }
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}[int]{\@@_cs_graduate_proposal_tabular:}
+% 研究生开题报告题名页信息表。
+%    \begin{macrocode}
 \cs_new:Nn \@@_cs_graduate_proposal_tabular: {
     \begin{tabular}{c~p{0.55\textwidth}<{\raggedright}}
         \hwkaiti \textbf{题 \hspace{2em} 目}  :
@@ -1590,25 +1698,46 @@
         \hwkaiti \textbf{学 \hspace{2em} 号}  :
         & \hwkaiti\l_@@_student_id_tl \\[.4ex]
         \hwkaiti \textbf{指导教师}  :
-        & \hwkaiti\l_@@_teacher_tl \bool_if:nT \g_@@_twoteacher_bool {\quad \l_@@_teacher_two_tl}\\
+        & \hwkaiti\l_@@_teacher_tl 
+        \bool_if:nT \g_@@_twoteacher_bool {
+            \quad \l_@@_teacher_two_tl
+        }\\
     \end{tabular}
 }
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}[int]{\@@_cs_graduate_tabular:}
+% 研究生论文题名页信息表。
+%    \begin{macrocode}
 \cs_new:Nn \@@_cs_graduate_tabular: {
     \begin{tabular}[b]{ll}
-        作 \hspace{0.5em} 者 \hspace{0.5em} 姓 \hspace{0.5em} 名 \hspace{0.5em} & \l_@@_author_tl \\[.3ex]
+        作 \hspace{0.5em} 者 \hspace{0.5em} 姓 \hspace{0.5em} 名 \hspace{0.5em} &
+        \l_@@_author_tl \\[.3ex]
         \bool_if:NTF \g_@@_professional_bool {
-            专 \hspace{0.5em} 业 \hspace{0.5em} 名 \hspace{0.5em} 称 \hspace{0.5em} & \l_@@_major_tl\\[.3ex]
+            专 \hspace{0.5em} 业 \hspace{0.5em} 名 \hspace{0.5em} 称 \hspace{0.5em} & 
+            \l_@@_major_tl\\[.3ex]
         } {
-            学 \hspace{0.5em} 科 \hspace{0.5em} 专 \hspace{0.5em} 业 \hspace{0.5em} & \l_@@_major_tl\\[.3ex]
+            学 \hspace{0.5em} 科 \hspace{0.5em} 专 \hspace{0.5em} 业 \hspace{0.5em} & 
+            \l_@@_major_tl\\[.3ex]
         }
-        指 \hspace{0.5em} 导 \hspace{0.5em} 教 \hspace{0.5em} 师 \hspace{0.5em} & \l_@@_teacher_tl\quad\l_@@_teacher_title_tl
+
+        指 \hspace{0.5em} 导 \hspace{0.5em} 教 \hspace{0.5em} 师 \hspace{0.5em} & 
+        \l_@@_teacher_tl\quad\l_@@_teacher_title_tl
         \bool_if:nT \g_@@_twoteacher_bool {
-            \\[.3ex] \hspace{0.5em} & \l_@@_teacher_two_tl\quad\l_@@_teacher_two_title_tl
+            \\[.3ex] \hspace{0.5em} & 
+            \l_@@_teacher_two_tl\quad\l_@@_teacher_two_title_tl
         }
+
         \\[.3ex]
-        培 \hspace{0.5em} 养 \hspace{0.5em} 学 \hspace{0.5em} 院 \hspace{0.5em} & \l_@@_school_name_tl 学院\\
+        培 \hspace{0.5em} 养 \hspace{0.5em} 学 \hspace{0.5em} 院 \hspace{0.5em} & 
+        \l_@@_school_name_tl 学院\\
     \end{tabular}
 }
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}[int]{\@@_cs_bachelor_proposal_cover_page:}
+% 本科生开题报告题名页。
+%    \begin{macrocode}
 \cs_new:Nn \@@_cs_bachelor_proposal_cover_page: {
     \begin{titlepage}
         % 第二个()里的参数表示左移35pt，下移55pt
@@ -1616,12 +1745,18 @@
         \begin{center}
             \includegraphics[width=310bp]{\g_@@_name_filename_tl}
             \\ \skip_vertical:n{60bp} \mode_leave_vertical: \\
-            \centerline{\zihao{1} \heiti \textbf{\l_@@_degree_long_tl 论文\l_@@_proposal_class_tl}}
+            \centerline{
+                \zihao{1} \heiti \textbf{
+                    \l_@@_degree_long_tl 论文\l_@@_proposal_class_tl
+                }
+            }
             \mode_leave_vertical: \\ \skip_vertical:n{60bp} \mode_leave_vertical: \\
             { \zihao{-3} \heiti \@@_cs_bachelor_proposal_tabular: }
             \mode_leave_vertical: \\ \skip_vertical:n{75bp} \mode_leave_vertical: \\
             \centerline{
-                \heiti\zihao{3}\textbf{\l_@@_university_name_tl \l_@@_school_name_tl 学院}
+                \heiti \zihao{3} \textbf{
+                    \l_@@_university_name_tl \l_@@_school_name_tl 学院
+                }
             }
             \skip_vertical:n{20bp}
             \centerline{
@@ -1632,6 +1767,11 @@
         \end{center}
     \end{titlepage}
 }
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}[int]{\@@_cs_bachelor_cover_page:}
+% 本科生论文题名页。
+%    \begin{macrocode}
 \cs_new:Nn \@@_cs_bachelor_cover_page: {
     \begin{titlepage}
         % 第二个()里的参数表示左移35pt，下移55pt
@@ -1677,18 +1817,33 @@
         \end{center}
     \end{titlepage}
 }
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}[int]{\@@_cs_graduate_proposal_cover_page:}
+% 研究生开题报告题名页。
+%    \begin{macrocode}
 \cs_new:Nn \@@_cs_graduate_proposal_cover_page: {
     \begin{titlepage}
         % 第二个()里的参数表示左移35pt，下移55pt
         \hfill \skip_vertical:n{45bp}
         \begin{center}
             \includegraphics[width=310bp]{\g_@@_name_filename_tl}
+            
             \mode_leave_vertical: \\ \skip_vertical:n{60bp} \mode_leave_vertical: \\
-            \centerline{\zihao{1} \heiti \textbf{\l_@@_degree_long_tl 论文\l_@@_proposal_class_tl}}
+            \centerline{
+                \zihao{1} \heiti \textbf{
+                    \l_@@_degree_long_tl 论文\l_@@_proposal_class_tl
+            }}
+
             \mode_leave_vertical: \\ \skip_vertical:n{60bp} \mode_leave_vertical: \\
             { \zihao{-3} \heiti \@@_cs_graduate_proposal_tabular: }
+            
             \mode_leave_vertical: \\ \skip_vertical:n{75bp} \mode_leave_vertical: \\
-            \centerline{\heiti\zihao{3}\textbf{\l_@@_university_name_tl\l_@@_school_name_tl 学院}}
+            \centerline{
+                \heiti\zihao{3}\textbf{
+                    \l_@@_university_name_tl\l_@@_school_name_tl 学院
+            }}
+            
             \skip_vertical:n{20bp}
             \centerline{
                 \heiti\zihao{-3}
@@ -1698,6 +1853,11 @@
         \end{center}
     \end{titlepage}
 }
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}[int]{\@@_cs_graduate_cover_page:}
+% 研究生论文题名页。
+%    \begin{macrocode}
 \cs_new:Nn \@@_cs_graduate_cover_page: {
     \begin{titlepage}
         \begin{center}
@@ -1708,7 +1868,8 @@
                         中图分类号：\l_@@_clc_number_tl  \\
                         论\,\,文\,\,编\,\,号：\l_@@_thesis_id_tl\\
                         \bool_if:nTF \g_@@_classified_bool {
-                            \l_@@_confidential_level_tl\ding{73} \hspace{0.5em} \l_@@_confidential_limit_tl \\
+                            \l_@@_confidential_level_tl\ding{73} 
+                            \hspace{0.5em} \l_@@_confidential_limit_tl \\
                         } {
                             \skip_vertical:n{20bp}
                         }
@@ -1745,25 +1906,50 @@
         \end{center}
     \end{titlepage}
 }
-
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}[int]{\@@_cs_cover_page:}
+% 生成根据文档类选项生成题名页。
+%    \begin{macrocode}
 \cs_new:Nn \@@_cs_cover_page: {
     \bool_case:n {
-        { \g_@@_bachelor_bool && \g_@@_proposal_bool } { \@@_cs_bachelor_proposal_cover_page: }
-        { \g_@@_bachelor_bool } { \@@_cs_bachelor_cover_page: }
-        { (\g_@@_master_bool || \g_@@_doctor_bool) && \g_@@_proposal_bool } { \@@_cs_graduate_proposal_cover_page: }
-        { \g_@@_master_bool || \g_@@_doctor_bool } { \@@_cs_graduate_cover_page:}
+        { \g_@@_bachelor_bool && \g_@@_proposal_bool } { 
+            \@@_cs_bachelor_proposal_cover_page: 
+        }
+        { \g_@@_bachelor_bool } { 
+            \@@_cs_bachelor_cover_page: 
+        }
+        { (\g_@@_master_bool || \g_@@_doctor_bool) && \g_@@_proposal_bool } { 
+            \@@_cs_graduate_proposal_cover_page: 
+        }
+        { \g_@@_master_bool || \g_@@_doctor_bool } { 
+            \@@_cs_graduate_cover_page:
+        }
     }
 }
-
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}[int]{\@@_cs_graduate_tabular_eng:}
+% 英文研究生信息表。
+%    \begin{macrocode}
 \cs_new:Nn \@@_cs_graduate_tabular_eng: {
     \begin{tabular}{ll}
-        \textbf{Candidate:\ } & \textbf{\l_@@_author_eng_tl} \\[0.5ex]
-        \textbf{Supervisor:\ } & \textbf{\l_@@_teacher_title_eng_tl \hspace{0.5em} \l_@@_teacher_eng_tl}
+        \textbf{Candidate:\ } & 
+        \textbf{\l_@@_author_eng_tl} \\[0.5ex]
+        \textbf{Supervisor:\ } & 
+        \textbf{\l_@@_teacher_title_eng_tl \hspace{0.5em} \l_@@_teacher_eng_tl}
         \bool_if:NT \g_@@_twoteacher_bool {
-            \\ ~~ & \textbf{\l_@@_teacher_two_title_eng_tl \hspace{0.5em} \l_@@_teacher_two_eng_tl}
+            \\ ~~ & 
+            \textbf{\l_@@_teacher_two_title_eng_tl 
+            \hspace{0.5em} \l_@@_teacher_two_eng_tl}
         } \\
     \end{tabular}
 }
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}[int]{\@@_cs_graduate_cover_page_eng:}
+% 英文研究生题名页。
+%    \begin{macrocode}
 \cs_new:Nn \@@_cs_graduate_cover_page_eng: {
     \@@_cs_clear_page_ensure_even: \thispagestyle{empty}
     \vspace*{\stretch{1}}
@@ -1773,16 +1959,25 @@
                 \centering{ \zihao{-2} \textbf{\l_@@_thesis_title_eng_tl} }
             \end{spacing}
         \end{minipage}
+
         \skip_vertical:n {20bp}
         \begin{minipage}[h]{.75\textwidth}
-            \centering{\zihao{-3}\l_@@_thesis_subtitle_eng_tl}
+            \centering{
+                \zihao{-3}\l_@@_thesis_subtitle_eng_tl
+            }
         \end{minipage}
+
         \vspace*{\stretch{1}} \mode_leave_vertical: \\
-        {\zihao{4} A~Dissertation~Submitted~for~the~Degree~of~\l_@@_degree_long_eng_tl} \\
+        {
+            \zihao{4} A~Dissertation~Submitted~for~the~Degree~of~
+            \l_@@_degree_long_eng_tl
+        } \\
+
         \skip_vertical:n {110bp}
         \begin{center}
             \zihao{-3} \@@_cs_graduate_tabular_eng:
         \end{center}
+
         \skip_vertical:n {125bp}
         \zihao{3}{
             \l_@@_university_name_tl \\[1.8ex]
@@ -1790,7 +1985,11 @@
         }
     \end{center}
 }
-
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{cabstract}
+% 中文摘要环境。
+%    \begin{macrocode}
 \NewDocumentEnvironment{cabstract}{}{
     \newpage \vspace*{2bp}
     \bool_if:NT \g_@@_bachelor_bool {
@@ -1822,7 +2021,11 @@
     \bool_if:NT \g_@@_bachelor_bool {\noindent}
     { \heiti \zihao{-4} 关键词：} { \heiti \tl_use:N \l_@@_keyword_tl }
 }
-
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{eabstract}
+% 英文摘要环境。
+%    \begin{macrocode}
 \NewDocumentEnvironment{eabstract}{}{
     \newpage \vspace*{2bp}
     \bool_if:NT \g_@@_bachelor_bool {
@@ -1858,7 +2061,11 @@
     \bool_if:NT \g_@@_bachelor_bool {\noindent}
     {\bf\zihao{-4} Key~words:~} \tl_use:N \l_@@_keyword_eng_tl
 }
-
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}[int]{\@@_cs_bachelor_declaration_page:}
+% 本科生独立性声明。
+%    \begin{macrocode}
 \cs_new:Nn \@@_cs_bachelor_declaration_page: {
     \@@_cs_clear_page_ensure_even: \thispagestyle{empty} \vspace*{54bp}
     \centerline{\bf\zihao{-2}\songti 本人声明}
@@ -1874,8 +2081,9 @@
         时间：& \l_@@_bachelor_thesis_year_tl~年~\l_@@_bachelor_thesis_month_tl ~月
     \end{tabular}
 }
-
-
+%    \end{macrocode}
+% \end{macro}
+%    \begin{macrocode}
 \NewDocumentCommand{\ulinel}{O{}m}{
     \uline{\makebox[#1\textwidth][l]{#2}}
 }
@@ -1920,7 +2128,10 @@
     \seq_put_right:Nn \l_@@_bachelor_asgnmt_reference_seq {#8}
 }
 
-
+%    \end{macrocode}
+% \begin{macro}[int]{\@@_cs_bachelor_assignment_page:}
+% 本科生任务书。
+%    \begin{macrocode}
 \cs_new:Npn \@@_cs_bachelor_assignment_page: {
     \newpage \thispagestyle{empty} \parindent=0pt \songti
     {
@@ -1994,7 +2205,11 @@
     \parindent=2\ccwd
     \linespread{1.5}
 }
-
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}[int]{\@@_cs_graduate_title_page:}
+% 研究生题名页。
+%    \begin{macrocode}
 \cs_new:Nn \@@_cs_graduate_title_page: {
     \@@_cs_clear_page_ensure_even: \thispagestyle{empty}
     \begin{flushleft}
@@ -2063,7 +2278,11 @@
         \end{spacing}
     \end{center}
 }
-
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}[int]{\@@_cs_graduate_declaration_page:}
+% 研究生独创性声明页。
+%    \begin{macrocode}
 \cs_new:Nn \@@_cs_graduate_declaration_page: {
     \@@_cs_clear_page_ensure_even: \thispagestyle{empty}
     \vspace*{50bp}
@@ -2091,7 +2310,9 @@
         \ 学位论文作者签名：\uline{\mbox{\hspace{7em}}}\hspace{5em}日期：\hspace{7ex}年\hspace{5ex}月\hspace{5ex}日\par
         \ 指导教师签名：\uline{\mbox{\hspace{9em}}}\hspace{5em}日期：\hspace{7ex}年\hspace{5ex}月\hspace{5ex}日}
 }
-
+%    \end{macrocode}
+% \end{macro}
+%    \begin{macrocode}
 \NewDocumentEnvironment{denotation}{}
 {
     \chapter*{主要符号对照表\markboth{主要符号对照表}{}}
@@ -2115,7 +2336,9 @@
 \RenewDocumentCommand{\maketitle}{}{
     \@@_cs_cover_page:
     \bool_case:n {
-        { \g_@@_bachelor_bool && \g_@@_proposal_bool } { \pagestyle{fancy} \frontmatter }
+        { \g_@@_bachelor_bool && \g_@@_proposal_bool } { 
+            \pagestyle{fancy} \frontmatter 
+        }
         { \g_@@_bachelor_bool } {
             \pagestyle{empty}
             \loadgeometry{bachelortaskgeometry}
@@ -2125,7 +2348,9 @@
             \pagestyle{fancy}
             \frontmatter
         }
-        { (\g_@@_master_bool || \g_@@_doctor_bool) && \g_@@_proposal_bool } { \@@_cs_clear_page_ensure_even: \frontmatter }
+        { (\g_@@_master_bool || \g_@@_doctor_bool) && \g_@@_proposal_bool } { 
+            \@@_cs_clear_page_ensure_even: \frontmatter 
+        }
         { \g_@@_master_bool || \g_@@_doctor_bool } {
             \@@_cs_graduate_cover_page_eng:
             \@@_cs_graduate_title_page:
