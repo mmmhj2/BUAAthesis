@@ -109,7 +109,204 @@
 % \begin{function}{twoteacher} 指定该论文具有副导师，谨慎使用。 \end{function}
 % \begin{function}{proposal} 指定该论文生成为开题报告或文献综述。 \end{function}
 %
-% \subsection{通用信息设定}
+% \subsection{信息设置接口}
+% 本节主要介绍用于设置各种信息的接口。
+% 除了作者、标题和摘要使用和 \LaTeX{} 兼容的接口之外，其他信息均可通过键值对设置。
+%
+% \begin{function}{\title, \thesistitle}
+%	 \begin{syntax}
+%		 \cs{title} \Arg{论文标题} \Arg{论文副标题} \Arg{英文论文标题} \Arg{英文论文副标题}
+%    \end{syntax}
+%	 输入模板中的论文中英文副标题。 \cs{thesistitle} 是 \cs{title} 的后向兼容别名。
+% \end{function}
+%
+% \begin{function}{\author, \thesisauthor}
+%	 \begin{syntax}
+%		 \cs{author} \Arg{作者姓名} \Arg{作者英文姓名}
+%    \end{syntax}
+%	 输入模板中的论文中英文姓名，原则上英文姓在前且大写。\cs{thesisauthor} 是 \cs{author} 的后向兼容别名。
+% \end{function}
+%
+% \begin{function}{\ckeyword, \ekeyword}
+%	 \begin{syntax}
+%		 \cs{ckeyword} \Arg{中文关键词}
+%		 \cs{ekeyword} \Arg{英文关键词}
+%    \end{syntax}
+%	 设置论文摘要后的关键词。
+% \end{function}
+%
+% \begin{function}{cabstract, eabstract}
+%	 \begin{syntax}
+%		 \cs{begin}\{\env{cabstract}\} 中文摘要 \cs{end}\{\env{cabstract}\}
+%		 \cs{begin}\{\env{eabstract}\} 英文摘要 \cs{end}\{\env{eabstract}\}
+%    \end{syntax}
+%	 中文和英文摘要对应的环境。
+% \end{function}
+%
+% \subsubsection{基本信息}
+% 
+% \begin{function}{\BUAACommonInfoSetup}
+%   \begin{syntax}
+%       \cs{BUAACommonInfoSetup} \Arg{键-值对}
+%   \end{syntax}
+%   提供设定基本信息用的键值对接口。
+% \end{function}
+%
+% 这个函数接收以下键值对。
+%
+% \begin{function}{university, universityEng}
+%   \begin{syntax}
+%       \cmd university = \meta{学校名}
+%       \cmd universityEng = \meta{学校英文名}
+%   \end{syntax}
+%   替换模板中的学校中文名（北京航空航天大学）和英文名（Beihang University）。
+% \end{function}
+% \begin{function}{school, schoolEng, major, majorEng}
+%   \begin{syntax}
+%       \cmd school = \meta{学院名}
+%       \cmd schoolEng = \meta{学院英文名}
+%       \cmd major = \meta{专业名}
+%       \cmd majorEng = \meta{专业英文名}
+%   \end{syntax}
+%   输入模板中的学院中文、英文名和专业中文、英文名。学院英文名可在校官网上查找得到。中文学院和专业名最后的“学院”和“专业”会由模板自动附加，不需要额外输入。
+% \end{function}
+% \begin{function}{teacher, teacherEng, teacherTwo, teacherTwoEng}
+%   \begin{syntax}
+%       \cmd teacher = \meta{指导教师名}
+%       \cmd teacherEng = \meta{指导教师英文名}
+%       \cmd teacherTwo = \meta{副导师名}
+%       \cmd teacherTwoEng = \meta{副导师英文名}
+%   \end{syntax}
+%	输入模板中的导师与副导师中英文姓名，原则上英文姓在前且大写。
+%   若有副导师，则需要在文档类选项中指定 \cmd subteacher 。
+% \end{function}
+% \begin{function}{clcnum}
+%   \begin{syntax}
+%       \cmd clcnum = \meta{中国图书馆分类号}
+%   \end{syntax}
+%   论文的中国图书馆分类法分类号。
+% \end{function}
+% \begin{function}{proposalClass}
+%   \begin{syntax}
+%       \cmd proposalClass = \meta{开题文件类别}
+%   \end{syntax}
+%   设置论文开题文件的类别，一般是“开题报告”或“文献综述”二者择一。
+% \end{function}
+% \begin{function}{thesisBegin, thesisEnd, defense}
+%   \begin{syntax}
+%       \cmd thesisBegin = \{ \cmd year = \meta{开始年}, month = \meta{开始月}, day = \meta{开始日} \}
+%       \cmd thesisEnd = \{ \cmd year = \meta{结束年}, month = \meta{结束月}, day = \meta{结束日} \}
+%       \cmd defense = \{ \cmd year = \meta{答辩年}, month = \meta{答辩月}, day = \meta{答辩日} \}
+%   \end{syntax}
+%   设置论文开始与结束的日期和答辩日期，用于研究生提名页和本科生任务书。
+% \end{function}
+%
+%
+% 此处给出一个使用键值对设置通用信息的例子：
+% \begin{verbatim}
+% \BUAACommonInfoSetup{
+%    school = {电子信息工程学院},
+%    major = {电子信息与技术},
+%    teacher = {毛峡},
+%    thesisEnd = {
+%       year = 2015, month = 6, day = 6
+%    }
+% }
+% \end{verbatim}
+%
+% \subsubsection{本科生信息}
+%
+% \begin{function}{\BUAABachelorInfoSetup}
+%   \begin{syntax}
+%       \cs{BUAABachelorInfoSetup} \Arg{键-值对}
+%   \end{syntax}
+%   提供设定本科生信息用的键值对接口。
+% \end{function}
+%
+% 这个函数接收以下键值对。
+%
+% \begin{function}{class}
+%   \begin{syntax}
+%       \cmd class = \meta{班级}
+%   \end{syntax}
+%   设定作者的班级号，用于本科生任务书。
+% \end{function}
+% \begin{function}{studentID}
+%   \begin{syntax}
+%       \cmd studentID = \meta{学号}
+%   \end{syntax}
+%   设定作者的学号，用于本科生论文题名页以及开题报告题名页。
+% \end{function}
+% \begin{function}{unitcode}
+%   \begin{syntax}
+%       \cmd studentID = \meta{单位代码}
+%   \end{syntax}
+%   设定单位代码，用于本科生论文题名页。默认为“10006”。
+% \end{function}
+% \begin{function}{thesisDate}
+%   \begin{syntax}
+%       \cmd thesisDate = \{ \cmd year = \meta{论文年}, month = \meta{论文月}\}
+%   \end{syntax}
+%   设定论文的年份和月份，用于本科生论文题名页。
+% \end{function}
+%
+% \subsubsection{研究生信息}
+% \begin{function}{\BUAAGraduateInfoSetup}
+%   \begin{syntax}
+%       \cs{BUAAGraduateInfoSetup} \Arg{键-值对}
+%   \end{syntax}
+%   提供设定本科生信息用的键值对接口。
+% \end{function}
+%
+% 这个函数接收以下键值对。
+%
+% \begin{function}{confidentialLevel, confidentialLimit}
+%   \begin{syntax}
+%       \cmd confidentialLevel = \meta{保密等级}
+%       \cmd confidentialLimit = \meta{保密期限}
+%   \end{syntax}
+%   设定论文的保密等级与保密期限。非保密论文不需要此设置。保密论文需启用 \cmd classified 选项。
+% \end{function}
+% \begin{function}{direction}
+%   \begin{syntax}
+%       \cmd direction = \meta{研究方向}
+%   \end{syntax}
+%   设定作者的研究方向。
+% \end{function}
+% \begin{function}{teacherTitle, teacherTitleEng, teacherTwoTitle, teacherTwoTitleEng}
+%   \begin{syntax}
+%       \cmd teacherTitle = \meta{导师职称}
+%       \cmd teacherTitleEng = \meta{导师英文职称}
+%       \cmd teacherTwoTitle = \meta{副导师职称}
+%       \cmd teacherTwoTitleEng = \meta{副导师英文职称}
+%   \end{syntax}
+%   设定导师和副导师的中英文职称。
+%   若需显示副导师信息，则需要在文档类选项中指定 \cmd subteacher 。
+% \end{function}
+% \begin{function}{appliedDegree}
+%   \begin{syntax}
+%       \cmd appliedDegree = \meta{申请学位}
+%   \end{syntax}
+%   作者申请的学位。
+% \end{function}
+% \begin{function}{thesisID}
+%   \begin{syntax}
+%       \cmd thesisID = \meta{论文编号}
+%   \end{syntax}
+%   论文的编号，通常为“10006”加作者学号。
+% \end{function}
+% \begin{function}{submission, award}
+%   \begin{syntax}
+%       \cmd submission = \{ \cmd year = \meta{提交年}, month = \meta{提交月}, day = \meta{提交日} \}
+%       \cmd award = \{ \cmd year = \meta{授予年}, month = \meta{授予月}, day = \meta{授予日} \}
+%   \end{syntax}
+%   设定论文提交与学位授予的日期。
+% \end{function}
+%
+% \subsection{兼容接口}
+% 本节主要介绍由于向后兼容保留的接口。
+%
+% \subsubsection{通用信息设定}
 % 本小节主要介绍用于设定通用信息的函数，这些信息本科生和研究生毕业论文中均需要填写。
 % \begin{function}{\university}
 %	 \begin{syntax}
@@ -124,20 +321,6 @@
 %		 \cs{major} \Arg{专业中文名} \Arg{专业英文名}
 %    \end{syntax}
 %	 输入模板中的学院中文、英文名和专业中文、英文名。学院英文名可在校官网上查找得到。中文学院和专业名最后的“学院”和“专业”会由模板自动附加，不需要额外输入。
-% \end{function}
-%
-% \begin{function}{\title, \thesistitle}
-%	 \begin{syntax}
-%		 \cs{title} \Arg{论文标题} \Arg{论文副标题} \Arg{英文论文标题} \Arg{英文论文副标题}
-%    \end{syntax}
-%	 输入模板中的论文中英文副标题。 \cs{thesistitle} 是 \cs{title} 的后向兼容别名。
-% \end{function}
-%
-% \begin{function}{\author, \thesisauthor}
-%	 \begin{syntax}
-%		 \cs{author} \Arg{作者姓名} \Arg{作者英文姓名}
-%    \end{syntax}
-%	 输入模板中的论文中英文姓名，原则上英文姓在前且大写。\cs{thesisauthor} 是 \cs{author} 的后向兼容别名。
 % \end{function}
 %
 % \begin{function}{\teacher, \subteacher}
@@ -164,14 +347,6 @@
 %	 设置论文开始与结束的日期和答辩日期，用于研究生提名页和本科生任务书。
 % \end{function}
 %
-% \begin{function}{\ckeyword, \ekeyword}
-%	 \begin{syntax}
-%		 \cs{ckeyword} \Arg{中文关键词}
-%		 \cs{ekeyword} \Arg{英文关键词}
-%    \end{syntax}
-%	 设置论文摘要后的关键词。
-% \end{function}
-%
 % \begin{function}{\ktclass}
 %	 \begin{syntax}
 %		 \cs{ktclass} \Arg{开题文件类别}
@@ -179,7 +354,7 @@
 %	 设置论文开题文件的类别，一般是“开题报告”或“文献综述”二者择一。
 % \end{function}
 %
-% \subsection{本科生信息设定}
+% \subsubsection{本科生信息设定}
 %
 % \begin{function}{\class}
 %   \begin{syntax}
@@ -209,7 +384,7 @@
 %   设定论文的年份和月份，用于本科生论文题名页。
 % \end{function}
 %
-% \subsection{研究生信息设定}
+% \subsubsection{研究生信息设定}
 %
 % \begin{function}{\direction}
 %   \begin{syntax}
@@ -928,7 +1103,7 @@
     submission              .meta:nn = {buaathesis / info / graduate / submission}{#1},
     award                   .meta:nn = {buaathesis / info / graduate / award}{#1}
 }
-\DeclareDocumentCommand \BUAAGraduateInfoSet {m} {
+\DeclareDocumentCommand \BUAAGraduateInfoSetup {m} {
     \keys_set:nn{buaathesis / info / graduate}{#1}
 }
 %    \end{macrocode}
