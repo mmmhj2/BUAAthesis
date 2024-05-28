@@ -2109,11 +2109,10 @@
 %    \end{macrocode}
 % \end{macro}
 %    \begin{macrocode}
-\NewDocumentCommand{\ulinel}{O{}m}{
-    \uline{\makebox[#1\textwidth][l]{#2}}
+\cs_new_nopar:Nn \@@_cs_asgnmt_ulinel:n {
+    \uline{\makebox[\textwidth][l]{#1}}
 }
-
-\NewDocumentCommand{\ulinec}{O{}m}{
+\cs_new_nopar:Nn \@@_cs_asgnmt_ulinec:nn {
     \uline{\makebox[#1\textwidth][c]{#2}}
 }
 
@@ -2175,15 +2174,15 @@
     {
         \linespread{2} \zihao{4} \stepcounter{assign}
         \Roman{assign}、毕业设计（论文）题目： \\[2.5ex]
-        \ulinel{ \tl_use:N \l_@@_thesis_title_tl } \\
-        \ulinel{ \tl_use:N \l_@@_thesis_subtitle_tl } \\
-        \ulinel{} \\
+        \@@_cs_asgnmt_ulinel:n{ \tl_use:N \l_@@_thesis_title_tl } \\
+        \@@_cs_asgnmt_ulinel:n{ \tl_use:N \l_@@_thesis_subtitle_tl } \\
+        \@@_cs_asgnmt_ulinel:n{} \\
 
         \stepcounter{assign}
         \Roman{assign}、毕业设计（论文）使用的原始资料（数据）及设计技术要求： \\[2.5ex]
         \int_set:Nn \l_tmpa_int {1}
         \int_while_do:nNnn { \l_tmpa_int } < { 6 } {
-            \ulinel{ 
+            \@@_cs_asgnmt_ulinel:n{ 
                 \seq_item:NV \l_@@_bachelor_asgnmt_requirement_seq \l_tmpa_int
             } \\
             \int_incr:N \l_tmpa_int
@@ -2193,7 +2192,7 @@
         \Roman{assign}、毕业设计（论文）工作内容： \\[2.5ex]
         \int_set:Nn \l_tmpa_int {1}
         \int_while_do:nNnn { \l_tmpa_int } < { 7 } {
-            \ulinel{ \seq_item:NV \l_@@_bachelor_asgnmt_work_seq \l_tmpa_int }
+            \@@_cs_asgnmt_ulinel:n{ \seq_item:NV \l_@@_bachelor_asgnmt_work_seq \l_tmpa_int }
             \int_compare:nNnT {\l_tmpa_int} < { 6 } { \\ }
             \int_incr:N \l_tmpa_int
         }
@@ -2203,35 +2202,37 @@
             \Roman{assign}、主要参考资料： \\[1.5ex]
             \int_set:Nn \l_tmpa_int {1}
             \int_while_do:nNnn { \l_tmpa_int } < { 9 } {
-                \ulinel{ 
+                \@@_cs_asgnmt_ulinel:n{ 
                     \seq_item:NV \l_@@_bachelor_asgnmt_reference_seq \l_tmpa_int 
                 } \\
                 \int_incr:N \l_tmpa_int
             }
 
-            \ulinec[.28]{\l_@@_school_name_tl}学院
-            \ulinec[.28]{\l_@@_major_tl}~专业类
-            ~\ulinec[.15]{\l_@@_class_tl}班 \\
-            学生\ulinec[.3]{\l_@@_author_tl} \\
+            \@@_cs_asgnmt_ulinec:nn{.28}{\l_@@_school_name_tl}学院
+            \@@_cs_asgnmt_ulinec:nn{.28}{\l_@@_major_tl}~专业类
+            ~\@@_cs_asgnmt_ulinec:nn{.15}{\l_@@_class_tl}班 \\
+            学生\@@_cs_asgnmt_ulinec:nn{.3}{\l_@@_author_tl} \\
 
             毕业设计(论文)时间：~~
-            \ulinec[.1]{\l_@@_thesis_begin_year_tl}年
-            \ulinec[.06]{\l_@@_thesis_begin_month_tl}月
-            \ulinec[.06]{\l_@@_thesis_begin_day_tl}日
-            至\ulinec[.1]{\l_@@_thesis_end_year_tl}年
-            \ulinec[.06]{\l_@@_thesis_end_month_tl}月
-            \ulinec[.06]{\l_@@_thesis_end_day_tl}日 \\
+            \@@_cs_asgnmt_ulinec:nn{.1}{\l_@@_thesis_begin_year_tl}年
+            \@@_cs_asgnmt_ulinec:nn{.06}{\l_@@_thesis_begin_month_tl}月
+            \@@_cs_asgnmt_ulinec:nn{.06}{\l_@@_thesis_begin_day_tl}日
+            至\@@_cs_asgnmt_ulinec:nn{.1}{\l_@@_thesis_end_year_tl}年
+            \@@_cs_asgnmt_ulinec:nn{.06}{\l_@@_thesis_end_month_tl}月
+            \@@_cs_asgnmt_ulinec:nn{.06}{\l_@@_thesis_end_day_tl}日 \\
 
             答辩时间：
-            \ulinec[.16]{\l_@@_defense_year_tl}年
-            \ulinec[.08]{\l_@@_defense_month_tl}月
-            \ulinec[.08]{\l_@@_defense_day_tl}日 \\
-            成\qquad 绩：\ulinec[.3]{} \\
-            指导教师：\ulinec[.3]{} \\
+            \@@_cs_asgnmt_ulinec:nn{.16}{\l_@@_defense_year_tl}年
+            \@@_cs_asgnmt_ulinec:nn{.08}{\l_@@_defense_month_tl}月
+            \@@_cs_asgnmt_ulinec:nn{.08}{\l_@@_defense_day_tl}日 \\
+            成\qquad 绩：\@@_cs_asgnmt_ulinec:nn{.3}{} \\
+            指导教师：\@@_cs_asgnmt_ulinec:nn{.3}{} \\
             兼职教师或答疑教师（并指出所负责部分）：\\
-            \ulinel{} \\
-            \ulinel{} \\
-            \ulinec[.28]{}系（教研室） 主任（签字）：\ulinec[.28]{} \\
+            \@@_cs_asgnmt_ulinel:n{} \\
+            \@@_cs_asgnmt_ulinel:n{} \\
+            \@@_cs_asgnmt_ulinec:nn{.28}{}
+            系（教研室） 主任（签字）：
+            \@@_cs_asgnmt_ulinec:nn{.28}{} \\
             \vfill
             注：任务书应该附在已完成的毕业设计（论文）的首页。
         \end{spacing}
