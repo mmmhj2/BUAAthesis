@@ -101,7 +101,7 @@
 % 未在此处列出的选项会被转发至\pkg{ctexbook}文档类，常见的选项有 \file{openany} / \file{openright} 和 \file{oneside} / \file{twoside}。
 % 前者指定章节开头可在奇数或偶数页或只能在偶数页，后者指定单面打印或双面打印。
 % \begin{function}{bachelor, master, doctor}
-%	指定生成的论文的学位，分别为学士、硕士、博士学位。必须选择三者之一。
+%   指定生成的论文的学位，分别为学士、硕士、博士学位。必须选择三者之一。
 % \end{function}
 % \begin{function}{professional} 指定该论文为专业研究生（专业硕士、专业博士）生成。 \end{function}
 % \begin{function}{classified} 指定该论文为保密论文。 \end{function}
@@ -114,33 +114,33 @@
 % 除了作者、标题和摘要使用传统风格的接口之外，其他信息均可通过键值对设置。
 %
 % \begin{function}{\title, \thesistitle}
-%	 \begin{syntax}
-%		 \cs{title} \Arg{论文标题} \Arg{论文副标题} \Arg{英文论文标题} \Arg{英文论文副标题}
+%   \begin{syntax}
+%       \cs{title} \Arg{论文标题} \Arg{论文副标题} \Arg{英文论文标题} \Arg{英文论文副标题}
 %    \end{syntax}
-%	 输入模板中的论文中英文副标题。 \cs{thesistitle} 是 \cs{title} 的后向兼容别名。
+%   输入模板中的论文中英文副标题。 \cs{thesistitle} 是 \cs{title} 的后向兼容别名。
 % \end{function}
 %
 % \begin{function}{\author, \thesisauthor}
-%	 \begin{syntax}
-%		 \cs{author} \Arg{作者姓名} \Arg{作者英文姓名}
+%   \begin{syntax}
+%       \cs{author} \Arg{作者姓名} \Arg{作者英文姓名}
 %    \end{syntax}
-%	 输入模板中的论文中英文姓名，原则上英文姓在前且大写。\cs{thesisauthor} 是 \cs{author} 的后向兼容别名。
+%   输入模板中的论文中英文姓名，原则上英文姓在前且大写。\cs{thesisauthor} 是 \cs{author} 的后向兼容别名。
 % \end{function}
 %
 % \begin{function}{\ckeyword, \ekeyword}
-%	 \begin{syntax}
-%		 \cs{ckeyword} \Arg{中文关键词}
-%		 \cs{ekeyword} \Arg{英文关键词}
+%   \begin{syntax}
+%       \cs{ckeyword} \Arg{中文关键词}
+%       \cs{ekeyword} \Arg{英文关键词}
 %    \end{syntax}
-%	 设置论文摘要后的关键词。
+%   设置论文摘要后的关键词。
 % \end{function}
 %
 % \begin{function}{cabstract, eabstract}
-%	 \begin{syntax}
-%		 \cs{begin}\{\env{cabstract}\} 中文摘要 \cs{end}\{\env{cabstract}\}
-%		 \cs{begin}\{\env{eabstract}\} 英文摘要 \cs{end}\{\env{eabstract}\}
+%   \begin{syntax}
+%       \cs{begin}\{\env{cabstract}\} 中文摘要 \cs{end}\{\env{cabstract}\}
+%       \cs{begin}\{\env{eabstract}\} 英文摘要 \cs{end}\{\env{eabstract}\}
 %    \end{syntax}
-%	 中文和英文摘要对应的环境。
+%   中文和英文摘要对应的环境。
 % \end{function}
 %
 % \subsubsection{基本信息}
@@ -177,7 +177,7 @@
 %       \cmd teacherTwo = \meta{副导师名}
 %       \cmd teacherTwoEng = \meta{副导师英文名}
 %   \end{syntax}
-%	输入模板中的导师与副导师中英文姓名，原则上英文姓在前且大写。
+%   输入模板中的导师与副导师中英文姓名，原则上英文姓在前且大写。
 %   若有副导师，则需要在文档类选项中指定 \cmd subteacher 。
 % \end{function}
 % \begin{function}{clcnum}
@@ -319,49 +319,49 @@
 % \subsubsection{通用信息设定}
 % 本小节主要介绍用于设定通用信息的函数，这些信息本科生和研究生毕业论文中均需要填写。
 % \begin{function}{\university}
-%	 \begin{syntax}
-%		 \cs{university} \Arg{学校中文名} \Arg{学校英文名}
+%   \begin{syntax}
+%       \cs{university} \Arg{学校中文名} \Arg{学校英文名}
 %    \end{syntax}
-%	 替换模板中的学校中文名（北京航空航天大学）和英文名（Beihang University）。
+%   替换模板中的学校中文名（北京航空航天大学）和英文名（Beihang University）。
 % \end{function}
 %
 % \begin{function}{\school, \major}
-%	 \begin{syntax}
-%		 \cs{school} \Arg{学院中文名} \Arg{学院英文名}
-%		 \cs{major} \Arg{专业中文名} \Arg{专业英文名}
+%   \begin{syntax}
+%       \cs{school} \Arg{学院中文名} \Arg{学院英文名}
+%       \cs{major} \Arg{专业中文名} \Arg{专业英文名}
 %    \end{syntax}
-%	 输入模板中的学院中文、英文名和专业中文、英文名。学院英文名可在校官网上查找得到。中文学院和专业名最后的“学院”和“专业”会由模板自动附加，不需要额外输入。
+%   输入模板中的学院中文、英文名和专业中文、英文名。学院英文名可在校官网上查找得到。中文学院和专业名最后的“学院”和“专业”会由模板自动附加，不需要额外输入。
 % \end{function}
 %
 % \begin{function}{\teacher, \subteacher}
-%	 \begin{syntax}
-%		 \cs{teacher} \Arg{导师姓名} \Arg{导师英文姓名}
-%		 \cs{subteacher} \Arg{副导师姓名} \Arg{副导师英文姓名}
+%   \begin{syntax}
+%       \cs{teacher} \Arg{导师姓名} \Arg{导师英文姓名}
+%       \cs{subteacher} \Arg{副导师姓名} \Arg{副导师英文姓名}
 %    \end{syntax}
-%	 输入模板中的导师与副导师中英文姓名，原则上英文姓在前且大写。若输入了副导师信息但未指定 \env{twoteacher} 选项，则会自动选择该选项并发出警告。
+%   输入模板中的导师与副导师中英文姓名，原则上英文姓在前且大写。若输入了副导师信息但未指定 \env{twoteacher} 选项，则会自动选择该选项并发出警告。
 % \end{function}
 %
 % \begin{function}{\category}
-%	 \begin{syntax}
-%		 \cs{category} \Arg{分类号}
+%   \begin{syntax}
+%       \cs{category} \Arg{分类号}
 %    \end{syntax}
-%	 论文的中国图书馆分类法分类号。
+%   论文的中国图书馆分类法分类号。
 % \end{function}
 %
 % \begin{function}{\thesisbegin, \thesisend, \defense}
-%	 \begin{syntax}
-%		 \cs{thesisbegin} \Arg{论文开始年} \Arg{论文开始月} \Arg{论文开始日}
-%		 \cs{thesisend} \Arg{论文结束年} \Arg{论文结束月} \Arg{论文结束日}
-%		 \cs{defense} \Arg{答辩年} \Arg{答辩月} \Arg{答辩日}
+%   \begin{syntax}
+%       \cs{thesisbegin} \Arg{论文开始年} \Arg{论文开始月} \Arg{论文开始日}
+%       \cs{thesisend} \Arg{论文结束年} \Arg{论文结束月} \Arg{论文结束日}
+%       \cs{defense} \Arg{答辩年} \Arg{答辩月} \Arg{答辩日}
 %    \end{syntax}
-%	 设置论文开始与结束的日期和答辩日期，用于研究生提名页和本科生任务书。
+%   设置论文开始与结束的日期和答辩日期，用于研究生提名页和本科生任务书。
 % \end{function}
 %
 % \begin{function}{\ktclass}
-%	 \begin{syntax}
-%		 \cs{ktclass} \Arg{开题文件类别}
+%   \begin{syntax}
+%       \cs{ktclass} \Arg{开题文件类别}
 %    \end{syntax}
-%	 设置论文开题文件的类别，一般是“开题报告”或“文献综述”二者择一。
+%   设置论文开题文件的类别，一般是“开题报告”或“文献综述”二者择一。
 % \end{function}
 %
 % \subsubsection{本科生信息设定}
