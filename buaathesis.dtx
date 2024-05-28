@@ -111,7 +111,7 @@
 %
 % \subsection{信息设置接口}
 % 本节主要介绍用于设置各种信息的接口。
-% 除了作者、标题和摘要使用和 \LaTeX{} 兼容的接口之外，其他信息均可通过键值对设置。
+% 除了作者、标题和摘要使用传统风格的接口之外，其他信息均可通过键值对设置。
 %
 % \begin{function}{\title, \thesistitle}
 %	 \begin{syntax}
@@ -215,6 +215,16 @@
 % \end{verbatim}
 %
 % \subsubsection{本科生信息}
+% 
+% \begin{function}{\assignReq, \assignWork, \assignRef}
+%   \begin{syntax}
+%       \cs{assignReq} \Arg{第一行} …… \, \Arg{第五行}
+%       \cs{assignWork} \Arg{第一行} …… \, \Arg{第六行}
+%       \cs{assignRef} \Arg{第一行} …… \, \Arg{第八行}
+%   \end{syntax}
+% 分别设定本科生任务书的“原始资料及设计技术要求”一栏、“工作内容”一栏以及“主要参考资料”一栏。
+% 注意，即使某一行为空，也必须保留对应参数的花括号，否则命令不能正确解析。
+% \end{function}
 %
 % \begin{function}{\BUAABachelorInfoSetup}
 %   \begin{syntax}
@@ -245,7 +255,7 @@
 % \end{function}
 % \begin{function}{thesisDate}
 %   \begin{syntax}
-%       \cmd thesisDate = \{ \cmd year = \meta{论文年}, month = \meta{论文月}\}
+%       \cmd thesisDate = \{ \cmd year = \meta{论文年}, month = \meta{论文月} \}
 %   \end{syntax}
 %   设定论文的年份和月份，用于本科生论文题名页。
 % \end{function}
@@ -2108,6 +2118,8 @@
 }
 %    \end{macrocode}
 % \end{macro}
+% \begin{macro}[int]{\@@_cs_asgnmt_ulinel:n, \@@_cs_asgnmt_ulinec:nn}
+% 任务书下划线辅助宏定义。
 %    \begin{macrocode}
 \cs_new_nopar:Nn \@@_cs_asgnmt_ulinel:n {
     \uline{\makebox[\textwidth][l]{#1}}
@@ -2115,12 +2127,19 @@
 \cs_new_nopar:Nn \@@_cs_asgnmt_ulinec:nn {
     \uline{\makebox[#1\textwidth][c]{#2}}
 }
-
+%    \end{macrocode}
+% \end{macro}
+%    \begin{macrocode}
 \newcounter{assign}
 
 \seq_new:N \l_@@_bachelor_asgnmt_requirement_seq
 \seq_new:N \l_@@_bachelor_asgnmt_work_seq
 \seq_new:N \l_@@_bachelor_asgnmt_reference_seq
+
+%    \end{macrocode}
+% \begin{macro}{\assignReq}
+% 设置任务书“毕业设计（论文）使用的原始资料（数据）及设计技术要求”的栏。
+%    \begin{macrocode}
 \NewDocumentCommand{\assignReq}{mmmmm}{
     \seq_clear:N \l_@@_bachelor_asgnmt_requirement_seq
     \seq_put_right:Nn \l_@@_bachelor_asgnmt_requirement_seq {#1}
@@ -2129,7 +2148,11 @@
     \seq_put_right:Nn \l_@@_bachelor_asgnmt_requirement_seq {#4}
     \seq_put_right:Nn \l_@@_bachelor_asgnmt_requirement_seq {#5}
 }
-
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\assignWork}
+% 设置任务书“毕业设计（论文）工作内容”的栏。
+%    \begin{macrocode}
 \NewDocumentCommand{\assignWork}{mmmmmm}{
     \seq_clear:N \l_@@_bachelor_asgnmt_work_seq
     \seq_put_right:Nn \l_@@_bachelor_asgnmt_work_seq {#1}
@@ -2139,7 +2162,11 @@
     \seq_put_right:Nn \l_@@_bachelor_asgnmt_work_seq {#5}
     \seq_put_right:Nn \l_@@_bachelor_asgnmt_work_seq {#6}
 }
-
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\assignRef}
+% 设置任务书“主要参考资料”的栏。
+%    \begin{macrocode}
 \NewDocumentCommand{\assignRef}{mmmmmmmm}{
     \seq_clear:N \l_@@_bachelor_asgnmt_reference_seq
     \seq_put_right:Nn \l_@@_bachelor_asgnmt_reference_seq {#1}
@@ -2151,8 +2178,8 @@
     \seq_put_right:Nn \l_@@_bachelor_asgnmt_reference_seq {#7}
     \seq_put_right:Nn \l_@@_bachelor_asgnmt_reference_seq {#8}
 }
-
 %    \end{macrocode}
+% \end{macro}
 % \begin{macro}[int]{\@@_cs_bachelor_assignment_page:}
 % 本科生任务书。
 %    \begin{macrocode}
