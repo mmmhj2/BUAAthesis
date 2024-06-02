@@ -1650,18 +1650,39 @@
 \cs_new:Npn \@@_cs_ulinecvcbc:n #1 { \@@_cs_create_ubox_bf:nn {14em} {#1} }
 %    \end{macrocode}
 % \end{macro}
+% \begin{macro}[int]{\@@_cs_spread_text:nnn}
+% 用于在文本中插入固定宽度的空格的辅助宏定义。
+%    \begin{macrocode}
+\cs_new:Npn \@@_cs_spread_text:nnn #1#2#3 {
+    \tl_set:Nn \l_tmpa_tl {#2}
+    \tl_set:Nn #1 {}
+    \int_set:Nn \l_tmpa_int {1}
+    \int_set:Nn \l_tmpb_int {\tl_count:N \l_tmpa_tl}
+    \int_while_do:nNnn { \l_tmpa_int } < { \l_tmpb_int } {
+        \tl_put_right:Ne #1 {\tl_item:Nn \l_tmpa_tl {\l_tmpa_int}}
+        \tl_put_right:Nn #1 {\hspace{#3}}
+        \int_incr:N \l_tmpa_int
+    }
+    \tl_put_right:Ne #1 {\tl_item:Nn \l_tmpa_tl {\l_tmpb_int}}
+}
+%    \end{macrocode}
+% \end{macro}
 % \begin{macro}[int]{\@@_cs_bachelor_proposal_tabular:}
 % 本科开题报告题名页信息表。
 %    \begin{macrocode}
+\@@_cs_spread_text:nnn {\c_@@_bp_profession_tl}{专业}{2em}
+\@@_cs_spread_text:nnn {\c_@@_bp_name_tl}{姓名}{2em}
+\@@_cs_spread_text:nnn {\c_@@_bp_sid_tl}{学号}{2em}
+
 \cs_new:Nn \@@_cs_bachelor_proposal_tabular: {
     \begin{tabular}{c~p{0.55\textwidth}<{\raggedright}}
         \hwkaiti \textbf{论文题目}  : & 
         \hwkaiti \l_@@_thesis_title_tl \\[.4ex]
-        \hwkaiti \textbf{专 \hspace{2em} 业}  : & 
+        \hwkaiti \textbf{\c_@@_bp_profession_tl}  : & 
         \hwkaiti \l_@@_major_tl \\[.4ex]
-        \hwkaiti \textbf{姓 \hspace{2em} 名}  : & 
+        \hwkaiti \textbf{\c_@@_bp_name_tl}  : & 
         \hwkaiti \l_@@_author_tl \\[.4ex]
-        \hwkaiti \textbf{学 \hspace{2em} 号}  : & 
+        \hwkaiti \textbf{\c_@@_bp_sid_tl}  : & 
         \hwkaiti \l_@@_student_id_tl \\[.4ex]
         \hwkaiti \textbf{指导教师}  : & 
         \hwkaiti\l_@@_teacher_tl
@@ -1674,17 +1695,23 @@
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}[int]{\@@_cs_bachelor_tabular:}
-% 本科开题报告题名页信息表。
+% 本科毕业论文题名页信息表。
 %    \begin{macrocode}
+
+\@@_cs_spread_text:nnn {\c_@@_b_school_tl}{学院名称}{0.75em}
+\@@_cs_spread_text:nnn {\c_@@_b_major_tl}{专业名称}{0.75em}
+\@@_cs_spread_text:nnn {\c_@@_b_name_tl}{学生姓名}{0.75em}
+\@@_cs_spread_text:nnn {\c_@@_b_tutor_tl}{指导教师}{0.75em}
+
 \cs_new:Nn \@@_cs_bachelor_tabular: {
     \begin{tabular}{cc}
-        学 \hspace{0.75em} 院 \hspace{0.75em} 名 \hspace{0.75em} 称 \hspace{0.75em} &
+        \c_@@_b_school_tl &
         \@@_cs_ulinecvcbc:n {\l_@@_school_name_tl 学院} \\[.4ex]
-        专 \hspace{0.75em} 业 \hspace{0.75em} 名 \hspace{0.75em} 称 \hspace{0.75em} &
+        \c_@@_b_major_tl &
         \@@_cs_ulinecvcbc:n {\l_@@_major_tl 专业} \\[.4ex]
-        学 \hspace{0.75em} 生 \hspace{0.75em} 姓 \hspace{0.75em} 名 \hspace{0.75em} &
+        \c_@@_b_name_tl &
         \@@_cs_ulinecvcbc:n {\l_@@_author_tl} \\[.4ex]
-        指 \hspace{0.75em} 导 \hspace{0.75em} 教 \hspace{0.75em} 师 \hspace{0.75em} &
+        \c_@@_b_tutor_tl &
         \@@_cs_ulinecvcbc:n {\l_@@_teacher_tl 
             \bool_if:NT \g_@@_twoteacher_bool {
                 \quad \l_@@_teacher_two_tl
@@ -1699,12 +1726,10 @@
 %    \begin{macrocode}
 \cs_new:Nn \@@_cs_graduate_proposal_tabular: {
     \begin{tabular}{c~p{0.55\textwidth}<{\raggedright}}
-        \hwkaiti \textbf{题 \hspace{2em} 目}  :
-        & \hwkaiti\l_@@_thesis_title_tl \\[.4ex]
         \hwkaiti \textbf{专 \hspace{2em} 业}  :
-        & \hwkaiti\l_@@_major_tl \\[.4ex]
+        & \hwkaiti \l_@@_major_tl \\[.4ex]
         \hwkaiti \textbf{研究方向}  :
-        & \hwkaiti\l_@@_direction_tl \\[.4ex]
+        & \hwkaiti \l_@@_direction_tl \\[.4ex]
         \hwkaiti \textbf {
             \bool_case:n {
                 { \g_@@_master_bool } {研 \hspace{0.5em} 究 \hspace{0.5em} 生}
@@ -1726,19 +1751,22 @@
 % \begin{macro}[int]{\@@_cs_graduate_tabular:}
 % 研究生论文题名页信息表。
 %    \begin{macrocode}
+
+\@@_cs_spread_text:nnn {\c_@@_g_name_tl}{作者姓名}{0.5em}
+\@@_cs_spread_text:nnn {\c_@@_g_major_prof_tl}{专业名称}{0.5em}
+\@@_cs_spread_text:nnn {\c_@@_g_major_tl}{学科专业}{0.5em}
+\@@_cs_spread_text:nnn {\c_@@_g_tutor_tl}{指导教师}{0.5em}
+\@@_cs_spread_text:nnn {\c_@@_g_school_tl}{培养学院}{0.5em}
+
 \cs_new:Nn \@@_cs_graduate_tabular: {
     \begin{tabular}[b]{ll}
-        作 \hspace{0.5em} 者 \hspace{0.5em} 姓 \hspace{0.5em} 名 \hspace{0.5em} &
-        \l_@@_author_tl \\[.3ex]
+        \c_@@_g_name_tl & \l_@@_author_tl \\[.3ex]
         \bool_if:NTF \g_@@_professional_bool {
-            专 \hspace{0.5em} 业 \hspace{0.5em} 名 \hspace{0.5em} 称 \hspace{0.5em} & 
-            \l_@@_major_tl\\[.3ex]
+            \c_@@_g_major_prof_tl & \l_@@_major_tl \\[.3ex]
         } {
-            学 \hspace{0.5em} 科 \hspace{0.5em} 专 \hspace{0.5em} 业 \hspace{0.5em} & 
-            \l_@@_major_tl\\[.3ex]
+            \c_@@_g_major_tl & \l_@@_major_tl \\[.3ex]
         }
-
-        指 \hspace{0.5em} 导 \hspace{0.5em} 教 \hspace{0.5em} 师 \hspace{0.5em} & 
+        \c_@@_g_tutor_tl & 
         \l_@@_teacher_tl\quad\l_@@_teacher_title_tl
         \bool_if:nT \g_@@_twoteacher_bool {
             \\[.3ex] \hspace{0.5em} & 
@@ -1746,8 +1774,7 @@
         }
 
         \\[.3ex]
-        培 \hspace{0.5em} 养 \hspace{0.5em} 学 \hspace{0.5em} 院 \hspace{0.5em} & 
-        \l_@@_school_name_tl 学院\\
+        \c_@@_g_school_tl & \l_@@_school_name_tl 学院\\
     \end{tabular}
 }
 %    \end{macrocode}
